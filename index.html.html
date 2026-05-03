@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Minyan Lyon"/>
+<title>Minyan Lyon</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;900&family=DM+Sans:wght@300;400;500;600&family=Frank+Ruhl+Libre:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  /* Couleurs identiques (thème sombre navy/or) */
+  --gold:#C9A84C;--gold2:#E8C97A;--gold3:#A8862C;
+  --goldbg:rgba(201,168,76,0.1);--goldbr:rgba(201,168,76,0.22);--goldbr2:rgba(201,168,76,0.35);
+  --navy:#0D1B2A;--navy2:#152238;--navy3:#1E3050;
+  --text:#F0E6CE;--text2:#9AADBB;--text3:#5A7080;
+  --green:#4CAF82;--greenbg:rgba(76,175,130,0.12);
+  --orange:#E8A44A;--orangebg:rgba(232,164,74,0.12);
+  --red:#E85A4A;--redbg:rgba(232,90,74,0.12);
+  --card:rgba(21,34,56,0.9);
+  /* Hiérarchie de radius — plus arrondi pour un look premium */
+  --r:18px;--r-sm:12px;--r-lg:24px;
+  /* Ombres douces — empilables */
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.20);
+  --shadow:0 4px 16px rgba(0,0,0,0.25);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.45);
+  --shadow-gold:0 8px 32px rgba(201,168,76,0.32);
+  /* Easings premium */
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --font:'DM Sans',sans-serif;--serif:'Fraunces',serif;--nav:70px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:var(--font);background:var(--navy);color:var(--text);font-size:15px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 10%,rgba(201,168,76,0.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;z-index:1;}
+.pages{flex:1;overflow:hidden;position:relative;}
+.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav)+16px);opacity:0;pointer-events:none;transform:translateX(14px);transition:all 0.2s ease;}
+.page.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.page::-webkit-scrollbar{display:none;}
+
+/* HEADER */
+.hdr{background:rgba(13,27,42,0.98);border-bottom:1px solid var(--goldbr);backdrop-filter:blur(20px);z-index:50;}
+.hdr-top{padding:12px 18px 8px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:9px;}
+.logo-star{font-size:24px;animation:glow 3s ease-in-out infinite;}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 5px rgba(201,168,76,0.35))}50%{filter:drop-shadow(0 0 14px rgba(201,168,76,0.7))}}
+.logo-title{font-family:var(--serif);font-size:21px;font-weight:900;color:var(--gold);}
+.logo-sub{font-size:10px;color:var(--text2);margin-top:1px;letter-spacing:0.4px;text-transform:uppercase;}
+.hdr-right{display:flex;gap:5px;align-items:center;}
+.lbtn{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:20px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;font-family:var(--font);transition:all 0.15s;}
+.lbtn.on{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.ibtn{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
+
+/* DATE STRIP */
+.dstrip{background:linear-gradient(135deg,var(--navy2),var(--navy3));border-bottom:1px solid var(--goldbr);padding:10px 18px 12px;display:flex;justify-content:space-between;align-items:flex-end;}
+.dcivil{font-size:13px;font-weight:600;color:var(--text);}
+.dtags{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap;}
+.dtag{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;}
+.dtag-gold{background:rgba(201,168,76,0.18);color:var(--gold);border:1px solid rgba(201,168,76,0.25);}
+.dtag-dim{background:rgba(154,173,187,0.08);color:var(--text2);border:1px solid rgba(154,173,187,0.12);}
+.dright{text-align:right;}
+.djewish{font-size:14px;font-weight:700;color:var(--gold);}
+.domer{font-size:10px;color:var(--text2);margin-top:2px;}
+
+/* COMPTE A REBOURS */
+.cdb{background:var(--navy2);border-bottom:1px solid var(--goldbr);padding:9px 18px 8px;}
+.cdb-row{display:flex;align-items:center;justify-content:space-between;}
+.cdb-label{font-size:11px;color:var(--text2);}
+.cdb-timer{font-family:var(--serif);font-size:18px;font-weight:700;}
+.cdb-green{color:var(--green);}
+.cdb-orange{color:var(--orange);}
+.cdb-red{color:var(--red);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.cdb-progress{height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:6px;}
+.cdb-bar{height:100%;border-radius:2px;transition:width 1s linear;}
+.cdb-next{font-size:10px;color:var(--text3);margin-top:3px;}
+
+/* NAV */
+.bnav{height:var(--nav);background:rgba(13,27,42,0.97);border-top:1px solid var(--goldbr);backdrop-filter:blur(20px);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:50;}
+.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:none;border:none;cursor:pointer;padding:5px 4px;transition:opacity 0.15s var(--ease);position:relative;}
+.nbtn:active{opacity:0.6;}
+.nbtn .ni{font-size:20px;transition:transform 0.18s;}
+.nbtn .nl{font-size:9px;color:var(--text3);font-weight:500;letter-spacing:0.3px;text-transform:uppercase;}
+.nbtn.on .nl{color:var(--gold);}
+.nbtn.on .ni{transform:scale(1.1);filter:drop-shadow(0 0 4px rgba(201,168,76,0.45));}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r);backdrop-filter:blur(10px);margin:0 16px 12px;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform 0.25s var(--ease),box-shadow 0.25s var(--ease),border-color 0.25s var(--ease);animation:fadeInUp 0.5s var(--ease-out) backwards;}
+.card:active{transform:scale(0.985);}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.card-hd{padding:12px 15px 9px;display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.card-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.ci-gold{background:var(--goldbg);}
+.ci-blue{background:rgba(76,130,200,0.1);}
+.ci-green{background:var(--greenbg);}
+.ci-dim{background:rgba(154,173,187,0.07);}
+.card-title{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text);}
+.card-sub{font-size:10px;color:var(--text2);margin-top:1px;}
+.card-body{padding:12px 15px;}
+
+/* FIND BTN */
+.fwrap{padding:12px 16px 0;}
+.fbtn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r);padding:17px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:var(--shadow-gold);transition:transform 0.2s var(--ease),box-shadow 0.2s var(--ease);position:relative;overflow:hidden;}
+.fbtn:active{transform:scale(0.97);box-shadow:0 4px 16px rgba(201,168,76,0.4);}
+.fbtn:active{transform:scale(0.97);}
+.fico{width:42px;height:42px;background:rgba(0,0,0,0.18);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:inset 0 1px 2px rgba(255,255,255,0.15);}
+.ftxt{flex:1;}
+.ftitle{font-family:var(--serif);font-size:16px;font-weight:900;color:var(--navy);}
+.fsub{font-size:11px;color:rgba(13,27,42,0.65);margin-top:2px;}
+
+/* NOW PANEL */
+.now-panel{margin:12px 16px 0;background:var(--card);border:2px solid var(--gold);border-radius:var(--r);backdrop-filter:blur(10px);overflow:hidden;animation:popIn 0.35s var(--ease-out);box-shadow:var(--shadow-gold);}
+@keyframes popIn{from{opacity:0;transform:scale(0.94) translateY(6px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.now-hd{background:linear-gradient(90deg,var(--goldbg),transparent);border-bottom:1px solid var(--goldbr);padding:11px 14px;display:flex;align-items:center;gap:7px;}
+.now-prayer{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--gold);}
+.now-sub{font-size:11px;color:var(--text2);margin-top:1px;}
+.now-close{margin-left:auto;background:none;border:none;color:var(--text2);cursor:pointer;font-size:15px;}
+.now-item{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.now-item:last-child{border-bottom:none;}
+.now-item:active{background:var(--goldbg);}
+.now-sname{font-size:13px;font-weight:600;color:var(--text);}
+.now-addr{font-size:11px;color:var(--text2);margin-top:1px;}
+.now-right{text-align:right;}
+.now-time{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--gold);}
+.now-dist{font-size:10px;color:var(--green);margin-top:1px;font-weight:600;}
+
+/* TABS */
+.tabs{display:flex;margin:10px 16px 0;gap:3px;background:rgba(255,255,255,0.04);border-radius:12px;padding:3px;border:1px solid rgba(255,255,255,0.05);}
+.tab{flex:1;padding:6px;text-align:center;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;border-radius:9px;border:none;background:none;font-family:var(--font);transition:all 0.15s;}
+.tab.on{background:var(--goldbg);color:var(--gold);border:1px solid var(--goldbr);}
+
+/* SECTION */
+.sec-hd{padding:11px 18px 5px;display:flex;align-items:center;justify-content:space-between;}
+.sec-title{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;}
+
+/* SEARCH */
+.sw{margin:0 16px 6px;position:relative;}
+.si{width:100%;background:var(--card);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:10px 13px 10px 35px;font-size:13px;font-family:var(--font);color:var(--text);outline:none;backdrop-filter:blur(10px);}
+.si::placeholder{color:var(--text2);}
+.si-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;}
+
+/* FILTERS */
+.filters{padding:0 16px 6px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;}
+.filters::-webkit-scrollbar{display:none;}
+.fc{flex-shrink:0;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.07);background:var(--card);color:var(--text2);transition:all 0.15s;white-space:nowrap;font-family:var(--font);}
+.fc.on{background:var(--goldbg);border-color:var(--gold);color:var(--gold);}
+
+/* DAYS */
+.days{padding:4px 16px 3px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;}
+.days::-webkit-scrollbar{display:none;}
+.dbtn{flex-shrink:0;background:var(--card);border:1px solid rgba(255,255,255,0.07);border-radius:11px;padding:7px 11px;cursor:pointer;text-align:center;min-width:48px;transition:all 0.15s;font-family:var(--font);}
+.dbtn.on{background:var(--goldbg);border-color:var(--gold);}
+.dbn{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px;font-weight:600;}
+.dbtn.on .dbn{color:var(--gold);}
+.dbd{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);margin-top:1px;}
+.dbtn.on .dbd{color:var(--gold);}
+.count{font-size:11px;color:var(--text2);padding:3px 18px 2px;}
+
+/* LIEU CARD */
+.lieu-card{background:var(--card);border:1.5px solid rgba(255,255,255,0.06);border-radius:var(--r);margin:0 16px 10px;overflow:hidden;}
+.lieu-card.has-fav{border-color:var(--goldbr);}
+.lieu-hd{padding:11px 13px 8px;display:flex;align-items:center;gap:9px;}
+.lieu-ico{font-size:22px;flex-shrink:0;}
+.lieu-info{flex:1;}
+.lieu-addr-txt{font-family:var(--serif);font-size:13px;font-weight:600;color:var(--text);}
+.lieu-count{font-size:11px;color:var(--text2);margin-top:2px;}
+.lieu-acts{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.maps-btn{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:7px;padding:4px 7px;font-size:10px;color:var(--gold);font-weight:600;text-decoration:none;}
+.lieu-dist{font-size:10px;color:var(--green);font-weight:600;}
+.mrow{border-top:1px solid rgba(255,255,255,0.04);padding:8px 13px;cursor:pointer;}
+.mrow:active{background:var(--goldbg);}
+.mrow-top{display:flex;align-items:center;justify-content:space-between;}
+.mrow-name{font-size:12px;font-weight:600;color:var(--text);}
+.mrow-fav{background:none;border:none;font-size:14px;cursor:pointer;opacity:0.25;transition:opacity 0.15s;padding:0;line-height:1;}
+.mrow-fav.on{opacity:1;}
+.mrow-times{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:6px;}
+.mt{background:rgba(255,255,255,0.03);border-radius:7px;padding:5px 4px;text-align:center;}
+.mt.hl{background:var(--goldbg);}
+.mt-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px;font-weight:600;margin-bottom:2px;}
+.mt-val{font-family:var(--serif);font-size:13px;font-weight:600;color:var(--gold);}
+.mt-val.dim{color:var(--text2);font-family:var(--font);font-size:11px;font-weight:400;}
+
+/* SYN CARD */
+.syn-card{background:var(--card);border:1.5px solid rgba(255,255,255,0.06);border-radius:var(--r);margin:0 16px 10px;overflow:hidden;;transition:transform 0.2s var(--ease),border-color 0.2s var(--ease);}
+.syn-card:active{transform:scale(0.985);border-color:var(--goldbr2);}
+.syn-card.fav{border-color:var(--goldbr);}
+.syn-head{padding:11px 13px 8px;display:flex;align-items:flex-start;gap:9px;cursor:pointer;}
+.syn-emoji{font-size:22px;flex-shrink:0;margin-top:1px;}
+.syn-info{flex:1;}
+.syn-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text);}
+.syn-addr{font-size:11px;color:var(--text2);margin-top:2px;}
+.syn-acts{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.fav-star{background:none;border:none;font-size:16px;cursor:pointer;opacity:0.25;transition:opacity 0.15s;line-height:1;padding:0;}
+.fav-star.on{opacity:1;}
+.syn-times{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,0.04);}
+.t-slot{padding:8px 4px;text-align:center;border-right:1px solid rgba(255,255,255,0.04);}
+.t-slot:last-child{border-right:none;}
+.t-slot.hl{background:var(--goldbg);}
+.t-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:0.4px;font-weight:600;margin-bottom:2px;}
+.t-val{font-family:var(--serif);font-size:13px;font-weight:600;color:var(--gold);}
+.t-val.dim{color:var(--text2);font-family:var(--font);font-size:11px;font-weight:400;}
+.empty-st{text-align:center;padding:32px 20px;color:var(--text2);}
+
+/* SIGNAL */
+.sbtn{margin:8px 16px 0;background:var(--greenbg);border:1px solid rgba(76,175,130,0.2);border-radius:var(--r);padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.sbtn:active{transform:scale(0.98);}
+.stxt{font-size:13px;font-weight:600;color:var(--green);}
+.ssub{font-size:11px;color:var(--text2);margin-top:1px;}
+
+/* IMPROV */
+.improv-wrap{margin:8px 16px 0;}
+.improv-item{background:var(--greenbg);border:1px solid rgba(76,175,130,0.18);border-radius:12px;padding:10px 13px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
+.improv-name{font-size:13px;font-weight:600;color:var(--green);}
+.improv-addr{font-size:11px;color:var(--text2);margin-top:1px;}
+.improv-right{text-align:right;}
+.improv-time{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--green);}
+.improv-exp{font-size:10px;color:var(--text2);margin-top:1px;}
+.improv-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:16px;padding:0 0 0 8px;}
+
+/* ZMANIM GRID */
+.zman-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.zi{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:9px;padding:8px 10px;}
+.zi-lbl{font-size:9px;color:var(--text2);margin-bottom:2px;}
+.zi-time{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--gold);}
+.zi-note{font-size:9px;color:var(--text2);margin-top:1px;}
+.zman-loading{text-align:center;padding:14px;color:var(--text2);font-size:12px;}
+.zman-err{padding:10px;color:var(--orange);font-size:12px;background:var(--orangebg);border-radius:9px;text-align:center;}
+
+/* OMER / DAF / TEH */
+.omer-c{text-align:center;padding:7px 0 3px;}
+.omer-big{font-family:var(--serif);font-size:56px;font-weight:900;color:var(--gold);line-height:1;}
+.omer-sub{font-size:12px;color:var(--text2);margin-top:5px;}
+.omer-sefira{font-size:11px;color:var(--gold);margin-top:4px;}
+.omer-left{font-size:11px;color:var(--text2);margin-top:5px;}
+.daf-c{text-align:center;padding:5px 0;}
+.daf-name{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--text);}
+.daf-page{font-family:var(--serif);font-size:46px;font-weight:900;color:var(--gold);line-height:1.1;}
+.daf-info{font-size:11px;color:var(--text2);margin-top:4px;}
+.teh-c{text-align:center;padding:7px 0;}
+.teh-chaps{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--gold);}
+.teh-sub{font-size:11px;color:var(--text2);margin-top:3px;}
+.fete-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fete-row:last-child{border-bottom:none;}
+.fete-name{font-size:13px;font-weight:600;color:var(--text);}
+.fete-note{font-size:11px;color:var(--text2);margin-top:1px;}
+.fete-date{font-size:12px;color:var(--text2);}
+.badge{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;display:inline-block;margin-left:4px;}
+.b-today{background:var(--greenbg);color:var(--green);}
+.b-soon{background:var(--goldbg);color:var(--gold);}
+.birkat-row{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:9px;padding:9px 11px;margin-bottom:6px;}
+.birkat-row.open{background:var(--greenbg);border-color:rgba(76,175,130,0.22);}
+.birkat-mois{font-size:12px;font-weight:600;color:var(--text);}
+.birkat-dates{font-size:11px;color:var(--text2);margin-top:2px;}
+.birkat-open{font-size:11px;color:var(--green);font-weight:600;margin-top:3px;}
+.shab-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.shab-row:last-child{border-bottom:none;}
+.shab-lbl{font-size:12px;color:var(--text2);}
+.shab-time{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--gold);}
+
+/* TORAH PAGE */
+.mb-card{background:linear-gradient(135deg,rgba(28,16,4,0.95),rgba(48,28,6,0.95));border:1px solid rgba(201,168,76,0.18);border-radius:var(--r);padding:17px;margin:0 16px 11px;}
+.mb-ref{font-size:11px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px;}
+.mb-text{font-size:14px;color:var(--text);line-height:1.75;}
+.mb-source{font-size:10px;color:var(--text2);margin-top:9px;}
+.mikve-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r);margin:0 16px 10px;overflow:hidden;}
+.mikve-hd{padding:12px 15px 9px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.04);}
+.mikve-name{font-size:13px;font-weight:600;color:var(--text);}
+.mikve-addr{font-size:11px;color:var(--text2);margin-top:2px;}
+.mikve-contact{font-size:11px;color:var(--text2);margin-top:2px;}
+.mbadge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;flex-shrink:0;margin-left:8px;margin-top:2px;}
+.mb-w{background:rgba(219,39,119,0.14);color:#f472b6;}
+.mb-m{background:rgba(59,130,246,0.14);color:#60a5fa;}
+.mb-b{background:var(--greenbg);color:var(--green);}
+.mikve-btns{padding:9px 15px;display:flex;gap:7px;}
+.call-btn{flex:1;background:var(--greenbg);border:1px solid rgba(76,175,130,0.18);border-radius:10px;padding:8px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:600;color:var(--green);cursor:pointer;text-decoration:none;font-family:var(--font);}
+.wa-btn{background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.18);border-radius:10px;padding:8px 12px;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;text-decoration:none;}
+
+/* PAGE 4 — PRIERES */
+.p4-grid{padding:12px 16px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.p4-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px 12px;cursor:pointer;transition:all 0.15s;text-align:center;;transition:transform 0.2s var(--ease),box-shadow 0.2s var(--ease),border-color 0.2s var(--ease);will-change:transform;}
+.p4-card:active{transform:scale(0.96);}
+.p4-card:active{transform:scale(0.97);border-color:var(--goldbr);}
+.p4-ico{font-size:28px;margin-bottom:7px;}
+.p4-name{font-family:var(--serif);font-size:12px;font-weight:600;color:var(--text);line-height:1.3;}
+.p4-name-he{font-size:13px;color:var(--gold);margin-top:3px;direction:rtl;}
+
+/* BOUSSOLE */
+.compass-wrap{padding:16px;text-align:center;}
+.compass-ring{width:160px;height:160px;border-radius:50%;border:2px solid var(--goldbr);background:rgba(255,255,255,0.03);margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center;}
+.compass-needle{width:4px;height:70px;position:relative;transition:transform 0.5s ease;}
+.needle-n{width:100%;height:50%;background:var(--red);border-radius:2px 2px 0 0;}
+.needle-s{width:100%;height:50%;background:var(--text2);border-radius:0 0 2px 2px;}
+.compass-n{position:absolute;top:6px;font-size:11px;font-weight:700;color:var(--red);}
+.compass-s{position:absolute;bottom:6px;font-size:11px;font-weight:700;color:var(--text2);}
+.compass-e{position:absolute;right:8px;font-size:11px;font-weight:700;color:var(--text2);}
+.compass-w{position:absolute;left:8px;font-size:11px;font-weight:700;color:var(--text2);}
+.compass-center{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--gold);}
+.kotel-arrow{margin-top:14px;}
+.kotel-deg{font-family:var(--serif);font-size:32px;font-weight:900;color:var(--gold);}
+.kotel-lbl{font-size:11px;color:var(--text2);margin-top:3px;}
+
+/* SHARE */
+.share-hero{background:linear-gradient(135deg,var(--navy2),var(--navy3));border:1px solid var(--goldbr);border-radius:var(--r);padding:20px;margin:12px 16px;box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+.share-title{font-family:var(--serif);font-size:19px;font-weight:900;color:var(--gold);margin-bottom:5px;}
+.share-sub{font-size:12px;color:var(--text2);margin-bottom:14px;}
+.share-btns{display:flex;gap:9px;}
+.btn-wa{flex:1;background:#25d366;border:none;border-radius:11px;padding:12px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font);}
+.btn-sh{flex:1;background:var(--goldbg);border:1px solid var(--goldbr);border-radius:11px;padding:12px;font-size:12px;font-weight:700;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font);}
+.info-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r);margin:0 16px 12px;padding:15px;}
+.info-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;}
+.info-step{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px;}
+.info-step:last-child{margin-bottom:0;}
+.step-ico{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--goldbg);}
+.step-txt{font-size:12px;color:var(--text2);line-height:1.6;}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;display:flex;align-items:flex-end;animation:fdIn 0.2s ease;;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+@keyframes fdIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--navy2);border-top:1px solid var(--goldbr);border-radius:20px 20px 0 0;padding:20px 18px;width:100%;max-height:90vh;overflow-y:auto;animation:slUp 0.28s ease;}
+@keyframes slUp{from{transform:translateY(40px)}to{transform:translateY(0)}}
+.modal-bar{width:40px;height:4px;background:var(--goldbr);border-radius:2px;margin:0 auto 16px;}
+.modal-title{font-family:var(--serif);font-size:18px;font-weight:900;color:var(--gold);margin-bottom:2px;}
+.modal-close-btn{margin-top:10px;width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);}
+
+/* TEFILA MODAL */
+.tefila-text{font-family:'Frank Ruhl Libre',serif;font-size:20px;line-height:2.1;direction:rtl;text-align:right;color:var(--text);padding:8px 4px;letter-spacing:0.2px;font-weight:500;}
+.tefila-text:first-line{color:var(--gold);}
+.tefila-title-he{font-size:22px;font-weight:700;color:var(--gold);direction:rtl;text-align:center;margin-bottom:12px;}
+
+/* SYN MODAL */
+.mfav-btn{width:100%;background:var(--goldbg);border:1px solid var(--goldbr);border-radius:12px;padding:11px;color:var(--gold);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:11px;font-family:var(--font);}
+.mfav-btn.on{background:var(--gold);color:var(--navy);}
+.syn-modal-week{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);}
+.srow{display:grid;grid-template-columns:78px 1fr 1fr 1fr;align-items:center;padding:9px 11px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.srow:last-child{border-bottom:none;}
+.srow.today{background:var(--goldbg);}
+.srow-day{font-size:11px;color:var(--text2);font-weight:600;}
+.srow.today .srow-day{color:var(--gold);}
+.sc{text-align:center;}
+.sc-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:0.3px;font-weight:600;}
+.sc-val{font-family:var(--serif);font-size:13px;font-weight:600;color:var(--text);}
+.sc-val.gold{color:var(--gold);}
+.sc-val.dim{color:var(--text2);font-family:var(--font);font-size:11px;font-weight:400;}
+
+/* SIGNAL MODAL */
+.field{margin-bottom:12px;}
+.field label{font-size:12px;color:var(--text2);font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;}
+.field input,.field select{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 13px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;}
+.field select option{background:var(--navy2);}
+.modal-submit{width:100%;background:var(--gold);border:none;border-radius:12px;padding:13px;color:var(--navy);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:4px;}
+.modal-cancel{margin-top:8px;width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);}
+
+.notif-banner{background:var(--orangebg);border:1px solid rgba(232,164,74,0.22);border-radius:12px;padding:10px 14px;margin:10px 16px 0;display:flex;align-items:center;gap:8px;}
+.notif-txt{flex:1;font-size:12px;color:var(--orange);}
+.notif-act{background:var(--orange);border:none;border-radius:8px;padding:5px 11px;font-size:11px;font-weight:700;color:var(--navy);cursor:pointer;font-family:var(--font);}
+.notif-x{background:none;border:none;font-size:14px;color:var(--orange);cursor:pointer;}
+.hidden{display:none!important;}
+
+
+/* Scrollbar discrète dans le modal des prières */
+.modal::-webkit-scrollbar{width:5px;}
+.modal::-webkit-scrollbar-track{background:transparent;}
+.modal::-webkit-scrollbar-thumb{background:var(--goldbr);border-radius:3px;}
+.modal::-webkit-scrollbar-thumb:hover{background:var(--goldbr2);}
+
+/* Touch feedback global pour les éléments interactifs */
+.fbtn:hover,.card:hover,.p4-card:hover,.syn-card:hover,.now-item:hover{cursor:pointer;}
+
+/* Stagger des cards (apparition décalée pour un effet wow subtil) */
+.card:nth-child(2){animation-delay:0.05s;}
+.card:nth-child(3){animation-delay:0.1s;}
+.card:nth-child(4){animation-delay:0.15s;}
+.card:nth-child(5){animation-delay:0.2s;}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo">
+      <span class="logo-star">✡</span>
+      <div>
+        <div class="logo-title">Minyan Lyon</div>
+        <div class="logo-sub">Synagogues · Prières · Calendrier</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <button class="lbtn on" onclick="setLang('fr')">FR</button>
+      <button class="lbtn" onclick="setLang('he')">עב</button>
+      <button class="lbtn" onclick="setLang('en')">EN</button>
+      <button class="ibtn" onclick="shareNative()">📤</button>
+    </div>
+  </div>
+  <div class="dstrip">
+    <div>
+      <div class="dcivil" id="civilDate">—</div>
+      <div class="dtags" id="dateTags"></div>
+    </div>
+    <div class="dright">
+      <div class="djewish" id="jewishDate">—</div>
+      <div class="domer" id="omerShort"></div>
+    </div>
+  </div>
+  <div class="cdb">
+    <div class="cdb-row">
+      <div class="cdb-label" id="cdbLabel">Chargement Zmanim…</div>
+      <div class="cdb-timer" id="cdbTimer"></div>
+    </div>
+    <div class="cdb-progress"><div class="cdb-bar" id="cdbBar" style="width:0%"></div></div>
+    <div class="cdb-next" id="cdbNext"></div>
+  </div>
+</div>
+
+<!-- PAGES -->
+<div class="pages">
+
+<!-- PAGE 1 — PRIERES -->
+<div class="page active" id="p0">
+  <div class="notif-banner" id="notifBanner">
+    <span>🔔</span>
+    <div class="notif-txt">Activer les notifications avant les prières</div>
+    <button class="notif-act" onclick="askNotif()">Activer</button>
+    <button class="notif-x" onclick="dismissNotif()">✕</button>
+  </div>
+  <div class="fwrap">
+    <button class="fbtn" onclick="findNow()">
+      <div class="fico">🔍</div>
+      <div class="ftxt">
+        <div class="ftitle" id="findTitle">Trouver un minyan</div>
+        <div class="fsub" id="findSub">Maintenant</div>
+      </div>
+      <span style="font-size:20px;color:rgba(13,27,42,0.4)">›</span>
+    </button>
+  </div>
+  <div class="sbtn" onclick="openSignal()">
+    <span style="font-size:20px">🙋</span>
+    <div>
+      <div class="stxt">Signaler un minyan improvisé</div>
+      <div class="ssub">Partager avec la communauté</div>
+    </div>
+    <span style="margin-left:auto;font-size:18px;color:var(--green)">›</span>
+  </div>
+  <div class="improv-wrap" id="improvList"></div>
+  <div class="now-panel hidden" id="nowPanel">
+    <div class="now-hd">
+      <span id="nowIcon" style="font-size:20px">🕐</span>
+      <div style="margin-left:8px">
+        <div class="now-prayer" id="nowPrayer">—</div>
+        <div class="now-sub" id="nowSub">—</div>
+      </div>
+      <button class="now-close" onclick="closeNow()">✕</button>
+    </div>
+    <div id="nowList"></div>
+  </div>
+  <div class="tabs">
+    <button class="tab on" id="tabAll" onclick="switchTab('all')">🕍 Toutes</button>
+    <button class="tab" id="tabFav" onclick="switchTab('fav')">⭐ Favoris</button>
+  </div>
+  <div class="sec-hd"><span class="sec-title" id="secTitle">Horaires</span></div>
+  <div class="sw"><span class="si-ico">🔎</span><input class="si" type="text" placeholder="Rechercher…" oninput="doSearch(this.value)"/></div>
+  <div class="filters" id="filtersRow">
+    <button class="fc on" onclick="setFilter('all',this)">Tous</button>
+    <button class="fc" onclick="setFilter('sefarde',this)">Séfarade</button>
+    <button class="fc" onclick="setFilter('ashkenaze',this)">Ashkénaze</button>
+    <button class="fc" onclick="setFilter('habad',this)">Habad</button>
+    <button class="fc" onclick="setFilter('villeurb',this)">Villeurbanne</button>
+    <button class="fc" onclick="setFilter('lyon2',this)">Lyon 2</button>
+    <button class="fc" onclick="setFilter('lyon3',this)">Lyon 3</button>
+    <button class="fc" onclick="setFilter('lyon6',this)">Lyon 6</button>
+    <button class="fc" onclick="setFilter('lyon7',this)">Lyon 7</button>
+    <button class="fc" onclick="setFilter('ecully',this)">Écully</button>
+    <button class="fc" onclick="setFilter('caluire',this)">Caluire</button>
+    <button class="fc" onclick="setFilter('banlieue',this)">Banlieue</button>
+  </div>
+  <div class="days" id="daySelector"></div>
+  <div class="count" id="countBadge"></div>
+  <div id="synList"></div>
+</div>
+
+<!-- PAGE 2 — CALENDRIER -->
+<div class="page" id="p1">
+  <div id="calGrid" style="padding:12px 16px 0"></div>
+</div>
+
+<!-- PAGE 3 — TORAH / MIKVE -->
+<div class="page" id="p2">
+  <div style="padding:12px 16px 0">
+    <div class="sec-hd" style="padding:0 0 8px"><span class="sec-title">Mishna Broura du jour</span></div>
+    <div class="mb-card">
+      <div class="mb-ref" id="mbRef">—</div>
+      <div class="mb-text" id="mbText">—</div>
+      <div class="mb-source">Mishna Broura — Orah Haïm</div>
+    </div>
+    <div class="sec-hd" style="padding:4px 0 8px"><span class="sec-title">Mikvaot de Lyon</span></div>
+    <div id="mikveList"></div>
+  </div>
+</div>
+
+<!-- PAGE 4 — PRIERES TEXTES + OUTILS + PARTAGE -->
+<div class="page" id="p3">
+  <div style="padding:12px 0 0">
+    <!-- SIGNAL MINYAN -->
+    <div class="sbtn" style="margin:0 16px 8px" onclick="openSignal()">
+      <span style="font-size:22px">🙋</span>
+      <div>
+        <div class="stxt">Signaler un minyan improvisé</div>
+        <div class="ssub">Comme WhatsApp — partagez avec la communauté</div>
+      </div>
+    </div>
+    <!-- BOUSSOLE + DIRECTION -->
+    <div class="card" style="margin:0 16px 10px">
+      <div class="card-hd">
+        <div class="card-ico ci-gold">🧭</div>
+        <div>
+          <div class="card-title">Boussole & Direction de prière</div>
+          <div class="card-sub">Nord + direction vers le Kotel</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="compass-wrap">
+          <div class="compass-ring" id="compassRing">
+            <span class="compass-n">N</span>
+            <span class="compass-s">S</span>
+            <span class="compass-e">E</span>
+            <span class="compass-w">O</span>
+            <div class="compass-needle" id="compassNeedle">
+              <div class="needle-n"></div>
+              <div class="needle-s"></div>
+            </div>
+            <div class="compass-center"></div>
+          </div>
+          <div class="kotel-arrow">
+            <div class="kotel-deg" id="kotelDeg">136°</div>
+            <div class="kotel-lbl">Direction vers Jérusalem (Kotel)</div>
+            <div style="font-size:10px;color:var(--text2);margin-top:4px">Lyon → Jérusalem : Sud-Est</div>
+          </div>
+        </div>
+        <button onclick="startCompass()" style="width:100%;background:var(--goldbg);border:1px solid var(--goldbr);border-radius:10px;padding:10px;color:var(--gold);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);margin-top:4px">🧭 Activer la boussole</button>
+      </div>
+    </div>
+    <!-- PRIERES GRID -->
+    <div class="sec-hd" style="padding:6px 18px 4px"><span class="sec-title">Prières & Textes</span></div>
+    <div class="p4-grid" id="prayerGrid"></div>
+    <!-- PARTAGE -->
+    <div style="padding:8px 16px 0">
+      <div class="share-hero">
+        <div class="share-title">Partager Minyan Lyon 🙏</div>
+        <div class="share-sub">Envoie l'app à toute la communauté</div>
+        <div class="share-btns">
+          <button class="btn-wa" onclick="shareWA()">📱 WhatsApp</button>
+          <button class="btn-sh" onclick="shareNative()">📤 Partager</button>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">📱 Ajouter à l'écran d'accueil</div>
+        <div class="info-step"><div class="step-ico">🍎</div><div class="step-txt"><strong style="color:var(--text)">iPhone</strong> — Safari → Partager → "Sur l'écran d'accueil" → Ajouter</div></div>
+        <div class="info-step"><div class="step-ico">🤖</div><div class="step-txt"><strong style="color:var(--text)">Android</strong> — Chrome → 3 points → "Ajouter à l'écran d'accueil"</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">📧 Contact</div>
+        <div style="font-size:13px;color:var(--text2)">Pour signaler une erreur :<br><a href="mailto:noamamsellem@gmail.com" style="color:var(--gold);font-weight:600">noamamsellem@gmail.com</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /pages -->
+
+<div class="bnav">
+  <button class="nbtn on" id="nav0" onclick="showPage(0)"><span class="ni">🕍</span><span class="nl">Prières</span></button>
+  <button class="nbtn" id="nav1" onclick="showPage(1)"><span class="ni">📅</span><span class="nl">Calendrier</span></button>
+  <button class="nbtn" id="nav2" onclick="showPage(2)"><span class="ni">📖</span><span class="nl">Torah</span></button>
+  <button class="nbtn" id="nav3" onclick="showPage(3)"><span class="ni">🙏</span><span class="nl">Outils</span></button>
+</div>
+
+</div><!-- /app -->
+
+<!-- MODAL SIGNAL -->
+<div class="modal-ov hidden" id="signalModal" onclick="if(event.target.id==='signalModal')closeSignal()">
+  <div class="modal">
+    <div class="modal-bar"></div>
+    <div class="modal-title">🙋 Signaler un minyan</div>
+    <div class="field"><label>Prière</label>
+      <select id="sig-prayer">
+        <option value="sh">🌅 Shaharit</option>
+        <option value="mi">☀️ Minha</option>
+        <option value="ar">🌙 Arvit</option>
+      </select>
+    </div>
+    <div class="field"><label>Adresse</label><input type="text" id="sig-addr" placeholder="Ex: 12 Rue des Rosiers, Lyon 6"/></div>
+    <div class="field"><label>Heure</label><input type="time" id="sig-time"/></div>
+    <div class="field"><label>Hommes présents</label>
+      <select id="sig-men">
+        <option value="minyan">✅ Minyan complet (10+)</option>
+        <option value="9">9 hommes — il en manque 1</option>
+        <option value="8">8 hommes — il en manque 2</option>
+        <option value="7">7 hommes — il en manque 3</option>
+        <option value="moins">Moins de 7 hommes</option>
+      </select>
+    </div>
+    <button class="modal-submit" onclick="submitSignal()">Publier le minyan</button>
+    <button class="modal-cancel" onclick="closeSignal()">Annuler</button>
+  </div>
+</div>
+
+<!-- MODAL SYNAGOGUE -->
+<div class="modal-ov hidden" id="synModal" onclick="if(event.target.id==='synModal')closeSynModal()">
+  <div class="modal">
+    <div class="modal-bar"></div>
+    <div class="modal-title" id="smTitle"></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:13px" id="smAddr"></div>
+    <button class="mfav-btn" id="smFavBtn" onclick="toggleFavModal()"></button>
+    <div class="syn-modal-week" id="smWeek"></div>
+    <button class="modal-close-btn" onclick="closeSynModal()">Fermer</button>
+  </div>
+</div>
+
+<!-- MODAL TEFILA -->
+<div class="modal-ov hidden" id="tefilaModal" onclick="if(event.target.id==='tefilaModal')closeTefilaModal()">
+  <div class="modal" style="max-height:95vh">
+    <div class="modal-bar"></div>
+    <div class="tefila-title-he" id="tefilaTitle"></div>
+    <div class="tefila-text" id="tefilaContent"></div>
+    <button class="modal-close-btn" onclick="closeTefilaModal()">סגור / Fermer</button>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DONNÉES — 34 synagogues
+// ================================================================
+const SYNS=[
+  {id:1,e:"🕍",name:"Minian du NETS",addr:"37 Rue Alexandre Boutin, 69100 Villeurbanne",rite:"mixte",zone:"villeurb",maps:"https://maps.google.com/?q=37+Rue+Alexandre+Boutin+Villeurbanne",lat:45.768,lng:4.870,h:{vendredi:{sh:null,mi:null,ar:null},shabbat:{sh:null,mi:null,ar:null},dimanche:{sh:null,mi:null,ar:null},lundi_jeudi:{sh:"5h45 / 5h50",mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:2,e:"🕍",name:"Yismah' Lev",addr:"14 Rue Pierre Loti, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=14+Rue+Pierre+Loti+Villeurbanne",lat:45.769,lng:4.868,h:{vendredi:{sh:null,mi:null,ar:null},shabbat:{sh:"8h30",mi:null,ar:"21h39"},dimanche:{sh:"8h00",mi:null,ar:null},lundi_jeudi:{sh:null,mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:3,e:"🕍",name:"Torath Emeth",addr:"52 Rue Hippolyte Kahn, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=52+Rue+Hippolyte+Kahn+Villeurbanne",lat:45.769,lng:4.875,h:{vendredi:{sh:"6h45",mi:"19h15",ar:"19h35"},shabbat:{sh:"5h35 / 9h00",mi:"19h00",ar:"21h39"},dimanche:{sh:"8h00",mi:"19h10",ar:"19h30"},lundi_jeudi:{sh:"6h45",mi:"19h10",ar:"19h30"},mardi_mercredi:{sh:"6h45",mi:"19h10",ar:"19h30"}}},
+  {id:4,e:"🏫",name:"Ecole Juive",addr:"37 Rue Alexandre Boutin, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=37+Rue+Alexandre+Boutin+Villeurbanne",lat:45.768,lng:4.870,h:{vendredi:{sh:"6h45",mi:"19h15",ar:"19h35"},shabbat:{sh:"7h30 / 8h25",mi:null,ar:"21h39"},dimanche:{sh:"7h15",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"6h30",mi:"19h00",ar:"19h20"},mardi_mercredi:{sh:"6h45",mi:"19h00",ar:"19h20"}}},
+  {id:5,e:"📚",name:"Collel Na'halat Moché",addr:"37 Rue Alexandre Boutin, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=37+Rue+Alexandre+Boutin+Villeurbanne",lat:45.768,lng:4.870,h:{vendredi:{sh:null,mi:"14h30",ar:null},shabbat:{sh:null,mi:null,ar:null},dimanche:{sh:null,mi:null,ar:null},lundi_jeudi:{sh:null,mi:"14h50",ar:"22h10"},mardi_mercredi:{sh:null,mi:"14h50",ar:null}}},
+  {id:6,e:"🕍",name:"Minian Achkenaze — Ecole Juive",addr:"37 Rue Alexandre Boutin, 69100 Villeurbanne",rite:"ashkenaze",zone:"villeurb",maps:"https://maps.google.com/?q=37+Rue+Alexandre+Boutin+Villeurbanne",lat:45.768,lng:4.870,h:{vendredi:{sh:null,mi:"17h50",ar:"18h10"},shabbat:{sh:"8h30",mi:"17h30",ar:null},dimanche:{sh:null,mi:null,ar:null},lundi_jeudi:{sh:null,mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:7,e:"📖",name:"Yéchiva Pinto",addr:"20 Bis Rue des Mûriers, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=20+Rue+des+Muriers+Villeurbanne",lat:45.762,lng:4.883,h:{vendredi:{sh:"6h45 / 8h00",mi:null,ar:null},shabbat:{sh:"7h30 / 8h45",mi:null,ar:"21h39"},dimanche:{sh:"7h30 / 8h30",mi:null,ar:null},lundi_jeudi:{sh:"6h45 / 8h00",mi:"18h30",ar:"18h50"},mardi_mercredi:{sh:"6h45 / 8h00",mi:"18h30",ar:"18h50"}}},
+  {id:8,e:"🕍",name:"Tal Orot",addr:"52 Rue Hippolyte Kahn, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=52+Rue+Hippolyte+Kahn+Villeurbanne",lat:45.769,lng:4.875,h:{vendredi:{sh:"7h00",mi:"19h00",ar:"19h20"},shabbat:{sh:"8h30",mi:"19h55",ar:"21h39"},dimanche:{sh:"7h30",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"7h00",mi:"19h00",ar:"19h20"},mardi_mercredi:{sh:"7h00",mi:"19h00",ar:"19h20"}}},
+  {id:9,e:"🕍",name:"CIV Malherbe",addr:"4 Rue Malherbe, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=4+Rue+Malherbe+Villeurbanne",lat:45.767,lng:4.878,h:{vendredi:{sh:"6h45 / 8h30",mi:"19h15",ar:"19h35"},shabbat:{sh:"8h45",mi:"19h45",ar:"21h39"},dimanche:{sh:"8h00 / 9h00",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"6h45 / 8h20",mi:"19h00",ar:"19h20"},mardi_mercredi:{sh:"6h45 / 8h30",mi:"19h00",ar:"19h20"}}},
+  {id:10,e:"✡",name:"Beth Menahem Habad",addr:"293 Rue Francis de Pressensé, 69100 Villeurbanne",rite:"habad",zone:"villeurb",maps:"https://maps.google.com/?q=293+Rue+Francis+de+Pressense+Villeurbanne",lat:45.768,lng:4.897,h:{vendredi:{sh:"7h00",mi:null,ar:null},shabbat:{sh:"10h00",mi:null,ar:null},dimanche:{sh:"8h30",mi:null,ar:null},lundi_jeudi:{sh:"7h00",mi:null,ar:null},mardi_mercredi:{sh:"7h00",mi:null,ar:null}}},
+  {id:11,e:"🕍",name:"Beth Menahem Séfarade",addr:"293 Rue Francis de Pressensé, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=293+Rue+Francis+de+Pressense+Villeurbanne",lat:45.768,lng:4.897,h:{vendredi:{sh:"7h15",mi:null,ar:null},shabbat:{sh:"9h00",mi:null,ar:"21h39"},dimanche:{sh:"8h15",mi:null,ar:null},lundi_jeudi:{sh:"7h15",mi:null,ar:null},mardi_mercredi:{sh:"7h15",mi:null,ar:null}}},
+  {id:12,e:"✡",name:"Beth Habad Charpennes",addr:"86 Cours Émile Zola, 69100 Villeurbanne",rite:"habad",zone:"villeurb",maps:"https://maps.google.com/?q=86+Cours+Emile+Zola+Villeurbanne",lat:45.771,lng:4.871,h:{vendredi:{sh:"7h00",mi:"19h30",ar:"19h50"},shabbat:{sh:"10h00",mi:"20h15",ar:"21h39"},dimanche:{sh:"8h00",mi:"19h30",ar:"19h50"},lundi_jeudi:{sh:"7h00",mi:"19h30",ar:"19h50"},mardi_mercredi:{sh:"7h00",mi:"19h30",ar:"19h50"}}},
+  {id:13,e:"🕍",name:"Neveh Chalom",addr:"317 Rue Duguesclin, 69007 Lyon",rite:"sefarde",zone:"lyon7",maps:"https://maps.google.com/?q=317+Rue+Duguesclin+Lyon",lat:45.751,lng:4.851,h:{vendredi:{sh:"7h00",mi:"18h10",ar:"18h30"},shabbat:{sh:"8h30",mi:"18h00",ar:null},dimanche:{sh:"8h00",mi:"18h45",ar:"19h05"},lundi_jeudi:{sh:"7h00",mi:"18h45",ar:"19h05"},mardi_mercredi:{sh:"7h00",mi:"18h45",ar:"19h05"}}},
+  {id:14,e:"🕍",name:"Chaaré Tsédék",addr:"16 Rue St Mathieu, 69006 Lyon",rite:"sefarde",zone:"lyon6",maps:"https://maps.google.com/?q=16+Rue+Saint+Mathieu+Lyon",lat:45.771,lng:4.849,h:{vendredi:{sh:"6h30",mi:"19h00",ar:"19h20"},shabbat:{sh:"8h30",mi:"20h10",ar:"21h39"},dimanche:{sh:"7h30",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"6h30",mi:"19h00",ar:"19h20"},mardi_mercredi:{sh:"6h30",mi:"19h00",ar:"19h20"}}},
+  {id:15,e:"🕍",name:"Mizrahi",addr:"156 Rue Cuvier, 69006 Lyon",rite:"sefarde",zone:"lyon6",maps:"https://maps.google.com/?q=156+Rue+Cuvier+Lyon",lat:45.767,lng:4.854,h:{vendredi:{sh:"7h00",mi:"19h00",ar:"19h20"},shabbat:{sh:"8h45",mi:"19h30",ar:"21h39"},dimanche:{sh:"7h45",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"7h00",mi:"19h00",ar:"19h20"},mardi_mercredi:{sh:"7h00",mi:"19h00",ar:"19h20"}}},
+  {id:16,e:"🕍",name:"Or David Lyon 6",addr:"109 Rue Tronchet, 69006 Lyon",rite:"sefarde",zone:"lyon6",maps:"https://maps.google.com/?q=109+Rue+Tronchet+Lyon",lat:45.768,lng:4.852,h:{vendredi:{sh:"7h00",mi:"19h15",ar:"19h35"},shabbat:{sh:"9h00",mi:"20h10",ar:"21h39"},dimanche:{sh:"8h00",mi:"19h10",ar:"19h30"},lundi_jeudi:{sh:"7h00",mi:"19h10",ar:"19h30"},mardi_mercredi:{sh:"7h00",mi:"19h10",ar:"19h30"}}},
+  {id:17,e:"🕍",name:"Braha Vehatslaha",addr:"19 Rue J. Bourgey, 69006 Lyon",rite:"sefarde",zone:"lyon6",maps:"https://maps.google.com/?q=19+Rue+J+Bourgey+Lyon",lat:45.769,lng:4.851,h:{vendredi:{sh:"7h00",mi:"19h00",ar:"19h20"},shabbat:{sh:"9h00",mi:"19h30",ar:"21h39"},dimanche:{sh:"8h00",mi:null,ar:null},lundi_jeudi:{sh:"7h00",mi:null,ar:null},mardi_mercredi:{sh:"7h00",mi:null,ar:null}}},
+  {id:18,e:"🕍",name:"CERJ",addr:"76 Rue de Fontanières, 69100 Villeurbanne",rite:"ashkenaze",zone:"villeurb",maps:"https://maps.google.com/?q=76+Rue+de+Fontanieres+Villeurbanne",lat:45.773,lng:4.884,h:{vendredi:{sh:"7h00",mi:"19h30",ar:"19h50"},shabbat:{sh:"8h30",mi:"19h30",ar:"21h39"},dimanche:{sh:"7h30",mi:"19h30",ar:"19h50"},lundi_jeudi:{sh:"7h00",mi:"19h30",ar:"19h50"},mardi_mercredi:{sh:"7h00",mi:"19h30",ar:"19h50"}}},
+  {id:19,e:"🏛",name:"Grande Synagogue de Lyon",addr:"13 Quai Tilsitt, 69002 Lyon",rite:"ashkenaze",zone:"lyon2",maps:"https://maps.google.com/?q=13+Quai+Tilsitt+Lyon",lat:45.757,lng:4.828,h:{vendredi:{sh:"7h00",mi:"19h00",ar:"19h20"},shabbat:{sh:"9h00",mi:"18h40",ar:"21h39"},dimanche:{sh:"8h00",mi:"19h05",ar:"19h25"},lundi_jeudi:{sh:"7h00",mi:"19h05",ar:"19h25"},mardi_mercredi:{sh:"7h00",mi:"19h05",ar:"19h25"}}},
+  {id:20,e:"🕍",name:"ACIM Beth Moché",addr:"22 Cours du Dr Long, 69006 Lyon",rite:"sefarde",zone:"lyon6",maps:"https://maps.google.com/?q=22+Cours+du+Dr+Long+Lyon",lat:45.769,lng:4.853,h:{vendredi:{sh:"6h45",mi:"19h15",ar:"19h35"},shabbat:{sh:"9h00",mi:"20h00",ar:"21h39"},dimanche:{sh:"8h00",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"6h45",mi:null,ar:null},mardi_mercredi:{sh:"6h45",mi:null,ar:null}}},
+  {id:21,e:"🕍",name:"Beth Israel",addr:"26 Rue Tête d'Or, 69006 Lyon",rite:"ashkenaze",zone:"lyon6",maps:"https://maps.google.com/?q=26+Rue+Tete+d+Or+Lyon",lat:45.768,lng:4.854,h:{vendredi:{sh:"7h45",mi:"19h00",ar:"19h20"},shabbat:{sh:"8h30",mi:null,ar:"21h39"},dimanche:{sh:"8h30",mi:"19h00",ar:"19h20"},lundi_jeudi:{sh:"7h45",mi:"19h00",ar:"19h20"},mardi_mercredi:{sh:"7h45",mi:"19h00",ar:"19h20"}}},
+  {id:22,e:"🕍",name:"Rav Hyda",addr:"501 Rue Sauvegarde Duchère, 69009 Lyon",rite:"sefarde",zone:"lyon9",maps:"https://maps.google.com/?q=501+Rue+Sauvegarde+Duchere+Lyon",lat:45.788,lng:4.792,h:{vendredi:{sh:"7h00",mi:null,ar:null},shabbat:{sh:"9h00",mi:"21h00",ar:null},dimanche:{sh:"8h00",mi:null,ar:null},lundi_jeudi:{sh:"7h00",mi:null,ar:null},mardi_mercredi:{sh:"7h00",mi:null,ar:null}}},
+  {id:23,e:"🕍",name:"Mérone",addr:"61 Rue de Greuze, 69006 Lyon",rite:"sefarde",zone:"lyon6",maps:"https://maps.google.com/?q=61+Rue+de+Greuze+Lyon",lat:45.770,lng:4.855,h:{vendredi:{sh:null,mi:"20h00",ar:"20h20"},shabbat:{sh:"8h30",mi:"19h30",ar:"21h39"},dimanche:{sh:"8h00",mi:null,ar:null},lundi_jeudi:{sh:"7h00",mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:24,e:"🕍",name:"Ohel Yaacov",addr:"26 Rue Cheneul, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=26+Rue+Cheneul+Villeurbanne",lat:45.770,lng:4.876,h:{vendredi:{sh:"6h30",mi:"18h45",ar:"19h05"},shabbat:{sh:"8h30",mi:"20h00",ar:"21h39"},dimanche:{sh:"6h30",mi:"18h55",ar:"19h15"},lundi_jeudi:{sh:"6h30",mi:"18h55",ar:"19h15"},mardi_mercredi:{sh:"6h30",mi:"18h55",ar:"19h15"}}},
+  {id:25,e:"🕍",name:"Harav Sidi Fredj Halimi",addr:"7 Rue du Dr Frappaz, 69100 Villeurbanne",rite:"sefarde",zone:"villeurb",maps:"https://maps.google.com/?q=7+Rue+du+Dr+Frappaz+Villeurbanne",lat:45.771,lng:4.882,h:{vendredi:{sh:"7h00",mi:"19h15",ar:"19h35"},shabbat:{sh:"9h00",mi:"19h30",ar:"21h39"},dimanche:{sh:"8h00",mi:null,ar:null},lundi_jeudi:{sh:"7h00",mi:null,ar:null},mardi_mercredi:{sh:"7h00",mi:null,ar:null}}},
+  {id:26,e:"✡",name:"Beth Habad Part-Dieu",addr:"119 Rue Servient, 69003 Lyon",rite:"habad",zone:"lyon3",maps:"https://maps.google.com/?q=119+Rue+Servient+Lyon",lat:45.761,lng:4.851,h:{vendredi:{sh:null,mi:null,ar:null},shabbat:{sh:"10h00",mi:null,ar:null},dimanche:{sh:"8h30",mi:null,ar:null},lundi_jeudi:{sh:null,mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:27,e:"✡",name:"Chabad Lyon 6",addr:"60 Rue Crillon, 69006 Lyon",rite:"habad",zone:"lyon6",maps:"https://maps.google.com/?q=60+Rue+Crillon+Lyon",lat:45.771,lng:4.851,h:{vendredi:{sh:null,mi:null,ar:null},shabbat:{sh:"9h30",mi:null,ar:null},dimanche:{sh:null,mi:null,ar:null},lundi_jeudi:{sh:null,mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:28,e:"🕍",name:"Ateret Eliyaou",addr:"24 Allée Simon Saint-Jean, 69130 Écully",rite:"sefarde",zone:"ecully",maps:"https://maps.google.com/?q=24+Allee+Simon+Saint+Jean+Ecully",lat:45.789,lng:4.768,h:{vendredi:{sh:"7h00",mi:"19h15",ar:"19h35"},shabbat:{sh:"9h30",mi:"20h10",ar:"21h39"},dimanche:{sh:"8h00",mi:null,ar:null},lundi_jeudi:{sh:"7h00",mi:null,ar:null},mardi_mercredi:{sh:"7h00",mi:null,ar:null}}},
+  {id:29,e:"📖",name:"Yechiva Pinto Or David",addr:"41 Chemin du Chancelier, 69130 Écully",rite:"sefarde",zone:"ecully",maps:"https://maps.google.com/?q=41+Chemin+du+Chancelier+Ecully",lat:45.785,lng:4.772,h:{vendredi:{sh:"7h30",mi:null,ar:null},shabbat:{sh:"9h00",mi:null,ar:null},dimanche:{sh:"8h30",mi:null,ar:null},lundi_jeudi:{sh:"7h30",mi:null,ar:null},mardi_mercredi:{sh:"7h30",mi:null,ar:null}}},
+  {id:30,e:"🕍",name:"CI Caluire",addr:"48 Avenue Général Leclerc, 69300 Caluire",rite:"sefarde",zone:"caluire",maps:"https://maps.google.com/?q=48+Avenue+General+Leclerc+Caluire",lat:45.802,lng:4.858,h:{vendredi:{sh:null,mi:"18h45",ar:null},shabbat:{sh:"9h00",mi:"19h45",ar:"21h39"},dimanche:{sh:"8h00",mi:"18h50",ar:"19h10"},lundi_jeudi:{sh:"6h30",mi:"20h15",ar:"20h35"},mardi_mercredi:{sh:"6h30",mi:"20h15",ar:"20h35"}}},
+  {id:31,e:"🕍",name:"ACIB Bron",addr:"97 Rue de la Pagère, 69500 Bron",rite:"sefarde",zone:"banlieue",maps:"https://maps.google.com/?q=97+Rue+de+la+Pagere+Bron",lat:45.741,lng:4.915,h:{vendredi:{sh:"6h30",mi:null,ar:null},shabbat:{sh:"8h30",mi:null,ar:null},dimanche:{sh:"7h30",mi:null,ar:null},lundi_jeudi:{sh:"6h30",mi:null,ar:null},mardi_mercredi:{sh:"6h30",mi:null,ar:null}}},
+  {id:32,e:"🕍",name:"AJECO Oullins",addr:"18 Rue Aulagne, 69600 Oullins",rite:"sefarde",zone:"banlieue",maps:"https://maps.google.com/?q=18+Rue+Aulagne+Oullins",lat:45.715,lng:4.808,h:{vendredi:{sh:null,mi:null,ar:null},shabbat:{sh:"10h00",mi:null,ar:null},dimanche:{sh:null,mi:null,ar:null},lundi_jeudi:{sh:null,mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:33,e:"🕍",name:"ACI Meyziau",addr:"6 Avenue de la Libération, 69330 Meyzieu",rite:"sefarde",zone:"banlieue",maps:"https://maps.google.com/?q=6+Avenue+de+la+Liberation+Meyzieu",lat:45.767,lng:5.006,h:{vendredi:{sh:null,mi:"18h00",ar:null},shabbat:{sh:"9h00",mi:"17h50",ar:null},dimanche:{sh:null,mi:null,ar:null},lundi_jeudi:{sh:null,mi:null,ar:null},mardi_mercredi:{sh:null,mi:null,ar:null}}},
+  {id:34,e:"🕍",name:"Or David Écully",addr:"Écully",rite:"sefarde",zone:"ecully",maps:"https://maps.google.com/?q=Or+David+Ecully",lat:45.787,lng:4.770,h:{vendredi:{sh:"7h15",mi:"20h00",ar:"20h20"},shabbat:{sh:"9h00",mi:null,ar:null},dimanche:{sh:"7h15",mi:"20h00",ar:"20h20"},lundi_jeudi:{sh:"7h15",mi:"20h00",ar:"20h20"},mardi_mercredi:{sh:"7h15",mi:"20h00",ar:"20h20"}}},
+];
+
+const LIEUX=[
+  {addr:"37 Rue Alexandre Boutin, 69100 Villeurbanne",ico:"🏫",maps:"https://maps.google.com/?q=37+Rue+Alexandre+Boutin+Villeurbanne",lat:45.768,lng:4.870,ids:[1,4,5,6]},
+  {addr:"52 Rue Hippolyte Kahn, 69100 Villeurbanne",ico:"🕍",maps:"https://maps.google.com/?q=52+Rue+Hippolyte+Kahn+Villeurbanne",lat:45.769,lng:4.875,ids:[3,8]},
+  {addr:"293 Rue Francis de Pressensé, 69100 Villeurbanne",ico:"✡",maps:"https://maps.google.com/?q=293+Rue+Francis+de+Pressense+Villeurbanne",lat:45.768,lng:4.897,ids:[10,11]},
+];
+const GROUPED_IDS=LIEUX.flatMap(l=>l.ids);
+
+const MIKVAOT=[
+  {name:"CIV Malherbe Beer Myriam",addr:"35 Rue Racine, Villeurbanne",tel:"0652070417",contact:"Mme Benzakin",who:"both"},
+  {name:"Mikveh Ecole Juive",addr:"47 Rue Jean Claude Vivant, Villeurbanne",tel:"0614610863",contact:"Mme Madar",who:"women"},
+  {name:"Hayé Tahara",addr:"80 Rue Fontanières, Villeurbanne",tel:"0651156862",contact:"Mme Guedj",who:"women"},
+  {name:"Yéchiva Pinto",addr:"24 Rue des Muriers, Villeurbanne",tel:"0620272701",contact:"Mme Zadel",who:"women"},
+  {name:"Mikveh de la Duchère",addr:"501 Avenue de la Sauvegarde, Lyon 9",tel:"0648134601",contact:"Mme Abbou",who:"women"},
+  {name:"Mikveh Neveh Chalom",addr:"317 Rue Duguesclin, Lyon 7",tel:"0614504238",contact:"Mme Nezri",who:"women"},
+  {name:"Mikveh Haya Mouchka 6ème",addr:"60 Rue Crillon, Lyon 6",tel:"0606536763",contact:"Mme Nemanov",who:"women"},
+  {name:"Mikveh d'Ecully",addr:"20 Chemin Louis Chirpaz, Écully",tel:"0628916238",contact:"Mme Gurevitch",who:"women"},
+  {name:"Mikveh Eshel",addr:"97 Rue de la Pagère, Bron",tel:"0651836255",contact:"Mme El Hadad",who:"women"},
+  {name:"Chaaré Tsédék",addr:"18 Rue St Mathieu, Lyon 6",tel:"0659086880",contact:"Mme Germain",who:"women"},
+  {name:"Beth Menahem pour Homme",addr:"293 Rue Francis de Pressensé, Villeurbanne",tel:null,contact:"24h/24 — 7j/7",who:"men"},
+];
+
+// ================================================================
+// TEXTES DES PRIÈRES (Hébreu)
+// ================================================================
+const TEFILOT={
+  birkhot:{
+    name:"Birkhot HaShahar",nameHe:"ברכות השחר",ico:"🌅",
+    text:`מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה. רַבָּה אֱמוּנָתֶךָ.
+
+בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל נְטִילַת יָדָיִם׃
+
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה. וּבָרָא בוֹ נְקָבִים נְקָבִים. חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ שֶׁאִם יִסָּתֵם אֶחָד מֵהֶם אוֹ אִם יִפָּתֵחַ אֶחָד מֵהֶם אֵי אֶפְשַׁר לְהִתְקַיֵּם אֲפִלּוּ שָׁעָה אֶחָת. בָּרוּךְ אַתָּה יְהֹוָה, רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת׃
+
+אֱלֹהַי, נְשָׁמָה שֶׁנָּתַתָּ בִּי טְהוֹרָה. אַתָּה בְרָאתָהּ. אַתָּה יְצַרְתָּהּ. אַתָּה נְפַחְתָּהּ בִּי. וְאַתָּה מְשַׁמְּרָהּ בְּקִרְבִּי. וְאַתָּה עָתִיד לִטְּלָהּ מִמֶּנִּי וּלְהַחֲזִירָהּ בִּי לֶעָתִיד לָבֹא. כָּל זְמַן שֶׁהַנְּשָׁמָה בְקִרְבִּי. מוֹדֶה אֲנִי לְפָנֶיךָ. יְהֹוָה אֱלֹהַי וֵאלֹהֵי אֲבוֹתַי. שֶׁאַתָּה הוּא רִבּוֹן כָּל הַמַּעֲשִׂים. אֲדוֹן כָּל הַנְּשָׁמוֹת. מוֹשֵׁל בְּכָל הַבִּרְיוֹת. חַי וְקַיָם לָעַד. בָּרוּךְ אַתָּה יְהֹוָה, הַמַּחֲזִיר נְשָׁמוֹת לִפְגָרִים מֵתִים׃
+
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַשֶּׂכְוִי בִּינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, פּוֹקֵחַ עִוְרִים׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַתִּיר אֲסוּרִים׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, זוֹקֵף כְּפוּפִים׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, מַלְבִּישׁ עֲרֻמִּים׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַנּוֹתֵן לַיָּעֵף כֹּחַ׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, רוֹקַע הָאָרֶץ עַל הַמָּיִם׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמֵּכִין מִצְעֲדֵי גָבֶר׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁעָשָׂה לִי כָּל צָרְכִּי׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אוֹזֵר יִשְׂרָאֵל בִּגְבוּרָה׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עוֹטֵר יִשְׂרָאֵל בְּתִפְאָרָה׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי גּוֹי׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי עָבֶד׃
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, שֶׁלֹּא עָשַׂנִי אִשָּׁה׃
+
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמַּעֲבִיר חֶבְלֵי שֵׁנָה מֵעֵינֵינוּ וּתְנוּמָה מֵעַפְעַפֵּינוּ׃ וִיהִי רָצוֹן מִלְּפָנֶיךָ, יְהֹוָה אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שֶׁתַּרְגִּילֵנוּ בְּתוֹרָתֶךָ, וְתַדְבִּיקֵנוּ בְּמִצְוֹתֶיךָ, וְאַל תְּבִיאֵנוּ לִידֵי חֵטְא, וְלֹא לִידֵי עֲבֵירָה, וְלֹא לִידֵי נִסָּיוֹן, וְלֹא לִידֵי בִזָּיוֹן, וְתַרְחִיקֵנוּ מִיֵּצֶר הָרָע, וְתַדְבִּיקֵנוּ בְּיֵצֶר הַטּוֹב, וּתְנֵנוּ לְאַהֲבָה, לְחֵן וּלְחֶסֶד וּלְרַחֲמִים בְּעֵינֶיךָ וּבְעֵינֵי כָל רוֹאֵינוּ, וְגָמְלֵנוּ חֲסָדִים טוֹבִים׃ בָּרוּךְ אַתָּה יְהֹוָה, גּוֹמֵל חֲסָדִים טוֹבִים לְעַמּוֹ יִשְׂרָאֵל׃
+
+יְהִי רָצוֹן מִלְּפָנֶיךָ, יְהֹוָה אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שֶׁתַּצִּילֵנוּ הַיּוֹם וּבְכָל יוֹם וָיוֹם מֵעַזֵּי פָנִים וּמֵעַזּוּת פָּנִים, מֵאָדָם רָע, מֵאִשָּׁה רָעָה, מִיֵּצֶר רָע, מֵחָבֵר רָע, מִשָּׁכֵן רָע, מִפֶּגַע רָע, מֵעַיִן הָרָע, וּמִלָּשׁוֹן הָרָע, מִמַּלְשִׁינוּת, מֵעֵדוּת שֶׁקֶר, מִשִׂנְאַת הַבִּרְיוֹת, מֵעֲלִילָה, מִמִּיתָה מְשֻׁנָּה, מֵחוֹלָאִים רָעִים, מִמִּקְרִים רָעִים, מִדִּין קָשֶׁה, וּמִבַּעַל דִּין קָשֶׁה, בֵּין שֶׁהוּא בֶּן בְּרִית וּבֵין שֶׁאֵינוֹ בֶּן בְּרִית, וּמִדִּינָהּ שֶׁל גֵּיהִנָּם׃
+
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו וְצִוָּנוּ עַל דִּבְרֵי תוֹרָה׃ וְהַעֲרֵב נָא יְהֹוָה אֱלֹהֵינוּ אֶת דִּבְרֵי תוֹרָתְךָ בְּפִינוּ וּבְפִיפִיּוֹת עַמְּךָ בֵּית יִשְׂרָאֵל. וְנִהְיֶה אֲנַחְנוּ וְצֶאֱצָאֵינוּ וְצֶאֱצָאֵי צֶאֱצָאֵינוּ כֻּלָּנוּ יוֹדְעֵי שְׁמֶךָ וְלוֹמְדֵי תוֹרָתְךָ לִשְׁמָהּ. בָּרוּךְ אַתָּה יְהֹוָה, הַמְלַמֵּד תּוֹרָה לְעַמּוֹ יִשְׂרָאֵל׃
+
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בָּחַר בָּנוּ מִכָּל הָעַמִּים וְנָתַן לָנוּ אֶת תּוֹרָתוֹ. בָּרוּךְ אַתָּה יְהֹוָה, נוֹתֵן הַתּוֹרָה׃
+
+וַיְדַבֵּר יְהֹוָה אֶל משֶׁה לֵּאמֹר׃ דַּבֵּר אֶל אַהֲרֹן וְאֶל בָּנָיו לֵאמֹר כֹּה תְבָרְכוּ אֶת בְּנֵי יִשְׂרָאֵל. אָמוֹר לָהֶם׃
+יְבָרֶכְךָ יְהֹוָה וְיִשְׁמְרֶךָ׃
+יָאֵר יְהֹוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ׃
+יִשָּׂא יְהֹוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם׃
+וְשָׂמוּ אֶת שְׁמִי עַל בְּנֵי יִשְׂרָאֵל וַאֲנִי אֲבָרְכֵם׃`
+  },
+  asheryatsar:{
+    name:"Asher Yatsar",nameHe:"אשר יצר",ico:"🙏",
+    text:`בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה. וּבָרָא בוֹ נְקָבִים נְקָבִים. חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ שֶׁאִם יִסָּתֵם אֶחָד מֵהֶם אוֹ אִם יִפָּתֵחַ אֶחָד מֵהֶם אֵי אֶפְשַׁר לְהִתְקַיֵּם אֲפִלּוּ שָׁעָה אֶחָת. בָּרוּךְ אַתָּה יְהֹוָה, רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת׃`
+  },
+  birkathamazon:{
+    name:"Birkat HaMazon",nameHe:"ברכת המזון",ico:"🍞",
+    text:`— On procède à Mayim Aharonim (ablution des mains en fin de repas) puis on dit :
+
+לַמְנַצֵּחַ בִּנְגִינֹת מִזְמוֹר שִׁיר׃ אֱלֹהִים יְחָנֵּנוּ וִיבָרְכֵנוּ יָאֵר פָּנָיו אִתָּנוּ סֶלָה׃ לָדַעַת בָּאָרֶץ דַּרְכֶּךָ בְּכָל גּוֹיִם יְשׁוּעָתֶךָ׃ יוֹדוּךָ עַמִּים אֱלֹהִים יוֹדוּךָ עַמִּים כֻּלָּם׃ יִשְׂמְחוּ וִירַנְּנוּ לְאֻמִּים כִּי תִשְׁפֹּט עַמִּים מִישֹׁר וּלְאֻמִּים בָּאָרֶץ תַּנְחֵם סֶלָה׃ יוֹדוּךָ עַמִּים אֱלֹהִים יוֹדוּךָ עַמִּים כֻּלָּם׃ אֶרֶץ נָתְנָה יְבוּלָהּ יְבָרְכֵנוּ אֱלֹהִים אֱלֹהֵינוּ׃ יְבָרְכֵנוּ אֱלֹהִים וְיִירְאוּ אוֹתוֹ כָּל אַפְסֵי אָרֶץ׃
+
+אֲבָרְכָה אֶת יְהֹוָה בְּכָל עֵת תָּמִיד תְּהִלָּתוֹ בְּפִי׃ סוֹף דָּבָר הַכֹּל נִשְׁמָע אֶת הָאֱלֹהִים יְרָא וְאֶת מִצְוֹתָיו שְׁמוֹר כִּי זֶה כָּל הָאָדָם׃ תְּהִלַּת יְהֹוָה יְדַבֶּר פִּי וִיבָרֵךְ כָּל בָּשָׂר שֵׁם קָדְשׁוֹ לְעוֹלָם וָעֶד׃ וַאֲנַחְנוּ נְבָרֵךְ יָהּ מֵעַתָּה וְעַד עוֹלָם הַלְלוּיָהּ׃ וַיְדַבֵּר אֵלַי זֶה הַשֻּׁלְחָן אֲשֶׁר לִפְנֵי יְהֹוָה׃
+
+═════════════════
+ZIMOUN (à partir de 3 hommes)
+═════════════════
+
+— Le préposé au Zimoun dit :
+
+הַב לָן וְנִבְרִיךְ לְמַלְכָּא עִלָּאָה קַדִּישָׁא׃
+
+— Les convives répondent :
+
+שָׁמַיִם׃
+
+— Le préposé reprend :
+
+בִּרְשׁוּת מַלְכָּא עִלָּאָה קַדִּישָׁא וּבִרְשׁוּת מוֹרַי וְרַבּוֹתַי וּבִרְשׁוּתְכֶם.
+
+— Si 3 à 9 hommes, le préposé dit :
+
+נְבָרֵךְ שֶׁאָכַלְנוּ מִשֶּׁלּוֹ׃
+
+— Les convives répondent :
+
+בָּרוּךְ שֶׁאָכַלְנוּ מִשֶּׁלּוֹ וּבְטוּבוֹ חָיִינוּ׃
+
+— Le préposé reprend la même phrase :
+
+בָּרוּךְ שֶׁאָכַלְנוּ מִשֶּׁלּוֹ וּבְטוּבוֹ חָיִינוּ׃
+
+— Si 10 hommes ou plus, le préposé dit :
+
+נְבָרֵךְ אֱלֹהֵינוּ שֶׁאָכַלְנוּ מִשֶּׁלּוֹ׃
+
+— Les convives répondent puis le préposé reprend :
+
+בָּרוּךְ אֱלֹהֵינוּ שֶׁאָכַלְנוּ מִשֶּׁלּוֹ וּבְטוּבוֹ חָיִינוּ׃
+
+— Lors d'un Sheva Brakhot :
+
+נְבָרֵךְ אֱלֹהֵינוּ שֶׁהַשִּׂמְחָה בִּמְעוֹנוֹ וְאָכַלְנוּ מִשֶּׁלּוֹ׃
+בָּרוּךְ אֱלֹהֵינוּ שֶׁהַשִּׂמְחָה בִּמְעוֹנוֹ וְאָכַלְנוּ מִשֶּׁלּוֹ וּבְטוּבוֹ חָיִינוּ׃
+
+═════════════════
+1ʳᵉ BÉNÉDICTION — BIRKAT HAZAN
+═════════════════
+
+בָּרוּךְ אַתָּה יְהֹוָה. אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. הָאֵל הַזָּן אוֹתָנוּ וְאֶת הָעוֹלָם כֻּלּוֹ בְּטוּבוֹ. בְּחֵן בְּחֶסֶד בְּרֶוַח וּבְרַחֲמִים רַבִּים. נֹתֵן לֶחֶם לְכָל בָּשָׂר כִּי לְעוֹלָם חַסְדּוֹ. וּבְטוּבוֹ הַגָּדוֹל תָּמִיד לֹא חָסַר לָנוּ. וְאַל יֶחְסַר לָנוּ מָזוֹן תָּמִיד לְעוֹלָם וָעֶד. כִּי הוּא אֵל זָן וּמְפַרְנֵס לַכֹּל. וְשֻׁלְחָנוֹ עָרוּךְ לַכֹּל. וְהִתְקִין מִחְיָה וּמָזוֹן לְכָל בְּרִיּוֹתָיו אֲשֶׁר בָּרָא בְּרַחֲמָיו וּבְרוֹב חֲסָדָיו. כָּאָמוּר. פּוֹתֵחַ אֶת יָדֶךָ וּמַשְׂבִּיעַ לְכָל חַי רָצוֹן. בָּרוּךְ אַתָּה יְהֹוָה. הַזָּן אֶת הַכֹּל׃
+
+═════════════════
+2ᵉ BÉNÉDICTION — BIRKAT HAARETZ
+═════════════════
+
+נוֹדֶה לְךָ יְהֹוָה אֱלֹהֵינוּ עַל שֶׁהִנְחַלְתָּ לַאֲבוֹתֵינוּ. אֶרֶץ חֶמְדָּה טוֹבָה וּרְחָבָה. בְּרִית וְתוֹרָה חַיִּים וּמָזוֹן. עַל שֶׁהוֹצֵאתָנוּ מֵאֶרֶץ מִצְרַיִם. וּפְדִיתָנוּ מִבֵּית עֲבָדִים. וְעַל בְּרִיתְךָ שֶׁחָתַמְתָּ בִּבְשָׂרֵנוּ. וְעַל תּוֹרָתְךָ שֶׁלִּמַּדְתָּנוּ. וְעַל חֻקֵּי רְצוֹנָךְ שֶׁהוֹדַעְתָּנוּ. וְעַל חַיִּים וּמָזוֹן שֶׁאַתָּה זָן וּמְפַרְנֵס אוֹתָנוּ׃
+
+— À Hanouka et à Pourim, on ajoute Al HaNissim :
+
+עַל הַנִּסִּים וְעַל הַפֻּרְקָן וְעַל הַגְּבוּרוֹת וְעַל הַתְּשׁוּעוֹת וְעַל הַנִּפְלָאוֹת וְעַל הַנֶּחָמוֹת שֶׁעָשִׂיתָ לַאֲבוֹתֵינוּ בַּיָּמִים הָהֵם בַּזְּמַן הַזֶּה׃
+
+— À Hanouka :
+
+בִּימֵי מַתִּתְיָה בֶן יוֹחָנָן כֹּהֵן גָּדוֹל. חַשְׁמוֹנָאִי וּבָנָיו כְּשֶׁעָמְדָה מַלְכוּת יָוָן הָרְשָׁעָה עַל עַמְּךָ יִשְׂרָאֵל. לְשַׁכְּחָם תּוֹרָתָךְ וּלְהַעֲבִירָם מֵחֻקֵּי רְצוֹנָךְ. וְאַתָּה בְּרַחֲמֶיךָ הָרַבִּים עָמַדְתָּ לָהֶם בְּעֵת צָרָתָם. רַבְתָּ אֶת רִיבָם. דַּנְתָּ אֶת דִּינָם. נָקַמְתָּ אֶת נִקְמָתָם. מָסַרְתָּ גִבּוֹרִים בְּיַד חַלָּשִׁים. וְרַבִּים בְּיַד מְעַטִּים. וּרְשָׁעִים בְּיַד צַדִּיקִים. וּטְמֵאִים בְּיַד טְהוֹרִים. וְזֵדִים בְּיַד עוֹסְקֵי תוֹרָתֶךָ. לְךָ עָשִׂיתָ שֵׁם גָּדוֹל וְקָדוֹשׁ בְּעוֹלָמָךְ. וּלְעַמְּךָ יִשְׂרָאֵל עָשִׂיתָ תְּשׁוּעָה גְדוֹלָה וּפֻרְקָן כְּהַיּוֹם הַזֶּה. וְאַחַר כָּךְ בָּאוּ בָנֶיךָ לִדְבִיר בֵּיתֶךָ. וּפִנּוּ אֶת הֵיכָלֶךָ. וְטִהֲרוּ אֶת מִקְדָּשֶׁךָ. וְהִדְלִיקוּ נֵרוֹת בְּחַצְרוֹת קָדְשֶׁךָ. וְקָבְעוּ שְׁמוֹנַת יְמֵי חֲנֻכָּה אֵלּוּ בְּהַלֵּל וּבְהוֹדָאָה. וְעָשִׂיתָ עִמָּהֶם נִסִּים וְנִפְלָאוֹת וְנוֹדֶה לְשִׁמְךָ הַגָּדוֹל סֶלָה׃
+
+— À Pourim :
+
+בִּימֵי מָרְדְּכַי וְאֶסְתֵּר בְּשׁוּשַׁן הַבִּירָה. כְּשֶׁעָמַד עֲלֵיהֶם הָמָן הָרָשָׁע. בִּקֵּשׁ לְהַשְׁמִיד לַהֲרֹג וּלְאַבֵּד אֶת כָּל הַיְּהוּדִים מִנַּעַר וְעַד זָקֵן טַף וְנָשִׁים בְּיוֹם אֶחָד. בִּשְׁלֹשָׁה עָשָׂר לְחֹדֶשׁ שְׁנֵים עָשָׂר. הוּא חֹדֶשׁ אֲדָר. וּשְׁלָלָם לָבוֹז. וְאַתָּה בְּרַחֲמֶיךָ הָרַבִּים הֵפַרְתָּ אֶת עֲצָתוֹ וְקִלְקַלְתָּ אֶת מַחֲשַׁבְתּוֹ. וַהֲשֵׁבוֹתָ לּוֹ גְּמוּלוֹ בְרֹאשׁוֹ. וְתָלוּ אוֹתוֹ וְאֶת בָּנָיו עַל הָעֵץ. וְעָשִׂיתָ עִמָּהֶם נֵס וָפֶלֶא וְנוֹדֶה לְשִׁמְךָ הַגָּדוֹל סֶלָה׃
+
+— On reprend (suite de la 2ᵉ bénédiction) :
+
+עַל הַכֹּל יְהֹוָה אֱלֹהֵינוּ אֲנַחְנוּ מוֹדִים לָךְ. וּמְבָרְכִים אֶת שְׁמָךְ. כָּאָמוּר. וְאָכַלְתָּ וְשָׂבָעְתָּ וּבֵרַכְתָּ אֶת יְהֹוָה אֱלֹהֶיךָ עַל הָאָרֶץ הַטֹּבָה אֲשֶׁר נָתַן לָךְ. בָּרוּךְ אַתָּה יְהֹוָה. עַל הָאָרֶץ וְעַל הַמָּזוֹן׃
+
+═════════════════
+3ᵉ BÉNÉDICTION — BONÉ YERUSHALAYIM
+═════════════════
+
+רַחֵם יְהֹוָה אֱלֹהֵינוּ עָלֵינוּ וְעַל יִשְׂרָאֵל עַמָּךְ. וְעַל יְרוּשָׁלַיִם עִירָךְ. וְעַל הַר צִיּוֹן מִשְׁכַּן כְּבוֹדָךְ. וְעַל הֵיכָלָךְ. וְעַל מְעוֹנָךְ. וְעַל דְּבִירָךְ. וְעַל הַבַּיִת הַגָּדוֹל וְהַקָּדוֹשׁ שֶׁנִּקְרָא שִׁמְךָ עָלָיו. אָבִינוּ. רְעֵנוּ. זוּנֵנוּ. פַּרְנְסֵנוּ. כַּלְכְּלֵנוּ. הַרְוִיחֵנוּ הַרְוַח לָנוּ מְהֵרָה מִכָּל צָרוֹתֵינוּ. וְנָא. אַל תַּצְרִיכֵנוּ יְהֹוָה אֱלֹהֵינוּ. לִידֵי מַתְּנוֹת בָּשָׂר וָדָם וְלֹא לִידֵי הַלְוָאָתָם. אֶלָּא לְיָדְךָ הַמְּלֵאָה וְהָרְחָבָה. הָעֲשִׁירָה וְהַפְּתוּחָה. יְהִי רָצוֹן שֶׁלֹּא נֵבוֹשׁ בָּעוֹלָם הַזֶּה. וְלֹא נִכָּלֵם לָעוֹלָם הַבָּא. וּמַלְכוּת בֵּית דָּוִד מְשִׁיחָךְ תַּחֲזִירֶנָּה לִמְקוֹמָהּ בִּמְהֵרָה בְיָמֵינוּ׃
+
+— À Roch Hodech et à Hol HaMoed, on ajoute Yaalé VeYavo :
+
+אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ. יַעֲלֶה וְיָבֹא. וְיַגִּיעַ וְיֵרָאֶה. וְיֵרָצֶה וְיִשָּׁמַע. וְיִפָּקֵד וְיִזָּכֵר. זִכְרוֹנֵנוּ וְזִכְרוֹן אֲבוֹתֵינוּ. זִכְרוֹן יְרוּשָׁלַיִם עִירָךְ. וְזִכְרוֹן מָשִׁיחַ בֶּן דָּוִד עַבְדָּךְ. וְזִכְרוֹן כָּל עַמְּךָ בֵּית יִשְׂרָאֵל לְפָנֶיךָ. לִפְלֵיטָה. לְטוֹבָה. לְחֵן. לְחֶסֶד וּלְרַחֲמִים. לְחַיִּים טוֹבִים וּלְשָׁלוֹם. בְּיוֹם
+
+— À Roch Hodech : רֹאשׁ חֹדֶשׁ הַזֶּה.
+— À Hol HaMoed Pessah : חַג הַמַּצּוֹת הַזֶּה. בְּיוֹם מִקְרָא קֹדֶשׁ הַזֶּה.
+— À Hol HaMoed Souccot : חַג הַסֻּכּוֹת הַזֶּה. בְּיוֹם מִקְרָא קֹדֶשׁ הַזֶּה.
+
+לְרַחֵם בּוֹ עָלֵינוּ וּלְהוֹשִׁיעֵנוּ. זָכְרֵנוּ יְהֹוָה אֱלֹהֵינוּ בּוֹ לְטוֹבָה. וּפָקְדֵנוּ בוֹ לִבְרָכָה. וְהוֹשִׁיעֵנוּ בוֹ לְחַיִּים טוֹבִים. בִּדְבַר יְשׁוּעָה וְרַחֲמִים. חוּס וְחָנֵּנוּ. וַחֲמוֹל וְרַחֵם עָלֵינוּ. וְהוֹשִׁיעֵנוּ כִּי אֵלֶיךָ עֵינֵינוּ. כִּי אֵל מֶלֶךְ חַנּוּן וְרַחוּם אָתָּה׃
+
+— On reprend :
+
+וְתִבְנֶה יְרוּשָׁלַיִם עִירָךְ בִּמְהֵרָה בְיָמֵינוּ. בָּרוּךְ אַתָּה יְהֹוָה. בּוֹנֵה יְרוּשָׁלָיִם׃ (à voix basse : אָמֵן)
+
+═════════════════
+4ᵉ BÉNÉDICTION — HATOV VEHAMETIV
+═════════════════
+
+בָּרוּךְ אַתָּה יְהֹוָה. אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. הָאֵל אָבִינוּ. מַלְכֵּנוּ. אַדִּירֵנוּ. בּוֹרְאֵנוּ. גּוֹאֲלֵנוּ. קְדוֹשֵׁנוּ. קְדוֹשׁ יַעֲקֹב. רוֹעֵנוּ רוֹעֵה יִשְׂרָאֵל. הַמֶּלֶךְ הַטּוֹב. וְהַמֵּטִיב לַכֹּל. שֶׁבְּכָל יוֹם וָיוֹם הוּא הֵטִיב לָנוּ. הוּא מֵטִיב לָנוּ. הוּא יֵיטִיב לָנוּ. הוּא גְמָלָנוּ. הוּא גוֹמְלֵנוּ. הוּא יִגְמְלֵנוּ לָעַד חֵן וָחֶסֶד וְרַחֲמִים וְרֶוַח וְהַצָּלָה וְכָל טוֹב׃
+
+═════════════════
+HARAHAMAN
+═════════════════
+
+הָרַחֲמָן הוּא יִשְׁתַּבַּח עַל כִּסֵּא כְבוֹדוֹ׃ הָרַחֲמָן הוּא יִשְׁתַּבַּח בַּשָּׁמַיִם וּבָאָרֶץ׃ הָרַחֲמָן הוּא יִשְׁתַּבַּח בָּנוּ לְדוֹר דּוֹרִים׃ הָרַחֲמָן הוּא קֶרֶן לְעַמּוֹ יָרִים׃ הָרַחֲמָן הוּא יִתְפָּאַר בָּנוּ לְנֵצַח נְצָחִים׃ הָרַחֲמָן הוּא יְפַרְנְסֵנוּ בְּכָבוֹד וְלֹא בְבִזּוּי בְּנַחַת וְלֹא בְצַעַר׃ הָרַחֲמָן הוּא יִתֵּן שָׁלוֹם בֵּינֵינוּ׃ הָרַחֲמָן הוּא יִשְׁלַח בְּרָכָה רְוָחָה וְהַצְלָחָה בְּכָל מַעֲשֵׂה יָדֵינוּ׃ הָרַחֲמָן הוּא יַצְלִיחַ אֶת דְּרָכֵינוּ׃ הָרַחֲמָן הוּא יִשְׁבֹּר עֹל גָּלוּת מְהֵרָה מֵעַל צַוָּארֵנוּ׃ הָרַחֲמָן הוּא יוֹלִיכֵנוּ מְהֵרָה קוֹמְמִיּוּת לְאַרְצֵנוּ׃ הָרַחֲמָן הוּא יִרְפָּאֵנוּ רְפוּאָה שְׁלֵמָה׃ הָרַחֲמָן הוּא יִפְתַּח לָנוּ אֶת יָדוֹ הָרְחָבָה׃ הָרַחֲמָן הוּא יְבָרֵךְ כָּל אֶחָד וְאֶחָד מִמֶּנּוּ בִּשְׁמוֹ הַגָּדוֹל כְּמוֹ שֶׁנִּתְבָּרְכוּ אֲבוֹתֵינוּ אַבְרָהָם יִצְחָק וְיַעֲקֹב. בַּכֹּל מִכֹּל כֹּל. כֵּן יְבָרֵךְ אוֹתָנוּ יַחַד בְּרָכָה שְׁלֵמָה. וְכֵן יְהִי רָצוֹן וְנֹאמַר אָמֵן׃ הָרַחֲמָן הוּא יִפְרוֹשׂ עָלֵינוּ סֻכַּת שְׁלוֹמוֹ׃
+
+— À Roch Hodech :
+הָרַחֲמָן הוּא יְחַדֵּשׁ עָלֵינוּ אֶת הַחֹדֶשׁ הַזֶּה לְטוֹבָה וְלִבְרָכָה׃
+
+— À Souccot :
+הָרַחֲמָן הוּא יְזַכֵּנוּ לֵישֵׁב בְּסֻכַּת עוֹרוֹ שֶׁל לִוְיָתָן׃ הָרַחֲמָן הוּא יַשְׁפִּיעַ עָלֵינוּ שֶׁפַע קְדֻשָּׁה וְטָהֳרָה מִשִּׁבְעָה אוּשְׁפִּיזִין עִלָּאִין קַדִּישִׁין. זְכוּתָם תְּהֵא מָגֵן וְצִנָּה בַּעֲדֵינוּ׃ הָרַחֲמָן הוּא יָקִים לָנוּ אֶת סֻכַּת דָּוִד הַנּוֹפֶלֶת׃
+
+— À Hol HaMoed Pessah et Souccot :
+הָרַחֲמָן הוּא יַגִּיעֵנוּ לְמוֹעֲדִים אֲחֵרִים הַבָּאִים לִקְרָאתֵנוּ לְשָׁלוֹם׃
+
+— On reprend :
+
+הָרַחֲמָן הוּא יִטַּע תּוֹרָתוֹ וְאַהֲבָתוֹ בְּלִבֵּנוּ וְתִהְיֶה יִרְאָתוֹ עַל פָּנֵינוּ לְבִלְתִּי נֶחֱטָא. וְיִהְיוּ כָל מַעֲשֵׂינוּ לְשֵׁם שָׁמָיִם׃
+
+— L'invité bénit son hôte :
+
+הָרַחֲמָן הוּא יְבָרֵךְ אֶת הַשֻּׁלְחָן הַזֶּה שֶׁאָכַלְנוּ עָלָיו וִיסַדֵּר בּוֹ כָּל מַעֲדַנֵּי עוֹלָם. וְיִהְיֶה כְּשֻׁלְחָנוֹ שֶׁל אַבְרָהָם אָבִינוּ. כָּל רָעֵב מִמֶּנּוּ יֹאכַל וְכָל צָמֵא מִמֶּנּוּ יִשְׁתֶּה. וְאַל יֶחְסַר מִמֶּנּוּ כָּל טוּב לָעַד וּלְעוֹלְמֵי עוֹלָמִים. אָמֵן׃ הָרַחֲמָן הוּא יְבָרֵךְ בַּעַל הַבַּיִת הַזֶּה וּבַעַל הַסְּעוּדָּה הַזֹּאת. הוּא וּבָנָיו וְאִשְׁתּוֹ וְכָל אֲשֶׁר לוֹ. בְּבָנִים שֶׁיִּחְיוּ וּבִנְכָסִים שֶׁיִּרְבּוּ׃ בָּרֵךְ יְהֹוָה חֵילוֹ וּפֹעַל יָדָיו תִּרְצֶה׃
+
+— Repas de mariage :
+הָרַחֲמָן הוּא יְבָרֵךְ אֶת הֶחָתָן וְהַכַּלָּה. בְּבָנִים זְכָרִים לַעֲבוֹדָתוֹ יִתְבָּרַךְ׃
+
+— Repas de Brit-Mila :
+הָרַחֲמָן הוּא יְבָרֵךְ אֶת בַּעַל הַבַּיִת הַזֶּה. אֲבִי הַבֵּן. הוּא וְאִשְׁתּוֹ הַיּוֹלֶדֶת. מֵעַתָּה וְעַד עוֹלָם׃ הָרַחֲמָן הוּא יְבָרֵךְ אֶת הַיֶּלֶד הַנּוֹלָד. וּכְשֵׁם שֶׁזִּכָּהוּ הַקָּדוֹשׁ בָּרוּךְ הוּא לַמִּילָה. כֵּן יְזַכֵּהוּ לְהִכָּנֵס לַתּוֹרָה וְלַחֻפָּה וְלַמִּצְוֹת וּלְמַעֲשִׂים טוֹבִים. וְכֵן יְהִי רָצוֹן וְנֹאמַר אָמֵן׃ הָרַחֲמָן הוּא יְבָרֵךְ אֶת מַעֲלַת הַסַּנְדָּק וְהַמּוֹהֵל וּשְׁאָר הַמִּשְׁתַּדְּלִים בַּמִּצְוָה הֵם וְכָל אֲשֶׁר לָהֶם׃
+
+— Conclusion :
+
+הָרַחֲמָן הוּא יְחַיֵּנוּ וִיזַכֵּנוּ וִיקָרְבֵנוּ לִימוֹת הַמָּשִׁיחַ וּלְבִנְיַן בֵּית הַמִּקְדָּשׁ וּלְחַיֵּי הָעוֹלָם הַבָּא׃
+
+מַגְדִּיל יְשׁוּעוֹת מַלְכּוֹ וְעֹשֶׂה חֶסֶד לִמְשִׁיחוֹ לְדָוִד וּלְזַרְעוֹ עַד עוֹלָם׃ (Motsaé Chabbat / Roch Hodech / Hol HaMoed : מִגְדּוֹל)
+
+כְּפִירִים רָשׁוּ וְרָעֵבוּ וְדֹרְשֵׁי יְהֹוָה לֹא יַחְסְרוּ כָל טוֹב׃ נַעַר הָיִיתִי גַּם זָקַנְתִּי וְלֹא רָאִיתִי צַדִּיק נֶעֱזָב וְזַרְעוֹ מְבַקֶּשׁ לָחֶם׃ כָּל הַיּוֹם חוֹנֵן וּמַלְוֶה וְזַרְעוֹ לִבְרָכָה׃ מַה שֶּׁאָכַלְנוּ יִהְיֶה לְשָׂבְעָה. וּמַה שֶּׁשָּׁתִינוּ יִהְיֶה לִרְפוּאָה. וּמַה שֶּׁהוֹתַרְנוּ יִהְיֶה לִבְרָכָה. כְּדִכְתִיב. וַיִּתֵּן לִפְנֵיהֶם וַיֹּאכְלוּ וַיּוֹתִרוּ כִּדְבַר יְהֹוָה׃ בְּרוּכִים אַתֶּם לַיהֹוָה עֹשֵׂה שָׁמַיִם וָאָרֶץ׃ בָּרוּךְ הַגֶּבֶר אֲשֶׁר יִבְטַח בַּיהֹוָה וְהָיָה יְהֹוָה מִבְטַחוֹ׃ יְהֹוָה עֹז לְעַמּוֹ יִתֵּן יְהֹוָה יְבָרֵךְ אֶת עַמּוֹ בַשָּׁלוֹם׃
+
+עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו. הוּא בְּרַחֲמָיו יַעֲשֶׂה שָׁלוֹם עָלֵינוּ. וְעַל כָּל עַמּוֹ יִשְׂרָאֵל. וְאִמְרוּ אָמֵן׃`
+  },
+  meinshalosh:{
+    name:"Me'ein Shalosh",nameHe:"מעין שלוש",ico:"🌾",
+    text:`— Après avoir consommé un Kazaït (28g) de gâteaux, du vin ou jus de raisin, ou un des 5 fruits d'Israël :
+
+בָּרוּךְ אַתָּה יְהֹוָה. אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם.
+
+— Sur des gâteaux :
+עַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה.
+
+— Sur du vin ou jus de raisin :
+(וְ)עַל הַגֶּפֶן וְעַל פְּרִי הַגֶּפֶן.
+
+— Sur les 5 fruits d'Israël :
+(וְ)עַל הָעֵץ וְעַל פְּרִי הָעֵץ.
+
+— On poursuit :
+
+וְעַל תְּנוּבַת הַשָּׂדֶה. וְעַל אֶרֶץ חֶמְדָּה טוֹבָה וּרְחָבָה. שֶׁרָצִיתָ וְהִנְחַלְתָּ לַאֲבוֹתֵינוּ. לֶאֱכֹל מִפִּרְיָהּ וְלִשְׂבֹּעַ מִטּוּבָהּ. רַחֵם יְהֹוָה אֱלֹהֵינוּ עָלֵינוּ וְעַל יִשְׂרָאֵל עַמָּךְ. וְעַל יְרוּשָׁלַיִם עִירָךְ. וְעַל הַר צִיּוֹן מִשְׁכַּן כְּבוֹדָךְ. וְעַל מִזְבָּחָךְ וְעַל הֵיכָלָךְ. וּבְנֵה יְרוּשָׁלַיִם עִיר הַקֹּדֶשׁ בִּמְהֵרָה בְיָמֵינוּ. וְהַעֲלֵנוּ לְתוֹכָהּ. וְשַׂמְּחֵנוּ בְּבִנְיָנָהּ. וּנְבָרְכָךְ עָלֶיהָ בִּקְדֻשָּׁה וּבְטָהֳרָה׃
+
+— À Roch Hodech : וְזָכְרֵנוּ לְטוֹבָה בְּיוֹם רֹאשׁ חֹדֶשׁ הַזֶּה.
+— À Pessah : וְשַׂמְּחֵנוּ בְּיוֹם חַג הַמַּצּוֹת הַזֶּה.
+— À Souccot : וְשַׂמְּחֵנוּ בְּיוֹם חַג הַסֻּכּוֹת הַזֶּה.
+
+כִּי אַתָּה טוֹב וּמֵטִיב לַכֹּל. וְנוֹדֶה לְךָ עַל הָאָרֶץ
+
+— Sur des gâteaux : וְעַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה.
+— Sur du vin/jus de raisin : וְעַל פְּרִי הַגֶּפֶן.
+— Sur les 5 fruits : וְעַל הַפֵּרוֹת.
+
+— Conclusion :
+
+בָּרוּךְ אַתָּה יְהֹוָה. עַל הָאָרֶץ וְעַל
+
+— Sur des gâteaux : הַמִּחְיָה׃
+— Sur du vin/jus de raisin : פְּרִי הַגֶּפֶן׃
+— Sur les 5 fruits : הַפֵּרוֹת׃`
+  },
+  boreinefashot:{
+    name:"Borei Nefashot",nameHe:"בורא נפשות",ico:"💧",
+    text:`— Après avoir consommé un Kazayit (28g) de fruits (excepté les 5 fruits d'Israël), de légumes ou de tout aliment qui ne pousse pas sur la terre, ou après avoir bu un Révi'ït (86ml) d'eau ou de toute autre boisson (excepté le vin) :
+
+בָּרוּךְ אַתָּה יְהֹוָה. אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. בּוֹרֵא נְפָשׁוֹת רַבּוֹת וְחֶסְרוֹנָן עַל כָּל מַה שֶּׁבָּרָאתָ לְהַחֲיוֹת בָּהֶם נֶפֶשׁ כָּל חַי. בָּרוּךְ חַי הָעוֹלָמִים׃`
+  },
+  kaddish:{
+    name:"Kaddish",nameHe:"קדיש",ico:"✡",
+    text:`יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
+בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ
+וְיַמְלִיךְ מַלְכוּתֵהּ
+בְּחַיֵּיכוֹן וּבְיוֹמֵיכוֹן
+וּבְחַיֵּי דְכָל בֵּית יִשְׂרָאֵל
+בַּעֲגָלָא וּבִזְמַן קָרִיב
+וְאִמְרוּ אָמֵן׃
+
+יְהֵא שְׁמֵהּ רַבָּא מְבָרַךְ
+לְעָלַם וּלְעָלְמֵי עָלְמַיָּא׃
+
+יִתְבָּרַךְ וְיִשְׁתַּבַּח
+וְיִתְפָּאַר וְיִתְרוֹמַם
+וְיִתְנַשֵּׂא וְיִתְהַדָּר
+וְיִתְעַלֶּה וְיִתְהַלָּל
+שְׁמֵהּ דְּקֻדְשָׁא בְּרִיךְ הוּא
+לְעֵלָּא מִן כָּל בִּרְכָתָא וְשִׁירָתָא
+תֻּשְׁבְּחָתָא וְנֶחֱמָתָא
+דַּאֲמִירָן בְּעָלְמָא
+וְאִמְרוּ אָמֵן׃
+
+יְהֵא שְׁלָמָא רַבָּא מִן שְׁמַיָּא
+וְחַיִּים עָלֵינוּ וְעַל כָּל יִשְׂרָאֵל
+וְאִמְרוּ אָמֵן׃
+
+עוֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו
+הוּא יַעֲשֶׂה שָׁלוֹם עָלֵינוּ
+וְעַל כָּל יִשְׂרָאֵל
+וְאִמְרוּ אָמֵן׃`
+  },
+  tefilahadereh:{
+    name:"Tefilat HaDereh",nameHe:"תפילת הדרך",ico:"✈️",
+    text:`יְהִי רָצוֹן מִלְּפָנֶיךָ יְהֹוָה אֱלֹהֵינוּ וֵאלֹהֵי אֲבוֹתֵינוּ, שֶׁתּוֹלִיכֵנוּ לְשָׁלוֹם, וְתַצְעִידֵנוּ לְשָׁלוֹם, וְתִסְמְכֵנוּ לְשָׁלוֹם, (וְתַחֲזִירֵנוּ לְשָׁלוֹם), וְתַצִּילֵנוּ מִכַּף כָּל אוֹיֵב וְאוֹרֵב בַּדֶּרֶךְ, וְתִשְׁלַח בְּרָכָה בְּמַעֲשֵׂה יָדֵינוּ, וְתִתְּנֵנוּ לְחֵן וּלְחֶסֶד וּלְרַחֲמִים בְּעֵינֶיךָ וּבְעֵינֵי כָל רוֹאֵינוּ. בָּרוּךְ אַתָּה יְהֹוָה, שׁוֹמֵעַ תְּפִלָּה׃
+
+וְיַעֲקֹב הָלַךְ לְדַרְכּוֹ וַיִּפְגְּעוּ בוֹ מַלְאֲכֵי אֱלֹהִים׃ וַיֹּאמֶר יַעֲקֹב כַּאֲשֶׁר רָאָם מַחֲנֵה אֱלֹהִים זֶה וַיִּקְרָא שֵׁם הַמָּקוֹם הַהוּא מַחֲנָיִם׃
+
+וַיִּסָּעוּ וַיְהִי חִתַּת אֱלֹהִים עַל הֶעָרִים אֲשֶׁר סְבִיבוֹתֵיהֶם וְלֹא רָדְפוּ אַחֲרֵי בְּנֵי יַעֲקֹב׃
+
+לִישׁוּעָתְךָ קִוִּיתִי יְהֹוָה׃ לִישׁוּעָתְךָ קִוִּיתִי יְהֹוָה׃ לִישׁוּעָתְךָ קִוִּיתִי יְהֹוָה׃
+
+יְבָרֶכְךָ יְהֹוָה וְיִשְׁמְרֶךָ׃ יָאֵר יְהֹוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ׃ יִשָּׂא יְהֹוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם׃
+
+הִנֵּה אָנֹכִי שֹׁלֵחַ מַלְאָךְ לְפָנֶיךָ לִשְׁמָרְךָ בַּדָּרֶךְ וְלַהֲבִיאֲךָ אֶל הַמָּקוֹם אֲשֶׁר הֲכִנֹתִי׃
+
+הַמַּלְאָךְ הַגֹּאֵל אֹתִי מִכָּל רָע יְבָרֵךְ אֶת הַנְּעָרִים וְיִקָּרֵא בָהֶם שְׁמִי וְשֵׁם אֲבֹתַי אַבְרָהָם וְיִצְחָק וְיִדְגּוּ לָרֹב בְּקֶרֶב הָאָרֶץ׃`
+  },
+  tikounhaklali:{
+    name:"Tikoun HaKlali",nameHe:"תיקון הכללי",ico:"📿",
+    text:`מִכְתָּם לְדָוִד, שָׁמְרֵנִי אֵל, כִּי חָסִיתִי בָךְ׃ אָמַרְתְּ לַיהוָה, אֲדֹנָי אָתָּה, טוֹבָתִי בַּל עָלֶיךָ׃ לִקְדוֹשִׁים אֲשֶׁר בָּאָרֶץ הֵמָּה וְאַדִּירֵי, כָּל חֶפְצִי בָם׃ יִרְבּוּ עַצְּבוֹתָם, אַחֵר מָהָרוּ, בַּל אַסִּיךְ נִסְכֵּיהֶם מִדָּם, וּבַל אֶשָּׂא אֶת שְׁמוֹתָם עַל שְׂפָתָי׃ יְהֹוָה, מְנָת חֶלְקִי וְכוֹסִי, אַתָּה תּוֹמִיךְ גּוֹרָלִי׃ חֲבָלִים נָפְלוּ לִי בַּנְּעִמִים, אַף נַחֲלָת שָׁפְרָה עָלָי׃ אֲבָרֵךְ אֶת יְהֹוָה אֲשֶׁר יְעָצָנִי, אַף לֵילוֹת יִסְּרוּנִי כִלְיוֹתָי׃ שִׁוִּיתִי יְהֹוָה לְנֶגְדִּי תָמִיד, כִּי מִימִינִי בַּל אֶמּוֹט׃ לָכֵן שָׂמַח לִבִּי וַיָּגֶל כְּבוֹדִי, אַף בְּשָׂרִי יִשְׁכֹּן לָבֶטַח׃ כִּי לֹא תַעֲזֹב נַפְשִׁי לִשְׁאוֹל, לֹא תִתֵּן חֲסִידְךָ לִרְאוֹת שָׁחַת׃ תּוֹדִיעֵנִי אֹרַח חַיִּים, שֹׂבַע שְׂמָחוֹת אֶת פָּנֶיךָ, נְעִמוֹת בִּימִינְךָ נֶצַח׃
+
+לְדָוִד, מַשְׂכִּיל׃ אַשְׁרֵי נְשׂוּי פֶּשַׁע כְּסוּי חֲטָאָה׃ אַשְׁרֵי אָדָם לֹא יַחְשֹׁב יְהֹוָה לוֹ עָוֹן וְאֵין בְּרוּחוֹ רְמִיָּה׃ כִּי הֶחֱרַשְׁתִּי בָּלוּ עֲצָמָי, בְּשַׁאֲגָתִי כָּל הַיּוֹם׃ כִּי יוֹמָם וָלַיְלָה תִּכְבַּד עָלַי יָדֶךָ, נֶהְפַּךְ לְשַׁדִּי בְּחַרְבֹנֵי קַיִץ סֶלָה׃ חַטָּאתִי אוֹדִיעֲךָ וַעֲוֹנִי לֹא כִסִּיתִי, אָמַרְתִּי אוֹדֶה עֲלֵי פְשָׁעַי לַיהוָה, וְאַתָּה נָשָׂאתָ עֲוֹן חַטָּאתִי סֶלָה׃ עַל זֹאת יִתְפַּלֵּל כָּל חָסִיד אֵלֶיךָ לְעֵת מְצֹא, רַק לְשֵׁטֶף מַיִם רַבִּים אֵלָיו לֹא יַגִּיעוּ׃ אַתָּה סֵתֶר לִי, מִצַּר תִּצְּרֵנִי, רָנֵּי פַלֵּט תְּסוֹבְבֵנִי סֶלָה׃ אַשְׂכִּילְךָ וְאוֹרְךָ בְּדֶרֶךְ זוּ תֵלֵךְ, אִיעֲצָה עָלֶיךָ עֵינִי׃ אַל תִּהְיוּ כְּסוּס כְּפֶרֶד אֵין הָבִין, בְּמֶתֶג וָרֶסֶן עֶדְיוֹ לִבְלוֹם, בַּל קְרֹב אֵלֶיךָ׃ רַבִּים מַכְאוֹבִים לָרָשָׁע, וְהַבּוֹטֵחַ בַּיהוָה חֶסֶד יְסוֹבְבֶנּוּ׃ שִׂמְחוּ בַיהוָה וְגִילוּ צַדִּיקִים, וְהַרְנִינוּ כָּל יִשְׁרֵי לֵב׃
+
+לַמְנַצֵּחַ, מִזְמוֹר לְדָוִד׃ אַשְׁרֵי מַשְׂכִּיל אֶל דָּל, בְּיוֹם רָעָה יְמַלְּטֵהוּ יְהֹוָה׃ יְהֹוָה יִשְׁמְרֵהוּ וִיחַיֵּהוּ, וְאֻשַּׁר בָּאָרֶץ, וְאַל תִּתְּנֵהוּ בְּנֶפֶשׁ אֹיְבָיו׃ יְהֹוָה יִסְעָדֶנּוּ עַל עֶרֶשׂ דְּוָי, כָּל מִשְׁכָּבוֹ הָפַכְתָּ בְחָלְיוֹ׃ אֲנִי אָמַרְתִּי יְהֹוָה חָנֵּנִי, רְפָאָה נַפְשִׁי כִּי חָטָאתִי לָךְ׃ אוֹיְבַי יֹאמְרוּ רַע לִי, מָתַי יָמוּת וְאָבַד שְׁמוֹ׃ וְאִם בָּא לִרְאוֹת שָׁוְא יְדַבֵּר, לִבּוֹ יִקְבָּץ אָוֶן לוֹ, יֵצֵא לַחוּץ יְדַבֵּר׃ יַחַד עָלַי יִתְלַחֲשׁוּ כָּל שֹׂנְאָי, עָלַי יַחְשְׁבוּ רָעָה לִי׃ דְּבַר בְּלִיַּעַל יָצוּק בּוֹ, וַאֲשֶׁר שָׁכַב לֹא יוֹסִיף לָקוּם׃ גַּם אִישׁ שְׁלוֹמִי אֲשֶׁר בָּטַחְתִּי בוֹ אוֹכֵל לַחְמִי, הִגְדִּיל עָלַי עָקֵב׃ וְאַתָּה יְהֹוָה חָנֵּנִי וַהֲקִימֵנִי, וַאֲשַׁלְּמָה לָהֶם׃ בְּזֹאת יָדַעְתִּי כִּי חָפַצְתָּ בִּי, כִּי לֹא יָרִיעַ אֹיְבִי עָלָי׃ וַאֲנִי בְּתֻמִּי תָּמַכְתָּ בִּי, וַתַּצִּיבֵנִי לְפָנֶיךָ לְעוֹלָם׃ בָּרוּךְ יְהֹוָה אֱלֹהֵי יִשְׂרָאֵל מֵהָעוֹלָם וְעַד הָעוֹלָם, אָמֵן וְאָמֵן׃
+
+לַמְנַצֵּחַ, מַשְׂכִּיל לִבְנֵי קֹרַח׃ כְּאַיָּל תַּעֲרֹג עַל אֲפִיקֵי מָיִם, כֵּן נַפְשִׁי תַעֲרֹג אֵלֶיךָ אֱלֹהִים׃ צָמְאָה נַפְשִׁי לֵאלֹהִים לְאֵל חָי, מָתַי אָבוֹא וְאֵרָאֶה פְּנֵי אֱלֹהִים׃ הָיְתָה לִּי דִמְעָתִי לֶחֶם יוֹמָם וָלָיְלָה, בֶּאֱמֹר אֵלַי כָּל הַיּוֹם אַיֵּה אֱלֹהֶיךָ׃ אֵלֶּה אֶזְכְּרָה וְאֶשְׁפְּכָה עָלַי נַפְשִׁי, כִּי אֶעֱבֹר בַּסָּךְ אֶדַּדֵּם עַד בֵּית אֱלֹהִים, בְּקוֹל רִנָּה וְתוֹדָה הָמוֹן חוֹגֵג׃ מַה תִּשְׁתּוֹחֲחִי נַפְשִׁי וַתֶּהֱמִי עָלָי, הוֹחִילִי לֵאלֹהִים כִּי עוֹד אוֹדֶנּוּ יְשׁוּעוֹת פָּנָיו׃ אֱלֹהַי, עָלַי נַפְשִׁי תִשְׁתּוֹחָח, עַל כֵּן אֶזְכָּרְךָ מֵאֶרֶץ יַרְדֵּן וְחֶרְמוֹנִים מֵהַר מִצְעָר׃ תְּהוֹם אֶל תְּהוֹם קוֹרֵא לְקוֹל צִנּוֹרֶיךָ, כָּל מִשְׁבָּרֶיךָ וְגַלֶּיךָ עָלַי עָבָרוּ׃ יוֹמָם יְצַוֶּה יְהֹוָה חַסְדּוֹ, וּבַלַּיְלָה שִׁירֹה עִמִּי, תְּפִלָּה לְאֵל חַיָּי׃ אוֹמְרָה לְאֵל סַלְעִי לָמָה שְׁכַחְתָּנִי, לָמָּה קֹדֵר אֵלֵךְ בְּלַחַץ אוֹיֵב׃ בְּרֶצַח בְּעַצְמוֹתַי חֵרְפוּנִי צוֹרְרָי, בְּאָמְרָם אֵלַי כָּל הַיּוֹם אַיֵּה אֱלֹהֶיךָ׃ מַה תִּשְׁתּוֹחֲחִי נַפְשִׁי וּמַה תֶּהֱמִי עָלָי, הוֹחִילִי לֵאלֹהִים כִּי עוֹד אוֹדֶנּוּ יְשׁוּעֹת פָּנַי וֵאלֹהָי׃
+
+לַמְנַצֵּחַ אַל תַּשְׁחֵת לְדָוִד מִכְתָּם, בִּשְׁלֹחַ שָׁאוּל וַיִּשְׁמְרוּ אֶת הַבַּיִת לַהֲמִיתוֹ׃ הַצִּילֵנִי מֵאֹיְבַי אֱלֹהָי, מִמִּתְקוֹמְמַי תְּשַׂגְּבֵנִי׃ הַצִּילֵנִי מִפֹּעֲלֵי אָוֶן, וּמֵאַנְשֵׁי דָמִים הוֹשִׁיעֵנִי׃ כִּי הִנֵּה אָרְבוּ לְנַפְשִׁי, יָגוּרוּ עָלַי עַזִּים, לֹא פִשְׁעִי וְלֹא חַטָּאתִי יְהֹוָה׃ בְּלִי עָוֹן יְרֻצוּן וְיִכּוֹנָנוּ, עוּרָה לִקְרָאתִי וּרְאֵה׃ וְאַתָּה יְהֹוָה אֱלֹהִים צְבָאוֹת אֱלֹהֵי יִשְׂרָאֵל, הָקִיצָה לִפְקֹד כָּל הַגּוֹיִם, אַל תָּחֹן כָּל בֹּגְדֵי אָוֶן סֶלָה׃ יָשׁוּבוּ לָעֶרֶב יֶהֱמוּ כַכָּלֶב וִיסוֹבְבוּ עִיר׃ הִנֵּה יַבִּיעוּן בְּפִיהֶם חֲרָבוֹת בְּשִׂפְתוֹתֵיהֶם, כִּי מִי שֹׁמֵעַ׃ וְאַתָּה יְהֹוָה תִּשְׂחַק לָמוֹ, תִּלְעַג לְכָל גּוֹיִם׃ עֻזּוֹ אֵלֶיךָ אֶשְׁמֹרָה, כִּי אֱלֹהִים מִשְׂגַּבִּי׃ אֱלֹהֵי חַסְדִּי יְקַדְּמֵנִי, אֱלֹהִים יַרְאֵנִי בְשֹׁרְרָי׃ אַל תַּהַרְגֵם פֶּן יִשְׁכְּחוּ עַמִּי, הֲנִיעֵמוֹ בְחֵילְךָ וְהוֹרִידֵמוֹ, מָגִנֵּנוּ אֲדֹנָי׃ חַטַּאת פִּימוֹ דְּבַר שְׂפָתֵימוֹ, וְיִלָּכְדוּ בִגְאוֹנָם, וּמֵאָלָה וּמִכַּחַשׁ יְסַפֵּרוּ׃ כַּלֵּה בְחֵמָה כַּלֵּה וְאֵינֵמוֹ, וְיֵדְעוּ כִּי אֱלֹהִים מֹשֵׁל בְּיַעֲקֹב לְאַפְסֵי הָאָרֶץ סֶלָה׃ וְיָשֻׁבוּ לָעֶרֶב יֶהֱמוּ כַכָּלֶב וִיסוֹבְבוּ עִיר׃ הֵמָּה יְנִיעוּן לֶאֱכֹל, אִם לֹא יִשְׂבְּעוּ וַיָּלִינוּ׃ וַאֲנִי אָשִׁיר עֻזֶּךָ, וַאֲרַנֵּן לַבֹּקֶר חַסְדֶּךָ, כִּי הָיִיתָ מִשְׂגָּב לִי וּמָנוֹס בְּיוֹם צַר לִי׃ עֻזִּי אֵלֶיךָ אֲזַמֵּרָה, כִּי אֱלֹהִים מִשְׂגַּבִּי אֱלֹהֵי חַסְדִּי׃
+
+לַמְנַצֵּחַ עַל יְדוּתוּן לְאָסָף מִזְמוֹר׃ קוֹלִי אֶל אֱלֹהִים וְאֶצְעָקָה, קוֹלִי אֶל אֱלֹהִים וְהַאֲזִין אֵלָי׃ בְּיוֹם צָרָתִי אֲדֹנָי דָּרָשְׁתִּי, יָדִי לַיְלָה נִגְּרָה וְלֹא תָפוּג, מֵאֲנָה הִנָּחֵם נַפְשִׁי׃ אֶזְכְּרָה אֱלֹהִים וְאֶהֱמָיָה, אָשִׂיחָה וְתִתְעַטֵּף רוּחִי סֶלָה׃ אָחַזְתָּ שְׁמֻרוֹת עֵינָי, נִפְעַמְתִּי וְלֹא אֲדַבֵּר׃ חִשַּׁבְתִּי יָמִים מִקֶּדֶם, שְׁנוֹת עוֹלָמִים׃ אֶזְכְּרָה נְגִינָתִי בַּלָּיְלָה, עִם לְבָבִי אָשִׂיחָה וַיְחַפֵּשׂ רוּחִי׃ הַלְעוֹלָמִים יִזְנַח אֲדֹנָי, וְלֹא יֹסִיף לִרְצוֹת עוֹד׃ הֶאָפֵס לָנֶצַח חַסְדּוֹ, גָּמַר אֹמֶר לְדֹר וָדֹר׃ הֲשָׁכַח חַנּוֹת אֵל, אִם קָפַץ בְּאַף רַחֲמָיו סֶלָה׃ וָאֹמַר חַלּוֹתִי הִיא, שְׁנוֹת יְמִין עֶלְיוֹן׃ אֶזְכּוֹר מַעַלְלֵי יָהּ, כִּי אֶזְכְּרָה מִקֶּדֶם פִּלְאֶךָ׃ וְהָגִיתִי בְכָל פָּעֳלֶךָ, וּבַעֲלִילוֹתֶיךָ אָשִׂיחָה׃ אֱלֹהִים בַּקֹּדֶשׁ דַּרְכֶּךָ, מִי אֵל גָּדוֹל כֵּאלֹהִים׃ אַתָּה הָאֵל עֹשֵׂה פֶלֶא, הוֹדַעְתָּ בָעַמִּים עֻזֶּךָ׃ גָּאַלְתָּ בִּזְרוֹעַ עַמֶּךָ, בְּנֵי יַעֲקֹב וְיוֹסֵף סֶלָה׃ רָאוּךָ מַּיִם אֱלֹהִים, רָאוּךָ מַּיִם יָחִילוּ, אַף יִרְגְּזוּ תְהֹמוֹת׃ זֹרְמוּ מַיִם עָבוֹת, קוֹל נָתְנוּ שְׁחָקִים, אַף חֲצָצֶיךָ יִתְהַלָּכוּ׃ קוֹל רַעַמְךָ בַּגַּלְגַּל, הֵאִירוּ בְרָקִים תֵּבֵל, רָגְזָה וַתִּרְעַשׁ הָאָרֶץ׃ בַּיָּם דַּרְכֶּךָ, וּשְׁבִילְךָ בְּמַיִם רַבִּים, וְעִקְּבוֹתֶיךָ לֹא נֹדָעוּ׃ נָחִיתָ כַצֹּאן עַמֶּךָ, בְּיַד מֹשֶׁה וְאַהֲרֹן׃
+
+תְּפִלָּה, לְמֹשֶׁה אִישׁ הָאֱלֹהִים׃ אֲדֹנָי, מָעוֹן אַתָּה הָיִיתָ לָּנוּ בְּדֹר וָדֹר׃ בְּטֶרֶם הָרִים יֻלָּדוּ, וַתְּחוֹלֵל אֶרֶץ וְתֵבֵל, וּמֵעוֹלָם עַד עוֹלָם אַתָּה אֵל׃ תָּשֵׁב אֱנוֹשׁ עַד דַּכָּא, וַתֹּאמֶר שׁוּבוּ בְנֵי אָדָם׃ כִּי אֶלֶף שָׁנִים בְּעֵינֶיךָ כְּיוֹם אֶתְמוֹל כִּי יַעֲבֹר, וְאַשְׁמוּרָה בַלָּיְלָה׃ זְרַמְתָּם שֵׁנָה יִהְיוּ, בַּבֹּקֶר כֶּחָצִיר יַחֲלֹף׃ בַּבֹּקֶר יָצִיץ וְחָלָף, לָעֶרֶב יְמוֹלֵל וְיָבֵשׁ׃ כִּי כָלִינוּ בְאַפֶּךָ, וּבַחֲמָתְךָ נִבְהָלְנוּ׃ שַׁתָּה עֲוֹנֹתֵינוּ לְנֶגְדֶּךָ, עֲלֻמֵנוּ לִמְאוֹר פָּנֶיךָ׃ כִּי כָל יָמֵינוּ פָּנוּ בְעֶבְרָתֶךָ, כִּלִּינוּ שָׁנֵינוּ כְמוֹ הֶגֶה׃ יְמֵי שְׁנוֹתֵינוּ בָהֶם שִׁבְעִים שָׁנָה, וְאִם בִּגְבוּרֹת שְׁמוֹנִים שָׁנָה, וְרָהְבָּם עָמָל וָאָוֶן, כִּי גָז חִישׁ וַנָּעֻפָה׃ מִי יוֹדֵעַ עֹז אַפֶּךָ, וּכְיִרְאָתְךָ עֶבְרָתֶךָ׃ לִמְנוֹת יָמֵינוּ כֵּן הוֹדַע, וְנָבִא לְבַב חָכְמָה׃ שׁוּבָה יְהֹוָה עַד מָתָי, וְהִנָּחֵם עַל עֲבָדֶיךָ׃ שַׂבְּעֵנוּ בַבֹּקֶר חַסְדֶּךָ, וּנְרַנְּנָה וְנִשְׂמְחָה בְּכָל יָמֵינוּ׃ שַׂמְּחֵנוּ כִּימוֹת עִנִּיתָנוּ, שְׁנוֹת רָאִינוּ רָעָה׃ יֵרָאֶה אֶל עֲבָדֶיךָ פָעֳלֶךָ, וַהֲדָרְךָ עַל בְּנֵיהֶם׃ וִיהִי נֹעַם אֲדֹנָי אֱלֹהֵינוּ עָלֵינוּ, וּמַעֲשֵׂה יָדֵינוּ כּוֹנְנָה עָלֵינוּ, וּמַעֲשֵׂה יָדֵינוּ כּוֹנְנֵהוּ׃
+
+הוֹדוּ לַיהוָה קִרְאוּ בִשְׁמוֹ, הוֹדִיעוּ בָעַמִּים עֲלִילוֹתָיו׃ שִׁירוּ לוֹ זַמְּרוּ לוֹ, שִׂיחוּ בְּכָל נִפְלְאוֹתָיו׃ הִתְהַלְלוּ בְּשֵׁם קָדְשׁוֹ, יִשְׂמַח לֵב מְבַקְשֵׁי יְהֹוָה׃ דִּרְשׁוּ יְהֹוָה וְעֻזּוֹ, בַּקְּשׁוּ פָנָיו תָּמִיד׃ זִכְרוּ נִפְלְאוֹתָיו אֲשֶׁר עָשָׂה, מֹפְתָיו וּמִשְׁפְּטֵי פִיו׃ זֶרַע אַבְרָהָם עַבְדּוֹ, בְּנֵי יַעֲקֹב בְּחִירָיו׃ הוּא יְהֹוָה אֱלֹהֵינוּ, בְּכָל הָאָרֶץ מִשְׁפָּטָיו׃ זָכַר לְעוֹלָם בְּרִיתוֹ, דָּבָר צִוָּה לְאֶלֶף דּוֹר׃ אֲשֶׁר כָּרַת אֶת אַבְרָהָם, וּשְׁבוּעָתוֹ לְיִשְׂחָק׃ וַיַּעֲמִידֶהָ לְיַעֲקֹב לְחֹק, לְיִשְׂרָאֵל בְּרִית עוֹלָם׃ לֵאמֹר לְךָ אֶתֵּן אֶת אֶרֶץ כְּנָעַן, חֶבֶל נַחֲלַתְכֶם׃ בִּהְיוֹתָם מְתֵי מִסְפָּר, כִּמְעַט וְגָרִים בָּהּ׃ וַיִּתְהַלְּכוּ מִגּוֹי אֶל גּוֹי, מִמַּמְלָכָה אֶל עַם אַחֵר׃ לֹא הִנִּיחַ אָדָם לְעָשְׁקָם, וַיּוֹכַח עֲלֵיהֶם מְלָכִים׃ אַל תִּגְּעוּ בִמְשִׁיחָי, וְלִנְבִיאַי אַל תָּרֵעוּ׃ וַיִּקְרָא רָעָב עַל הָאָרֶץ, כָּל מַטֵּה לֶחֶם שָׁבָר׃ שָׁלַח לִפְנֵיהֶם אִישׁ, לְעֶבֶד נִמְכַּר יוֹסֵף׃ עִנּוּ בַכֶּבֶל רַגְלוֹ, בַּרְזֶל בָּאָה נַפְשׁוֹ׃ עַד עֵת בֹּא דְבָרוֹ, אִמְרַת יְהֹוָה צְרָפָתְהוּ׃ שָׁלַח מֶלֶךְ וַיַתִּירֵהוּ, מֹשֵׁל עַמִּים וַיְפַתְּחֵהוּ׃ שָׂמוֹ אָדוֹן לְבֵיתוֹ, וּמֹשֵׁל בְּכָל קִנְיָנוֹ׃ לֶאְסֹר שָׂרָיו בְּנַפְשׁוֹ, וּזְקֵנָיו יְחַכֵּם׃ וַיָּבֹא יִשְׂרָאֵל מִצְרָיִם, וְיַעֲקֹב גָּר בְּאֶרֶץ חָם׃ וַיֶּפֶר אֶת עַמּוֹ מְאֹד, וַיַּעֲצִמֵהוּ מִצָּרָיו׃ הָפַךְ לִבָּם לִשְׂנֹא עַמּוֹ, לְהִתְנַכֵּל בַּעֲבָדָיו׃ שָׁלַח מֹשֶׁה עַבְדּוֹ, אַהֲרֹן אֲשֶׁר בָּחַר בּוֹ׃ שָׂמוּ בָם דִּבְרֵי אֹתוֹתָיו, וּמֹפְתִים בְּאֶרֶץ חָם׃ שָׁלַח חֹשֶׁךְ וַיַּחְשִׁךְ, וְלֹא מָרוּ אֶת דְּבָרוֹ׃ הָפַךְ אֶת מֵימֵיהֶם לְדָם, וַיָּמֶת אֶת דְּגָתָם׃ שָׁרַץ אַרְצָם צְפַרְדְּעִים, בְּחַדְרֵי מַלְכֵיהֶם׃ אָמַר וַיָּבֹא עָרֹב, כִּנִּים בְּכָל גְּבוּלָם׃ נָתַן גִּשְׁמֵיהֶם בָּרָד, אֵשׁ לֶהָבוֹת בְּאַרְצָם׃ וַיַּךְ גַּפְנָם וּתְאֵנָתָם, וַיְשַׁבֵּר עֵץ גְּבוּלָם׃ אָמַר וַיָּבֹא אַרְבֶּה, וְיֶלֶק וְאֵין מִסְפָּר׃ וַיֹּאכַל כָּל עֵשֶׂב בְּאַרְצָם, וַיֹּאכַל פְּרִי אַדְמָתָם׃ וַיַּךְ כָּל בְּכוֹר בְּאַרְצָם, רֵאשִׁית לְכָל אוֹנָם׃ וַיּוֹצִיאֵם בְּכֶסֶף וְזָהָב, וְאֵין בִּשְׁבָטָיו כּוֹשֵׁל׃ שָׂמַח מִצְרַיִם בְּצֵאתָם, כִּי נָפַל פַּחְדָּם עֲלֵיהֶם׃ פָּרַשׂ עָנָן לְמָסָךְ, וְאֵשׁ לְהָאִיר לָיְלָה׃ שָׁאַל וַיָּבֵא שְׂלָו, וְלֶחֶם שָׁמַיִם יַשְׂבִּיעֵם׃ פָּתַח צוּר וַיָּזוּבוּ מָיִם, הָלְכוּ בַּצִּיּוֹת נָהָר׃ כִּי זָכַר אֶת דְּבַר קָדְשׁוֹ, אֶת אַבְרָהָם עַבְדּוֹ׃ וַיּוֹצִא עַמּוֹ בְשָׂשׂוֹן, בְּרִנָּה אֶת בְּחִירָיו׃ וַיִּתֵּן לָהֶם אַרְצוֹת גּוֹיִם, וַעֲמַל לְאֻמִּים יִירָשׁוּ׃ בַּעֲבוּר יִשְׁמְרוּ חֻקָּיו, וְתוֹרֹתָיו יִנְצֹרוּ, הַלְלוּ יָהּ׃
+
+עַל נַהֲרוֹת בָּבֶל שָׁם יָשַׁבְנוּ גַּם בָּכִינוּ, בְּזָכְרֵנוּ אֶת צִיּוֹן׃ עַל עֲרָבִים בְּתוֹכָהּ תָּלִינוּ כִּנֹּרוֹתֵינוּ׃ כִּי שָׁם שְׁאֵלוּנוּ שׁוֹבֵינוּ דִּבְרֵי שִׁיר, וְתוֹלָלֵינוּ שִׂמְחָה, שִׁירוּ לָנוּ מִשִּׁיר צִיּוֹן׃ אֵיךְ נָשִׁיר אֶת שִׁיר יְהֹוָה, עַל אַדְמַת נֵכָר׃ אִם אֶשְׁכָּחֵךְ יְרוּשָׁלִָם, תִּשְׁכַּח יְמִינִי׃ תִּדְבַּק לְשׁוֹנִי לְחִכִּי אִם לֹא אֶזְכְּרֵכִי, אִם לֹא אַעֲלֶה אֶת יְרוּשָׁלִַם עַל רֹאשׁ שִׂמְחָתִי׃ זְכֹר יְהֹוָה לִבְנֵי אֱדוֹם אֵת יוֹם יְרוּשָׁלִָם, הָאֹמְרִים עָרוּ עָרוּ, עַד הַיְסוֹד בָּהּ׃ בַּת בָּבֶל הַשְּׁדוּדָה, אַשְׁרֵי שֶׁיְשַׁלֶּם לָךְ אֶת גְּמוּלֵךְ שֶׁגָּמַלְתְּ לָנוּ׃ אַשְׁרֵי שֶׁיֹּאחֵז וְנִפֵּץ אֶת עֹלָלַיִךְ אֶל הַסָּלַע׃
+
+הַלְלוּיָהּ׃ הַלְלוּ אֵל בְּקָדְשׁוֹ, הַלְלוּהוּ בִּרְקִיעַ עֻזּוֹ׃ הַלְלוּהוּ בִגְבוּרֹתָיו, הַלְלוּהוּ כְּרֹב גֻּדְלוֹ׃ הַלְלוּהוּ בְּתֵקַע שׁוֹפָר, הַלְלוּהוּ בְּנֵבֶל וְכִנּוֹר׃ הַלְלוּהוּ בְּתֹף וּמָחוֹל, הַלְלוּהוּ בְּמִנִּים וְעֻגָב׃ הַלְלוּהוּ בְצִלְצְלֵי שָׁמַע, הַלְלוּהוּ בְּצִלְצְלֵי תְרוּעָה׃ כֹּל הַנְּשָׁמָה תְּהַלֵּל יָהּ, הַלְלוּ יָהּ׃`
+  },
+  shaharit:{
+    name:"Shaharit",nameHe:"שחרית",ico:"🌅",
+    text:`מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם
+שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה
+רַבָּה אֱמוּנָתֶךָ׃
+
+אֲדוֹן עוֹלָם אֲשֶׁר מָלַךְ
+בְּטֶרֶם כָּל יְצִיר נִבְרָא
+לְעֵת נַעֲשָׂה בְחֶפְצוֹ כֹּל
+אֲזַי מֶלֶךְ שְׁמוֹ נִקְרָא
+וְאַחֲרֵי כִּכְלוֹת הַכֹּל
+לְבַדּוֹ יִמְלֹךְ נוֹרָא
+וְהוּא הָיָה וְהוּא הֹוֶה
+וְהוּא יִהְיֶה בְּתִפְאָרָה׃
+
+שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד׃
+בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד׃
+
+וְאָהַבְתָּ אֵת יְיָ אֱלֹהֶיךָ
+בְּכָל לְבָבְךָ וּבְכָל נַפְשְׁךָ וּבְכָל מְאֹדֶךָ׃`
+  },
+  minha:{
+    name:"Minha",nameHe:"מנחה",ico:"☀️",
+    text:`אַשְׁרֵי יוֹשְׁבֵי בֵיתֶךָ עוֹד יְהַלְלוּךָ סֶּלָה׃
+אַשְׁרֵי הָעָם שֶׁכָּכָה לּוֹ אַשְׁרֵי הָעָם שֶׁיְּיָ אֱלֹהָיו׃
+
+תְּהִלָּה לְדָוִד
+אֲרוֹמִמְךָ אֱלוֹהַי הַמֶּלֶךְ
+וַאֲבָרֲכָה שִׁמְךָ לְעוֹלָם וָעֶד׃
+בְּכָל יוֹם אֲבָרֲכֶךָּ
+וַאֲהַלְלָה שִׁמְךָ לְעוֹלָם וָעֶד׃
+גָּדוֹל יְיָ וּמְהֻלָּל מְאֹד
+וְלִגְדֻלָּתוֹ אֵין חֵקֶר׃
+
+חֲצִי קַדִּישׁ
+יִתְגַּדַּל וְיִתְקַדַּשׁ שְׁמֵהּ רַבָּא
+בְּעָלְמָא דִּי בְרָא כִרְעוּתֵהּ
+וְאִמְרוּ אָמֵן׃
+
+שְׁמוֹנֶה עֶשְׂרֵה — עֲמִידָה`
+  },
+  arvit:{
+    name:"Arvit",nameHe:"ערבית",ico:"🌙",
+    text:`וְהוּא רַחוּם יְכַפֵּר עָוֹן וְלֹא יַשְׁחִית
+וְהִרְבָּה לְהָשִׁיב אַפּוֹ
+וְלֹא יָעִיר כָּל חֲמָתוֹ׃
+יְיָ הוֹשִׁיעָה
+הַמֶּלֶךְ יַעֲנֵנוּ בְיוֹם קָרְאֵנוּ׃
+
+בָּרְכוּ אֶת יְיָ הַמְבֹרָךְ׃
+בָּרוּךְ יְיָ הַמְּבֹרָךְ לְעוֹלָם וָעֶד׃
+
+בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם
+אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים
+בְּחָכְמָה פּוֹתֵחַ שְׁעָרִים
+וּבִתְבוּנָה מְשַׁנֶּה עִתִּים
+וּמַחֲלִיף אֶת הַזְּמַנִּים
+וּמְסַדֵּר אֶת הַכּוֹכָבִים
+בְּמִשְׁמְרוֹתֵיהֶם בָּרָקִיעַ כִּרְצוֹנוֹ
+בּוֹרֵא יוֹם וָלָיְלָה
+גּוֹלֵל אוֹר מִפְּנֵי חֹשֶׁךְ
+וְחֹשֶׁךְ מִפְּנֵי אוֹר
+בָּרוּךְ אַתָּה יְיָ הַמַּעֲרִיב עֲרָבִים׃
+
+שְׁמַע יִשְׂרָאֵל יְיָ אֱלֹהֵינוּ יְיָ אֶחָד׃`
+  },
+  parashatman:{
+    name:"Parashat HaMan",nameHe:"פרשת המן",ico:"☁️",
+    text:`שְׁמוֹת ט״ז:ד׳-ל״ו
+וַיֹּאמֶר יְיָ אֶל מֹשֶׁה
+הִנְנִי מַמְטִיר לָכֶם לֶחֶם מִן הַשָּׁמָיִם
+וְיָצָא הָעָם וְלָקְטוּ דְּבַר יוֹם בְּיוֹמוֹ
+לְמַעַן אֲנַסֶּנּוּ הֲיֵלֵךְ בְּתוֹרָתִי אִם לֹא׃
+
+וַיְהִי בַּבֹּקֶר
+וַתַּעַל שִׁכְבַת הַטַּל
+וְהִנֵּה עַל פְּנֵי הַמִּדְבָּר
+דַּק מְחֻסְפָּס דַּק כַּכְּפֹר עַל הָאָרֶץ׃
+
+וַיִּרְאוּ בְנֵי יִשְׂרָאֵל וַיֹּאמְרוּ אִישׁ אֶל אָחִיו מָן הוּא
+כִּי לֹא יָדְעוּ מַה הוּא
+וַיֹּאמֶר מֹשֶׁה אֲלֵהֶם
+הוּא הַלֶּחֶם אֲשֶׁר נָתַן יְיָ לָכֶם לְאָכְלָה׃`
+  },
+  shevabrahot:{
+    name:"Sheva Brakhot",nameHe:"שבע ברכות",ico:"💒",
+    text:`— Lors d'un repas de mariage ou les 7 jours suivants. Après Birkat HaMazon, on récite ces 7 bénédictions sur 2 verres de vin.
+
+— Première bénédiction :
+
+בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. שֶׁהַכֹּל בָּרָא לִכְבוֹדוֹ׃
+
+— Deuxième :
+
+בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. יוֹצֵר הָאָדָם׃
+
+— Troisième :
+
+בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. אֲשֶׁר יָצַר אֶת הָאָדָם בְּצַלְמוֹ. בְּצֶלֶם דְּמוּת תַּבְנִיתוֹ. וְהִתְקִין לוֹ מִמֶּנּוּ בִּנְיַן עֲדֵי עַד׃ בָּרוּךְ אַתָּה יְיָ. יוֹצֵר הָאָדָם׃
+
+— Quatrième :
+
+שׂוֹשׂ תָּשִׂישׂ וְתָגֵל עֲקָרָה. בְּקִבּוּץ בָּנֶיהָ לְתוֹכָהּ בִּמְהֵרָה בְּשִׂמְחָה׃ בָּרוּךְ אַתָּה יְיָ. מְשַׂמֵּחַ צִיּוֹן בְּבָנֶיהָ׃
+
+— Cinquième :
+
+שַׂמֵּחַ תְּשַׁמַּח רֵעִים הָאֲהוּבִים. כְּשַׂמֵּחֲךָ יְצִירְךָ בְּגַן עֵדֶן מִקֶּדֶם׃ בָּרוּךְ אַתָּה יְיָ. מְשַׂמֵּחַ חָתָן וְכַלָּה׃
+
+— Sixième :
+
+בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. אֲשֶׁר בָּרָא שָׂשׂוֹן וְשִׂמְחָה. חָתָן וְכַלָּה. גִּילָה רִנָּה דִּיצָה וְחֶדְוָה. אַהֲבָה וְאַחְוָה וְשָׁלוֹם וְרֵעוּת׃ מְהֵרָה יְיָ אֱלֹהֵינוּ יִשָּׁמַע בְּעָרֵי יְהוּדָה וּבְחוּצוֹת יְרוּשָׁלַיִם. קוֹל שָׂשׂוֹן וְקוֹל שִׂמְחָה. קוֹל חָתָן וְקוֹל כַּלָּה. קוֹל מִצְהֲלוֹת חֲתָנִים מֵחֻפָּתָם. וּנְעָרִים מִמִּשְׁתֵּה נְגִינָתָם׃ בָּרוּךְ אַתָּה יְיָ. מְשַׂמֵּחַ חָתָן עִם הַכַּלָּה׃
+
+— Septième (par celui qui a récité le Zimoun, sur sa coupe) :
+
+בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם. בּוֹרֵא פְּרִי הַגֶּפֶן׃`
+  },
+  birkathalevana:{
+    name:"Birkat HaLevana",nameHe:"ברכת הלבנה",ico:"🌙",
+    text:`לַמְנַצֵּחַ מִזְמוֹר לְדָוִד׃ הַשָּׁמַיִם מְסַפְּרִים כְּבוֹד אֵל, וּמַעֲשֵׂה יָדָיו מַגִּיד הָרָקִיעַ׃ יוֹם לְיוֹם יַבִּיעַ אֹמֶר, וְלַיְלָה לְּלַיְלָה יְחַוֶּה דָּעַת׃ אֵין אֹמֶר וְאֵין דְּבָרִים, בְּלִי נִשְׁמָע קוֹלָם׃ בְּכָל הָאָרֶץ יָצָא קַוָּם וּבִקְצֵה תֵבֵל מִלֵּיהֶם, לַשֶּׁמֶשׁ שָׂם אֹהֶל בָּהֶם׃ וְהוּא כְּחָתָן יֹצֵא מֵחֻפָּתוֹ, יָשִׂישׂ כְּגִבּוֹר לָרוּץ אֹרַח׃ מִקְצֵה הַשָּׁמַיִם מוֹצָאוֹ וּתְקוּפָתוֹ עַל קְצוֹתָם, וְאֵין נִסְתָּר מֵחַמָּתוֹ׃ תּוֹרַת יְהֹוָה תְּמִימָה מְשִׁיבַת נָפֶשׁ, עֵדוּת יְהֹוָה נֶאֱמָנָה מַחְכִּימַת פֶּתִי׃ פִּקּוּדֵי יְהֹוָה יְשָׁרִים מְשַׂמְּחֵי לֵב, מִצְוַת יְהֹוָה בָּרָה מְאִירַת עֵינָיִם׃ יִרְאַת יְהֹוָה טְהוֹרָה עוֹמֶדֶת לָעַד, מִשְׁפְּטֵי יְהֹוָה אֱמֶת צָדְקוּ יַחְדָּו׃ הַנֶּחֱמָדִים מִזָּהָב וּמִפַּז רָב, וּמְתוּקִים מִדְּבַשׁ וְנֹפֶת צוּפִים׃ גַּם עַבְדְּךָ נִזְהָר בָּהֶם, בְּשָׁמְרָם עֵקֶב רָב׃ שְׁגִיאוֹת מִי יָבִין, מִנִּסְתָּרוֹת נַקֵּנִי׃ גַּם מִזֵּדִים חֲשֹׂךְ עַבְדֶּךָ, אַל יִמְשְׁלוּ בִי, אָז אֵיתָם וְנִקֵּיתִי מִפֶּשַׁע רָב׃ יִהְיוּ לְרָצוֹן אִמְרֵי פִי וְהֶגְיוֹן לִבִּי לְפָנֶיךָ, יְהֹוָה צוּרִי וְגֹאֲלִי׃
+
+הַלְלוּיָהּ הַלְלוּ אֶת יְהֹוָה מִן הַשָּׁמַיִם, הַלְלוּהוּ בַּמְּרוֹמִים׃ הַלְלוּהוּ כָל מַלְאָכָיו, הַלְלוּהוּ כָּל צְבָאָו׃ הַלְלוּהוּ שֶׁמֶשׁ וְיָרֵחַ, הַלְלוּהוּ כָּל כּוֹכְבֵי אוֹר׃ הַלְלוּהוּ שְׁמֵי הַשָּׁמָיִם, וְהַמַּיִם אֲשֶׁר מֵעַל הַשָּׁמָיִם׃ יְהַלְלוּ אֶת שֵׁם יְהֹוָה כִּי הוּא צִוָּה וְנִבְרָאוּ׃ וַיַּעֲמִידֵם לָעַד לְעוֹלָם, חָק נָתַן וְלֹא יַעֲבוֹר׃
+
+כִּי אֶרְאֶה שָׁמֶיךָ מַעֲשֵׂה אֶצְבְּעֹתֶיךָ, יָרֵחַ וְכוֹכָבִים אֲשֶׁר כּוֹנָנְתָּה׃ יְהֹוָה אֲדֹנֵינוּ, מָה אַדִּיר שִׁמְךָ בְּכָל הָאָרֶץ׃
+
+בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בְּמַאֲמָרוֹ בָּרָא שְׁחָקִים, וּבְרוּחַ פִּיו כָּל צְבָאָם, חֹק וּזְמַן נָתַן לָהֶם שֶׁלֹּא יְשַׁנוּ אֶת תַּפְקִידָם, שָׂשִׂים וּשְׂמֵחִים לַעֲשׂוֹת רְצוֹן קוֹנֵיהֶם, פּוֹעֵל אֱמֶת שֶׁפְּעֻלָּתוֹ אֱמֶת, וְלַלְּבָנָה אָמַר שֶׁתִּתְחַדֵּשׁ, עֲטֶרֶת תִּפְאֶרֶת לַעֲמוּסֵי בָטֶן, שֶׁגַּם הֵם עֲתִידִים לְהִתְחַדֵּשׁ כְּמוֹתָהּ וּלְפָאֵר לְיוֹצְרָם עַל שֵׁם כְּבוֹד מַלְכוּתוֹ. בָּרוּךְ אַתָּה יְהֹוָה, מְחַדֵּשׁ חֳדָשִׁים׃
+
+בְּסִימָן טוֹב תְּהִי לָנוּ וּלְכָל יִשְׂרָאֵל׃
+בְּסִימָן טוֹב תְּהִי לָנוּ וּלְכָל יִשְׂרָאֵל׃
+בְּסִימָן טוֹב תְּהִי לָנוּ וּלְכָל יִשְׂרָאֵל׃
+
+בָּרוּךְ יוֹצְרִיךְ, בָּרוּךְ עוֹשִׂיךְ, בָּרוּךְ קוֹנִיךְ, בָּרוּךְ בּוֹרְאִיךְ׃
+
+כְּשֵׁם שֶׁאֲנַחְנוּ מְרַקְּדִים כְּנֶגְדִּיךְ, וְאֵין אֲנַחְנוּ יְכוֹלִים לִגַּע בִּיךְ, כָּךְ אִם יְרַקְּדוּ אֲחֵרִים כְּנֶגְדֵּנוּ לְהַזִּיקֵנוּ, לֹא יוּכְלוּ לִגַּע בָּנוּ, וְלֹא יִשְׁלְטוּ בָנוּ, וְלֹא יַעֲשׂוּ בָנוּ שׁוּם רֹשֶׁם. תִּפֹּל עֲלֵיהֶם אֵימָתָה וָפַחַד, בִּגְדֹל זְרוֹעֲךָ יִדְּמוּ כָּאָבֶן׃ כָּאָבֶן יִדְּמוּ, זְרוֹעֲךָ בִּגְדֹל, וָפַחַד אֵימָתָה עֲלֵיהֶם תִּפֹּל׃
+
+דָּוִד מֶלֶךְ יִשְׂרָאֵל חַי וְקַיָּם׃
+דָּוִד מֶלֶךְ יִשְׂרָאֵל חַי וְקַיָּם׃
+דָּוִד מֶלֶךְ יִשְׂרָאֵל חַי וְקַיָּם׃
+
+אָמֵן, אָמֵן, אָמֵן׃
+נֶצַח, נֶצַח, נֶצַח׃
+סֶלָה, סֶלָה, סֶלָה׃
+וָעֶד, וָעֶד, וָעֶד׃
+
+לֵב טָהוֹר בְּרָא לִי אֱלֹהִים, וְרוּחַ נָכוֹן חַדֵּשׁ בְּקִרְבִּי׃ (×7)
+
+שִׁיר לַמַּעֲלוֹת אֶשָּׂא עֵינַי אֶל הֶהָרִים, מֵאַיִן יָבֹא עֶזְרִי׃ עֶזְרִי מֵעִם יְהֹוָה, עֹשֵׂה שָׁמַיִם וָאָרֶץ׃ אַל יִתֵּן לַמּוֹט רַגְלֶךָ, אַל יָנוּם שֹׁמְרֶךָ׃ הִנֵּה לֹא יָנוּם וְלֹא יִישָׁן, שׁוֹמֵר יִשְׂרָאֵל׃ יְהֹוָה שֹׁמְרֶךָ, יְהֹוָה צִלְּךָ עַל יַד יְמִינֶךָ׃ יוֹמָם הַשֶּׁמֶשׁ לֹא יַכֶּכָּה, וְיָרֵחַ בַּלָּיְלָה׃ יְהֹוָה יִשְׁמָרְךָ מִכָּל רָע, יִשְׁמֹר אֶת נַפְשֶׁךָ׃ יְהֹוָה יִשְׁמָר צֵאתְךָ וּבוֹאֶךָ, מֵעַתָּה וְעַד עוֹלָם׃
+
+שָׁלוֹם עֲלֵיכֶם׃ שָׁלוֹם עֲלֵיכֶם׃ שָׁלוֹם עֲלֵיכֶם׃`
+  },
+  hashkaba:{
+    name:"Hashkaba (Ps. 119)",nameHe:"הַשְׁכָּבָה / תהלים קיט",ico:"📜",
+    text:`תְּהִלִּים קי״ט — אָלֶף
+
+אַשְׁרֵי תְמִימֵי דָרֶךְ הַהֹלְכִים בְּתוֹרַת יְיָ׃
+אַשְׁרֵי נֹצְרֵי עֵדֹתָיו בְּכָל לֵב יִדְרְשׁוּהוּ׃
+אַף לֹא פָעֲלוּ עַוְלָה בִּדְרָכָיו הָלָכוּ׃
+אַתָּה צִוִּיתָה פִקֻּדֶיךָ לִשְׁמֹר מְאֹד׃
+אַחֲלַי יִכֹּנוּ דְרָכָי לִשְׁמֹר חֻקֶּיךָ׃
+אָז לֹא אֵבוֹשׁ בְּהַבִּיטִי אֶל כָּל מִצְוֹתֶיךָ׃
+אוֹדְךָ בְּיֹשֶׁר לֵבָב בְּלָמְדִי מִשְׁפְּטֵי צִדְקֶךָ׃
+אֶת חֻקֶּיךָ אֶשְׁמֹר אַל תַּעַזְבֵנִי עַד מְאֹד׃`
+  },
+};
+
+// Tehilim par jour du mois
+const TEHILIM_DAYS=[
+  {day:1,chaps:"1–9",text:"תְּהִלִּים א׳-ט׳"},
+  {day:2,chaps:"10–17",text:"תְּהִלִּים י׳-י״ז"},
+  {day:3,chaps:"18–22",text:"תְּהִלִּים י״ח-כ״ב"},
+  {day:4,chaps:"23–32",text:"תְּהִלִּים כ״ג-ל״ב"},
+  {day:5,chaps:"33–35",text:"תְּהִלִּים ל״ג-ל״ה"},
+  {day:6,chaps:"36–41",text:"תְּהִלִּים ל״ו-מ״א"},
+  {day:7,chaps:"42–50",text:"תְּהִלִּים מ״ב-נ׳"},
+  {day:8,chaps:"51–60",text:"תְּהִלִּים נ״א-ס׳"},
+  {day:9,chaps:"61–68",text:"תְּהִלִּים ס״א-ס״ח"},
+  {day:10,chaps:"69–75",text:"תְּהִלִּים ס״ט-ע״ה"},
+  {day:11,chaps:"76–80",text:"תְּהִלִּים ע״ו-פ׳"},
+  {day:12,chaps:"81–89",text:"תְּהִלִּים פ״א-פ״ט"},
+  {day:13,chaps:"90–100",text:"תְּהִלִּים צ׳-ק׳"},
+  {day:14,chaps:"101–103",text:"תְּהִלִּים ק״א-ק״ג"},
+  {day:15,chaps:"104",text:"תְּהִלִּים ק״ד"},
+  {day:16,chaps:"105",text:"תְּהִלִּים ק״ה"},
+  {day:17,chaps:"106",text:"תְּהִלִּים ק״ו"},
+  {day:18,chaps:"107",text:"תְּהִלִּים ק״ז"},
+  {day:19,chaps:"108–110",text:"תְּהִלִּים ק״ח-ק״י"},
+  {day:20,chaps:"111–118",text:"תְּהִלִּים קי״א-קי״ח"},
+  {day:21,chaps:"119:1–96",text:"תְּהִלִּים קי״ט א׳-פ״ד"},
+  {day:22,chaps:"119:97–176",text:"תְּהִלִּים קי״ט פ״ה-קי״ח"},
+  {day:23,chaps:"120–134",text:"תְּהִלִּים ק״כ-קל״ד"},
+  {day:24,chaps:"135–136",text:"תְּהִלִּים קל״ה-קל״ו"},
+  {day:25,chaps:"137–139",text:"תְּהִלִּים קל״ז-קל״ט"},
+  {day:26,chaps:"140–144",text:"תְּהִלִּים ק״מ-קמ״ד"},
+  {day:27,chaps:"145–150",text:"תְּהִלִּים קמ״ה-ק״נ"},
+  {day:28,chaps:"145–150",text:"תְּהִלִּים קמ״ה-ק״נ"},
+  {day:29,chaps:"1–9",text:"תְּהִלִּים א׳-ט׳"},
+  {day:30,chaps:"1–9",text:"תְּהִלִּים א׳-ט׳"},
+];
+
+// Mishna Broura
+const MB=[
+  {ref:"O.H. 1:1",text:"Sois fort comme le tigre, léger comme l'aigle, rapide comme le cerf et puissant comme le lion pour accomplir la volonté de ton Père qui est aux cieux. (Yehouda ben Tema)"},
+  {ref:"O.H. 2:1",text:"Quand l'homme se réveille, qu'il sache que le Roi des Rois se tient au-dessus de lui et le voit. Il se lèvera donc avec empressement pour Le servir."},
+  {ref:"O.H. 4:1",text:"Au lever, on se lave immédiatement les mains avec un récipient avant de marcher quatre coudées, car l'esprit d'impureté repose sur les mains tant qu'on ne les a pas lavées."},
+  {ref:"O.H. 6:1",text:"On ne prononce pas de bénédiction inutile (berakha levatala). Celui qui prononce une bénédiction superflue transgresse l'interdit de prononcer le nom de l'Éternel en vain."},
+  {ref:"O.H. 25:1",text:"La mitsva des téfilines est très grande, et l'homme doit y être particulièrement vigilant."},
+  {ref:"O.H. 46:1",text:"Les Bénédictions du matin (Birkhot HaShahar) ont été instituées par les Sages pour être récitées chaque jour, même si l'on n'en a pas tiré profit personnellement."},
+  {ref:"O.H. 61:2",text:"Il faut se concentrer (kavana) lors du Shema, et particulièrement sur le premier verset qui est l'essence de l'acceptation du joug de la royauté divine."},
+  {ref:"O.H. 89:1",text:"Tout homme est obligé de prier Shaharit avant de s'occuper de ses affaires, comme il est dit : « La justice marchera devant Lui »."},
+  {ref:"O.H. 90:5",text:"On doit toujours s'efforcer de prier en minyan, car la prière de la communauté n'est jamais repoussée."},
+  {ref:"O.H. 98:1",text:"Pendant la prière, on aura à l'esprit que la Présence Divine se tient en face de soi, et on se conduira comme quelqu'un qui parle devant le Roi."},
+  {ref:"O.H. 111:1",text:"On enchaîne immédiatement la Guéoula (bénédiction de la délivrance) à la Tefila (Amida), sans interruption — pas même pour répondre Amen."},
+  {ref:"O.H. 128:1",text:"C'est une mitsva positive que les Cohanim lèvent leurs mains pour bénir Israël chaque jour."},
+  {ref:"O.H. 151:1",text:"On a coutume d'honorer la synagogue et la maison d'étude. Il est interdit d'y agir avec légèreté (kalut rosh)."},
+  {ref:"O.H. 155:1",text:"Après la prière, on se rend à la maison d'étude pour fixer un temps à la Torah, afin de ne pas quitter le palais du Roi sans avoir étudié."},
+  {ref:"O.H. 231:1",text:"Que toutes tes actions soient pour l'amour du Ciel, car toutes les paroles de l'homme doivent être au service du Créateur."},
+  {ref:"O.H. 263:1",text:"L'allumage des bougies de Shabbat est une obligation. Celle qui allume avant le coucher du soleil dit la bénédiction « ... qui nous a ordonné l'allumage des bougies de Shabbat »."},
+  {ref:"O.H. 271:1",text:"C'est une mitsva de faire le Kiddoush sur le vin. À défaut de vin, on le fera sur le pain."},
+  {ref:"O.H. 282:1",text:"Chaque shabbat on lit la paracha de la semaine. La coutume ashkénaze est de lire au moins trois versets pour chaque montant à la Torah."},
+  {ref:"O.H. 300:1",text:"Il est obligatoire de faire la Havdala à la sortie du Shabbat sur le vin. À défaut, on la fera sur la bière ou le « hamar médina » (boisson de la région)."},
+  {ref:"O.H. 328:1",text:"Tout danger pour la vie repousse le Shabbat. C'est même une mitsva de profaner le Shabbat pour sauver une vie."},
+  {ref:"O.H. 429:1",text:"On étudie et expose les lois de Pessah trente jours avant la fête."},
+  {ref:"O.H. 472:1",text:"Chaque homme doit se considérer, le soir du Séder, comme s'il était lui-même sorti d'Égypte."},
+  {ref:"O.H. 489:1",text:"C'est une mitsva positive de la Torah de compter sept semaines complètes à partir du jour de l'offrande du Omer."},
+  {ref:"O.H. 606:1",text:"La veille de Yom Kippour, c'est une mitsva de demander pardon à son prochain, car Yom Kippour n'expie pas les fautes entre l'homme et son prochain."},
+  {ref:"O.H. 625:1",text:"C'est une mitsva positive de la Torah de demeurer dans la souccah pendant sept jours, comme on demeure dans sa maison."},
+  {ref:"O.H. 670:1",text:"La mitsva des bougies de Hanouka est de publier le miracle. On allume à l'entrée de la maison, du côté extérieur."},
+  {ref:"O.H. 685:1",text:"C'est une mitsva positive de la Torah de lire la Méguila la nuit de Pourim et le jour."},
+  {ref:"O.H. 1:3",text:"Avant que n'arrive le moment de la prière du matin, on s'occupe de Torah afin d'entrer dans la prière à partir de paroles de Torah."},
+];
+
+// Omer texts
+const SEM=["חֶסֶד","גְּבוּרָה","תִּפְאֶרֶת","נֶצַח","הוֹד","יְסוֹד","מַלְכוּת"];
+const SEM_SHEBE=["שֶׁבַּחֶסֶד","שֶׁבִּגְבוּרָה","שֶׁבַּתִּפְאֶרֶת","שֶׁבַּנֶּצַח","שֶׁבַּהוֹד","שֶׁבַּיְּסוֹד","שֶׁבַּמַּלְכוּת"];
+const NUMS_HE=["","אֶחָד","שְׁנַיִם","שְׁלֹשָׁה","אַרְבָּעָה","חֲמִשָּׁה","שִׁשָּׁה","שִׁבְעָה","שְׁמוֹנָה","תִּשְׁעָה","עֲשָׂרָה","אַחַד עָשָׂר","שְׁנֵים עָשָׂר","שְׁלֹשָׁה עָשָׂר","אַרְבָּעָה עָשָׂר","חֲמִשָּׁה עָשָׂר","שִׁשָּׁה עָשָׂר","שִׁבְעָה עָשָׂר","שְׁמוֹנָה עָשָׂר","תִּשְׁעָה עָשָׂר","עֶשְׂרִים","עֶשְׂרִים וְאֶחָד","עֶשְׂרִים וּשְׁנַיִם","עֶשְׂרִים וּשְׁלֹשָׁה","עֶשְׂרִים וְאַרְבָּעָה","עֶשְׂרִים וַחֲמִשָּׁה","עֶשְׂרִים וְשִׁשָּׁה","עֶשְׂרִים וְשִׁבְעָה","עֶשְׂרִים וּשְׁמוֹנָה","עֶשְׂרִים וְתִשְׁעָה","שְׁלֹשִׁים","שְׁלֹשִׁים וְאֶחָד","שְׁלֹשִׁים וּשְׁנַיִם","שְׁלֹשִׁים וּשְׁלֹשָׁה","שְׁלֹשִׁים וְאַרְבָּעָה","שְׁלֹשִׁים וַחֲמִשָּׁה","שְׁלֹשִׁים וְשִׁשָּׁה","שְׁלֹשִׁים וְשִׁבְעָה","שְׁלֹשִׁים וּשְׁמוֹנָה","שְׁלֹשִׁים וְתִשְׁעָה","אַרְבָּעִים","אַרְבָּעִים וְאֶחָד","אַרְבָּעִים וּשְׁנַיִם","אַרְבָּעִים וּשְׁלֹשָׁה","אַרְבָּעִים וְאַרְבָּעָה","אַרְבָּעִים וַחֲמִשָּׁה","אַרְבָּעִים וְשִׁשָּׁה","אַרְבָּעִים וְשִׁבְעָה","אַרְבָּעִים וּשְׁמוֹנָה","אַרְבָּעִים וְתִשְׁעָה"];
+const WEEKS_HE=["","שָׁבוּעַ אֶחָד","שְׁנֵי שָׁבוּעוֹת","שְׁלֹשָׁה שָׁבוּעוֹת","אַרְבָּעָה שָׁבוּעוֹת","חֲמִשָּׁה שָׁבוּעוֹת","שִׁשָּׁה שָׁבוּעוֹת","שִׁבְעָה שָׁבוּעוֹת"];
+
+function getOmerText(jour){
+  if(jour<1||jour>49)return null;
+  const weeks=Math.floor(jour/7);
+  const days=jour%7;
+  const semIdx=Math.floor((jour-1)/7);
+  const dayIdx=(jour-1)%7;
+  let countStr="הַיּוֹם "+NUMS_HE[jour]+" יָמִים";
+  if(weeks>0&&days>0) countStr="הַיּוֹם "+NUMS_HE[jour]+" יָמִים שֶׁהֵם "+WEEKS_HE[weeks]+" וְ"+NUMS_HE[days]+" יָמִים";
+  else if(weeks>0&&days===0) countStr="הַיּוֹם "+NUMS_HE[jour]+" יָמִים שֶׁהֵם "+WEEKS_HE[weeks];
+  return `בָּרוּךְ אַתָּה יְיָ אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם
+אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו
+וְצִוָּנוּ עַל סְפִירַת הָעֹמֶר׃
+
+${countStr}
+לָעֹמֶר׃
+
+סְפִירַת הַיּוֹם: ${SEM[dayIdx]} ${SEM_SHEBE[semIdx]}
+
+הָרַחֲמָן הוּא יַחֲזִיר לָנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ בִּמְהֵרָה בְיָמֵינוּ אָמֵן׃`;
+}
+
+// ================================================================
+// CALENDRIER JUIF
+// ================================================================
+const JM=["תִּשְׁרֵי","חֶשְׁוָן","כִּסְלֵו","טֵבֵת","שְׁבָט","אֲדָר","נִיסָן","אִיָּר","סִיוָן","תַּמּוּז","אָב","אֱלוּל"];
+const JM_FR=["Tichri","Hechvan","Kislev","Tevet","Chevat","Adar","Nisan","Iyar","Sivan","Tamouz","Av","Eloul"];
+const ML=[30,29,30,29,30,30,29,30,29,30,29,29];
+function getJD(d){
+  const diff=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(2026,4,1))/86400000);
+  let day=14+diff,mi=7,yr=5786;
+  while(day>ML[mi]){day-=ML[mi];mi++;if(mi>=12){mi=0;yr++;}}
+  while(day<1){mi--;if(mi<0){mi=11;yr--;}day+=ML[mi];}
+  return{day,month:mi,year:yr,str:`${day} ${JM_FR[mi]} ${yr}`};
+}
+function getOmer(d){
+  const jour=29+Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(2026,4,1))/86400000);
+  if(jour<1||jour>49)return null;
+  const s=Math.floor((jour-1)/7),j=(jour-1)%7;
+  return{jour,semaine:s+1,jourSem:j+1,sefirot:`${SEM_FR[j]} she-be${SEM_FR[s]}`};
+}
+const SEM_FR=["Hessed","Guevura","Tiferet","Netsah","Hod","Yessod","Malkhout"];
+const MASEKHOT=[{n:"Berakhot",d:64},{n:"Shabbat",d:157},{n:"Eruvin",d:105},{n:"Pesahim",d:121},{n:"Shekalim",d:22},{n:"Yoma",d:88},{n:"Sukka",d:56},{n:"Beitza",d:40},{n:"Rosh Hashana",d:35},{n:"Taanit",d:31},{n:"Megila",d:32},{n:"Moed Katan",d:29},{n:"Hagiga",d:27},{n:"Yevamot",d:122},{n:"Ketubot",d:112},{n:"Nedarim",d:91},{n:"Nazir",d:66},{n:"Sota",d:49},{n:"Gitin",d:90},{n:"Kidushin",d:82},{n:"Bava Kama",d:119},{n:"Bava Metsia",d:119},{n:"Bava Batra",d:176},{n:"Sanhedrin",d:113},{n:"Makkot",d:24},{n:"Shevuot",d:49},{n:"Avoda Zara",d:76},{n:"Horayot",d:14},{n:"Zevahim",d:120},{n:"Menahot",d:110},{n:"Hulin",d:142},{n:"Bekhorot",d:61},{n:"Arakhin",d:34},{n:"Temura",d:34},{n:"Keritot",d:28},{n:"Meila",d:22},{n:"Nida",d:73}];
+function getDaf(d){
+  const diff=Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(2026,4,1))/86400000);
+  const total=MASEKHOT.reduce((s,m)=>s+(m.d-1),0);
+  let rp=0;for(const m of MASEKHOT){if(m.n==="Menahot"){rp+=108;break;}rp+=m.d-1;}
+  let pos=((rp+diff)%total+total)%total,acc=0;
+  for(const m of MASEKHOT){const p=m.d-1;if(pos<acc+p)return{n:m.n,d:pos-acc+2};acc+=p;}
+  return{n:"Nida",d:2};
+}
+
+const FETES=[
+  {name:"Lag BaOmer",note:"33ème jour de l'Omer",date:new Date(2026,4,4)},
+  {name:"Yom Yeroushalayim",note:"28 Iyar",date:new Date(2026,4,14)},
+  {name:"Chavouot J1",note:"6 Sivan",date:new Date(2026,4,22)},
+  {name:"Chavouot J2",note:"7 Sivan",date:new Date(2026,4,23)},
+  {name:"Jeûne du 17 Tamouz",note:"17 Tamouz",date:new Date(2026,6,12)},
+  {name:"Tisha BeAv",note:"9 Av",date:new Date(2026,7,2)},
+  {name:"Roch Hachana 5787",note:"1 Tichri 5787",date:new Date(2026,8,10)},
+  {name:"Yom Kippour",note:"10 Tichri",date:new Date(2026,8,19)},
+  {name:"Souccot J1",note:"15 Tichri",date:new Date(2026,8,24)},
+  {name:"Hanouka J1",note:"25 Kislev",date:new Date(2026,11,5)},
+];
+const BIRKAT=[
+  {mois:"Iyar 5786",debut:new Date(2026,3,22),fin:new Date(2026,4,1)},
+  {mois:"Sivan 5786",debut:new Date(2026,4,21),fin:new Date(2026,4,31)},
+  {mois:"Tamouz 5786",debut:new Date(2026,5,19),fin:new Date(2026,5,29)},
+  {mois:"Av 5786",debut:new Date(2026,6,19),fin:new Date(2026,6,29)},
+  {mois:"Eloul 5786",debut:new Date(2026,7,17),fin:new Date(2026,7,27)},
+  {mois:"Tichri 5787",debut:new Date(2026,8,16),fin:new Date(2026,8,25)},
+];
+
+// ================================================================
+// ZMANIM — Algorithme CalJ exact (NOAA Jean Meeus + degrés CalJ)
+// Lyon : 45.7640°N, 4.8357°E, TZ=+2 (CEST)
+// Sources: calj.net, Or Meir (Rav Posen), Ye'avé Daat (Rav Ovadia)
+// ================================================================
+let zmanimData=null;
+let cdInterval=null;
+
+const ZLAT=45.7640, ZLNG=4.8357, ZTZ=2;
+
+function sunTimeCalj(y,m,d,zenith,isSunrise){
+  // Algorithme NOAA/Jean Meeus — même base que KosherJava et CalJ
+  if(m<=2){y-=1;m+=12;}
+  const A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  const JD=Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+  const T=(JD-2451545.0)/36525.0;
+  const L0=((280.46646+T*(36000.76983+T*0.0003032))%360+360)%360;
+  const M=((357.52911+T*(35999.05029-0.0001537*T))%360+360)%360;
+  const C=Math.sin(r(M))*(1.914602-T*(0.004817+0.000014*T))+Math.sin(r(2*M))*(0.019993-0.000101*T)+Math.sin(r(3*M))*0.000289;
+  const sunLon=L0+C;
+  const omega=125.04-1934.136*T;
+  const lambd=sunLon-0.00569-0.00478*Math.sin(r(omega));
+  const eps0=23+(26+((21.448-T*(46.815+T*(0.00059-T*0.001813)))/60))/60;
+  const eps=eps0+0.00256*Math.cos(r(omega));
+  const decl=deg(Math.asin(Math.sin(r(eps))*Math.sin(r(lambd))));
+  const y2=Math.tan(r(eps/2))**2;
+  const eqTime=4*deg(y2*Math.sin(r(2*L0))-2*0.016709*Math.sin(r(M))+4*0.016709*y2*Math.sin(r(M))*Math.cos(r(2*L0))-0.5*y2**2*Math.sin(r(4*L0))-1.25*0.016709**2*Math.sin(r(2*M)));
+  const cosH=Math.cos(r(zenith))/(Math.cos(r(ZLAT))*Math.cos(r(decl)))-Math.tan(r(ZLAT))*Math.tan(r(decl));
+  if(Math.abs(cosH)>1)return null;
+  const HA=deg(Math.acos(cosH));
+  const solarNoon=720-4*ZLNG-eqTime;
+  const result=isSunrise?solarNoon-4*HA:solarNoon+4*HA;
+  return((result+ZTZ*60)/60+24)%24;
+}
+function r(x){return x*Math.PI/180;}
+function deg(x){return x*180/Math.PI;}
+
+function calcZmanim(date){
+  const y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+  const toDate=(h)=>{if(h===null||isNaN(h))return null;const dd=new Date(date);dd.setHours(Math.floor(h),Math.round((h-Math.floor(h))*60),0,0);return dd;};
+
+  // Hanetz et Shkia (-0.8333° = réfraction atmosphérique)
+  const hanetz=sunTimeCalj(y,m,d,90.8333,true);
+  const shkia=sunTimeCalj(y,m,d,90.8333,false);
+  if(!hanetz||!shkia)return null;
+
+  // Heure proportionnelle GRA (entre hanetz et shkia)
+  const shaahGra=(shkia-hanetz)*60/12; // minutes
+
+  // Alot HaShahar — Rav Posen: soleil à -16.1°
+  const alotDeg=sunTimeCalj(y,m,d,90+16.1,true);
+
+  // Début téfilin — Rav Posen: soleil à -11°
+  const tefilin=sunTimeCalj(y,m,d,90+11.0,true);
+
+  // Hatsot = hanetz + 6 shaot GRA
+  const hatsot=hanetz+6*shaahGra/60;
+
+  // Shema GRA = hanetz + 3 shaot GRA
+  const shema_gra=hanetz+3*shaahGra/60;
+
+  // Tefila GRA = hanetz + 4 shaot GRA
+  const tefila_gra=hanetz+4*shaahGra/60;
+
+  // Shema M"A — méthode Calj (Rav Posen "équivalence des degrés"):
+  // heures proportionnelles entre l'aube Rav Posen (-16.1°) et la chkia
+  const shaahMga=(shkia-alotDeg)*60/12;
+  const shema_ma=alotDeg+3*shaahMga/60;
+
+  // Tefila M"A = alotDeg + 4 × shaahMga (toujours basé sur aube Rav Posen)
+  const tefila_ma=alotDeg+4*shaahMga/60;
+
+  // Minha Guedola lahumra = max(hatsot + 0.5 shaah GRA, hatsot + 30 min fixes)
+  // On prend le plus tardif des deux pour respecter l'avis le plus rigoureux
+  const minha_g_prop=hatsot+0.5*shaahGra/60;
+  const minha_g_fixe=hatsot+30/60;
+  const minha_g=Math.max(minha_g_prop,minha_g_fixe);
+
+  // Minha Ketana = shkia - 2.5 shaot GRA
+  const minha_k=shkia-2.5*shaahGra/60;
+
+  // Plag HaMinha = shkia - 1.25 shaot GRA
+  const plag=shkia-1.25*shaahGra/60;
+
+  // Tzeit = soleil à -7.08° (3 petites étoiles)
+  const tzeit=sunTimeCalj(y,m,d,90+7.08,false);
+
+  // Fin Shabbat = soleil à -8.5°
+  const fin_shab=sunTimeCalj(y,m,d,90+8.5,false);
+
+  // Rabénou Tam = shkia + 72 min proportionnelles
+  const rt=shkia+72*shaahGra/60/60;
+
+  // Allumage bougies = shkia - 18 min fixes
+  const candles=shkia-18/60;
+
+  return{
+    alot:toDate(alotDeg),tefilin:toDate(tefilin),sunrise:toDate(hanetz),
+    shema_ma:toDate(shema_ma),shema_gra:toDate(shema_gra),
+    tefila_ma:toDate(tefila_ma),tefila_gra:toDate(tefila_gra),
+    hatsot:toDate(hatsot),minha_g:toDate(minha_g),minha_k:toDate(minha_k),
+    plag:toDate(plag),sunset:toDate(shkia),tzeit:toDate(tzeit),
+    fin_shab:toDate(fin_shab),rt:toDate(rt),candles:toDate(candles),
+    shaahGra:shaahGra
+  };
+}
+
+function fetchZmanim(){
+  // Calcul local — pas besoin de connexion internet !
+  return calcZmanim(new Date());
+}
+
+function fmtZD(date){
+  if(!date)return'—';
+  const h=date.getHours(),m=date.getMinutes();
+  return`${h}h${String(m).padStart(2,'0')}`;
+}
+
+// Compte à rebours
+const ZMAN_LABELS=[
+  {key:'alot',lbl:'🌄 Alot HaShahar'},
+  {key:'tefilin',lbl:'📿 Début téfilin'},
+  {key:'sunrise',lbl:'🌅 Lever du soleil'},
+  {key:'shema_gra',lbl:'📖 Fin Shema GR"A'},
+  {key:'tefila_gra',lbl:'🙏 Fin Tefila'},
+  {key:'hatsot',lbl:'☀️ Hatsot'},
+  {key:'minha_g',lbl:'🕌 Minha Guedola'},
+  {key:'minha_k',lbl:'🕌 Minha Ketana'},
+  {key:'plag',lbl:'🌆 Plag HaMinha'},
+  {key:'sunset',lbl:'🌇 Coucher du soleil'},
+  {key:'tzeit',lbl:'🌙 3 étoiles'},
+];
+
+function startCountdown(z){
+  if(cdInterval)clearInterval(cdInterval);
+  function tick(){
+    const now=new Date().getTime();
+    let next=null,nextLbl='',nextColor='green';
+    for(const ev of ZMAN_LABELS){
+      const t=z[ev.key];
+      if(!t)continue;
+      const td=new Date(t).getTime();
+      if(td>now){next=td;nextLbl=ev.lbl;break;}
+    }
+    if(!next){
+      document.getElementById('cdbLabel').textContent='Tous les zmanim passés';
+      document.getElementById('cdbTimer').textContent='';
+      return;
+    }
+    const diff=next-now;
+    const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    const timeStr=h>0?`${h}h${String(m).padStart(2,'0')}min`:`${m}min ${String(s).padStart(2,'0')}s`;
+    if(diff<10*60000)nextColor='red';
+    else if(diff<30*60000)nextColor='orange';
+    document.getElementById('cdbLabel').textContent=`Prochain : ${nextLbl}`;
+    const timer=document.getElementById('cdbTimer');
+    timer.textContent=timeStr;
+    timer.className=`cdb-timer cdb-${nextColor}`;
+    const pct=Math.max(0,Math.min(100,(1-diff/3600000)*100));
+    const bar=document.getElementById('cdbBar');
+    bar.style.width=pct+'%';
+    bar.className=`cdb-bar`+(nextColor==='red'?' cdb-bar-red':nextColor==='orange'?' cdb-bar-orange':' cdb-bar-green');
+    // Prochain
+    const idx=ZMAN_LABELS.findIndex(ev=>{const t=z[ev.key];return t&&new Date(t).getTime()===next;});
+    if(idx<ZMAN_LABELS.length-1){
+      const ne=ZMAN_LABELS[idx+1];if(z[ne.key])document.getElementById('cdbNext').textContent=`Ensuite : ${ne.lbl} à ${fmtZD(z[ne.key])}`;
+    }
+  }
+  tick();
+  cdInterval=setInterval(tick,1000);
+}
+
+// ================================================================
+// GÉOLOCALISATION
+// ================================================================
+let userLat=null,userLng=null;
+function getLocation(){
+  if(!navigator.geolocation)return;
+  navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLng=p.coords.longitude;buildList();},()=>{});
+}
+function haversine(la1,ln1,la2,ln2){const R=6371,dL=(la2-la1)*Math.PI/180,dN=(ln2-ln1)*Math.PI/180;const a=Math.sin(dL/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dN/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function fmtDist(km){return km<1?`${Math.round(km*1000)}m`:`${km.toFixed(1)}km`;}
+
+// ================================================================
+// LOGIQUE SOIR (Point 10)
+// ================================================================
+function isEveningMode(){return new Date().getHours()>=21;}
+function getEffectiveDate(off){const d=new Date();if(off===0&&isEveningMode())d.setDate(d.getDate()+1);else d.setDate(d.getDate()+off);return d;}
+function getDayKey(d,forShaharit=false){
+  let dt=d;if(forShaharit&&isEveningMode()){dt=new Date(d);dt.setDate(dt.getDate()+1);}
+  const w=dt.getDay();
+  if(w===6)return'shabbat';if(w===5)return'vendredi';if(w===0)return'dimanche';
+  if(w===1||w===4)return'lundi_jeudi';return'mardi_mercredi';
+}
+
+// ================================================================
+// ÉTAT
+// ================================================================
+let lang='fr',activePage=0,selOff=0,searchQ='',activeFilter='all',activeTab='all',modalSynId=null;
+const PRAYERS=[
+  {key:'sh',fr:'Shaharit',he:'שחרית',en:'Shacharit',icon:'🌅',start:300,end:600},
+  {key:'mi',fr:'Minha',he:'מנחה',en:'Mincha',icon:'☀️',start:720,end:1170},
+  {key:'ar',fr:'Arvit',he:'ערבית',en:'Arvit',icon:'🌙',start:1080,end:1380},
+];
+function T(fr,he,en){return lang==='he'?he:lang==='en'?en:fr;}
+function getFavs(){try{return JSON.parse(localStorage.getItem('mly_favs')||'[]');}catch{return[];}}
+function saveFavs(f){try{localStorage.setItem('mly_favs',JSON.stringify(f));}catch{}}
+function isFav(id){return getFavs().includes(id);}
+function toggleFav(id){let f=getFavs();f=f.includes(id)?f.filter(x=>x!==id):[...f,id];saveFavs(f);}
+function nowMin(){const n=new Date();return n.getHours()*60+n.getMinutes();}
+function timeToMin(t){if(!t)return null;const m=t.match(/(\d+)h(\d*)/);if(!m)return null;return parseInt(m[1])*60+(parseInt(m[2])||0);}
+function getCurrentPrayer(){
+  const h=new Date().getHours(),nm=nowMin();
+  if(h>=21)return{...PRAYERS[0],status:'tomorrow_morning'};
+  for(const p of PRAYERS)if(nm>=p.start&&nm<=p.end)return{...p,status:'current'};
+  for(const p of PRAYERS)if(nm<p.start)return{...p,status:'upcoming',diff:p.start-nm};
+  return{...PRAYERS[0],status:'tomorrow'};
+}
+
+// ================================================================
+// HEADER
+// ================================================================
+function updateHeader(){
+  const now=new Date();
+  const DN=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const MN=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+  document.getElementById('civilDate').textContent=`${DN[now.getDay()]} ${now.getDate()} ${MN[now.getMonth()]} ${now.getFullYear()}`;
+  const jd=getJD(now);
+  document.getElementById('jewishDate').textContent=jd.str;
+  const omer=getOmer(now);
+  document.getElementById('omerShort').textContent=omer?`🌾 Omer : jour ${omer.jour}`:'';
+  const tags=[];const dow=now.getDay();
+  if(dow===6)tags.push({cls:'dtag-gold',txt:'Shabbat'});
+  else if(dow===5)tags.push({cls:'dtag-gold',txt:'Vendredi'});
+  else if(dow===1||dow===4)tags.push({cls:'dtag-gold',txt:'Torah'});
+  else tags.push({cls:'dtag-dim',txt:'Semaine'});
+  if(omer)tags.push({cls:'dtag-dim',txt:`${omer.jour}/49`});
+  if(isEveningMode())tags.push({cls:'dtag-gold',txt:'🌙 Soir'});
+  document.getElementById('dateTags').innerHTML=tags.map(t=>`<span class="dtag ${t.cls}">${t.txt}</span>`).join('');
+  const cp=getCurrentPrayer();
+  document.getElementById('findTitle').textContent='Trouver un minyan';
+  if(cp.status==='tomorrow_morning'){
+    const key=getDayKey(now,true);
+    const dayNames={shabbat:'Shabbat',vendredi:'Vendredi',dimanche:'Dimanche',lundi_jeudi:'Lun/Jeu',mardi_mercredi:'Mar/Mer'};
+    document.getElementById('findSub').textContent=`Shaharit demain — ${dayNames[key]}`;
+  } else if(cp.status==='current')document.getElementById('findSub').textContent=`${T(cp.fr,cp.he,cp.en)} en cours`;
+  else if(cp.status==='upcoming'){const h=Math.floor(cp.diff/60),m=cp.diff%60;document.getElementById('findSub').textContent=`${T(cp.fr,cp.he,cp.en)} dans ${h>0?h+'h':''}${m}min`;}
+  else document.getElementById('findSub').textContent='Shaharit demain matin';
+}
+
+// ================================================================
+// BUILD LIST
+// ================================================================
+function buildDays(){
+  const el=document.getElementById('daySelector');el.innerHTML='';
+  const DN=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+  for(let i=0;i<7;i++){
+    const d=getEffectiveDate(i),b=document.createElement('button');
+    b.className='dbtn'+(i===selOff?' on':'');
+    b.innerHTML=`<div class="dbn">${i===0?'Auj.':DN[d.getDay()]}</div><div class="dbd">${d.getDate()}</div>`;
+    b.onclick=()=>{selOff=i;buildDays();buildList();};
+    el.appendChild(b);
+  }
+}
+function doSearch(q){searchQ=q.toLowerCase();buildList();}
+function setFilter(f,el){activeFilter=f;document.querySelectorAll('.fc').forEach(c=>c.classList.remove('on'));el.classList.add('on');buildList();}
+function switchTab(t){activeTab=t;document.getElementById('tabAll').classList.toggle('on',t==='all');document.getElementById('tabFav').classList.toggle('on',t==='fav');document.getElementById('filtersRow').style.display=t==='fav'?'none':'flex';document.getElementById('secTitle').textContent=t==='fav'?'Mes favoris':'Horaires de la semaine';buildList();}
+function matchFilter(s){if(activeFilter==='all')return true;if(['sefarde','ashkenaze','habad','mixte'].includes(activeFilter))return s.rite===activeFilter;if(activeFilter==='banlieue')return['banlieue','caluire','ecully'].includes(s.zone);return s.zone===activeFilter;}
+
+function buildList(){
+  const list=document.getElementById('synList');list.innerHTML='';
+  const d=getEffectiveDate(selOff);
+  const key=selOff===0&&isEveningMode()?getDayKey(new Date(),true):getDayKey(d);
+  const cp=selOff===0?getCurrentPrayer():null;
+  const favs=getFavs();
+  let syns=[...SYNS].filter(s=>activeTab==='fav'?favs.includes(s.id):matchFilter(s));
+  if(searchQ)syns=syns.filter(s=>s.name.toLowerCase().includes(searchQ)||s.addr.toLowerCase().includes(searchQ));
+  syns.sort((a,b)=>{
+    const fa=favs.includes(a.id),fb=favs.includes(b.id);
+    if(fa&&!fb)return-1;if(!fa&&fb)return 1;
+    if(userLat!==null)return haversine(userLat,userLng,a.lat||45.75,a.lng||4.85)-haversine(userLat,userLng,b.lat||45.75,b.lng||4.85);
+    return 0;
+  });
+  document.getElementById('countBadge').textContent=`${syns.length} synagogue${syns.length>1?'s':''}`;
+  if(!syns.length){list.innerHTML=`<div class="empty-st">${activeTab==='fav'?'⭐ Appuie sur ⭐ pour ajouter':'🔍 Aucune synagogue trouvée'}</div>`;return;}
+  const shownIds=new Set();
+  if(activeFilter==='all'||activeTab==='fav'){
+    for(const lieu of LIEUX){
+      const ls=syns.filter(s=>lieu.ids.includes(s.id));
+      if(!ls.length)continue;
+      ls.forEach(s=>shownIds.add(s.id));
+      const hasFav=ls.some(s=>favs.includes(s.id));
+      const dist=userLat!==null?haversine(userLat,userLng,lieu.lat,lieu.lng):null;
+      const card=document.createElement('div');card.className='lieu-card'+(hasFav?' has-fav':'');
+      card.innerHTML=`<div class="lieu-hd"><span class="lieu-ico">${lieu.ico}</span><div class="lieu-info"><div class="lieu-addr-txt">${lieu.addr}</div><div class="lieu-count">${ls.length} minyanim</div></div><div class="lieu-acts">${dist!==null?`<div class="lieu-dist">📍 ${fmtDist(dist)}</div>`:''}<a class="maps-btn" href="${lieu.maps}" target="_blank">🗺 Maps</a></div></div>`;
+      ls.forEach(syn=>{
+        const h=syn.h[key]||{sh:null,mi:null,ar:null};const fav=favs.includes(syn.id);
+        const row=document.createElement('div');row.className='mrow';
+        const slots=PRAYERS.map(p=>{const tv=h[p.key];const isNext=cp&&p.key===cp.key;return`<div class="mt${isNext?' hl':''}"><div class="mt-lbl">${p.icon} ${T(p.fr,p.he,p.en)}</div><div class="mt-val ${tv?'':'dim'}">${tv||'—'}</div></div>`;}).join('');
+        row.innerHTML=`<div class="mrow-top"><div class="mrow-name">${syn.name}</div><button class="mrow-fav ${fav?'on':''}" onclick="event.stopPropagation();doFavRow(${syn.id},this)">⭐</button></div><div class="mrow-times">${slots}</div>`;
+        row.onclick=()=>openSynModal(syn.id);card.appendChild(row);
+      });
+      list.appendChild(card);
+    }
+  }
+  syns.filter(s=>!shownIds.has(s.id)).forEach(syn=>{
+    const h=syn.h[key]||{sh:null,mi:null,ar:null};const fav=favs.includes(syn.id);
+    const dist=userLat!==null&&syn.lat?haversine(userLat,userLng,syn.lat,syn.lng):null;
+    const card=document.createElement('div');card.className='syn-card'+(fav?' fav':'');
+    const slots=PRAYERS.map(p=>{const tv=h[p.key];const isNext=cp&&p.key===cp.key;return`<div class="t-slot${isNext?' hl':''}"><div class="t-lbl">${p.icon} ${T(p.fr,p.he,p.en)}</div><div class="t-val ${tv?'':'dim'}">${tv||'—'}</div></div>`;}).join('');
+    card.innerHTML=`<div class="syn-head" onclick="openSynModal(${syn.id})"><span class="syn-emoji">${syn.e}</span><div class="syn-info"><div class="syn-name">${syn.name}</div><div class="syn-addr">📍 ${syn.addr}</div>${dist!==null?`<div style="font-size:10px;color:var(--green);font-weight:600;margin-top:2px">📍 ${fmtDist(dist)}</div>`:''}</div><div class="syn-acts"><button class="fav-star ${fav?'on':''}" onclick="event.stopPropagation();doFav(${syn.id},this)">⭐</button><a class="maps-btn" href="${syn.maps}" target="_blank" onclick="event.stopPropagation()">🗺 Maps</a></div></div><div class="syn-times">${slots}</div>`;
+    list.appendChild(card);
+  });
+}
+function doFav(id,btn){toggleFav(id);btn.classList.toggle('on',isFav(id));btn.closest('.syn-card').classList.toggle('fav',isFav(id));}
+function doFavRow(id,btn){toggleFav(id);btn.classList.toggle('on',isFav(id));}
+
+// ================================================================
+// FIND NOW
+// ================================================================
+function findNow(){
+  const now=new Date(),ev=isEveningMode();
+  const key=ev?getDayKey(now,true):getDayKey(now);
+  const cp=getCurrentPrayer();
+  const prayerKey=ev?'sh':cp.key;
+  const prayerObj=PRAYERS.find(p=>p.key===prayerKey)||PRAYERS[0];
+  document.getElementById('nowIcon').textContent=prayerObj.icon;
+  document.getElementById('nowPrayer').textContent=T(prayerObj.fr,prayerObj.he,prayerObj.en);
+  if(ev){const dayNames={shabbat:'Shabbat',vendredi:'Vendredi',dimanche:'Dimanche',lundi_jeudi:'Lun/Jeu',mardi_mercredi:'Mar/Mer'};document.getElementById('nowSub').textContent=`Demain matin — ${dayNames[key]}`;}
+  else if(cp.status==='current')document.getElementById('nowSub').textContent='En cours';
+  else if(cp.status==='upcoming'){const h=Math.floor(cp.diff/60),m=cp.diff%60;document.getElementById('nowSub').textContent=`Dans ${h>0?h+'h':''}${m}min`;}
+  else document.getElementById('nowSub').textContent='Demain matin';
+  const lst=document.getElementById('nowList');lst.innerHTML='';
+  let avail=SYNS.map(s=>{const tv=s.h[key]?.[prayerKey];if(!tv)return null;const dist=userLat!==null&&s.lat?haversine(userLat,userLng,s.lat,s.lng):null;return{s,tv,min:timeToMin(tv)||999,dist};}).filter(Boolean);
+  avail.sort((a,b)=>userLat!==null?(a.dist||999)-(b.dist||999):a.min-b.min);
+  if(!avail.length)lst.innerHTML=`<div style="padding:14px;text-align:center;color:var(--text2);font-size:13px">Aucun minyan trouvé</div>`;
+  else avail.forEach(({s,tv,dist})=>{const el=document.createElement('div');el.className='now-item';el.innerHTML=`<div><div class="now-sname">${isFav(s.id)?'⭐ ':''}${s.name}</div><div class="now-addr">${s.addr}</div></div><div class="now-right"><div class="now-time">${tv}</div>${dist!==null?`<div class="now-dist">📍 ${fmtDist(dist)}</div>`:''}</div>`;el.onclick=()=>openSynModal(s.id);lst.appendChild(el);});
+  document.getElementById('nowPanel').classList.remove('hidden');
+  document.getElementById('nowPanel').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function closeNow(){document.getElementById('nowPanel').classList.add('hidden');}
+
+// ================================================================
+// MODALS SYNAGOGUE
+// ================================================================
+function openSynModal(id){
+  modalSynId=id;const syn=SYNS.find(s=>s.id===id);if(!syn)return;
+  document.getElementById('smTitle').textContent=syn.name;
+  document.getElementById('smAddr').textContent='📍 '+syn.addr;
+  updateSmFav();
+  const today=new Date().getDay();
+  const ROWS=[{l:'Vendredi',k:'vendredi',w:5},{l:'Shabbat',k:'shabbat',w:6},{l:'Dimanche',k:'dimanche',w:0},{l:'Lun/Jeu',k:'lundi_jeudi',w:1},{l:'Mar/Mer',k:'mardi_mercredi',w:2}];
+  document.getElementById('smWeek').innerHTML=ROWS.map(r=>{
+    const h=syn.h[r.k]||{};const isT=r.w===today||(today===4&&r.w===1)||(today===3&&r.w===2);
+    const f=v=>v?`<div class="sc-val ${isT?'gold':''}">${v}</div>`:`<div class="sc-val dim">—</div>`;
+    return`<div class="srow ${isT?'today':''}"><div class="srow-day">${r.l}${isT?' ✦':''}</div><div class="sc"><div class="sc-lbl">🌅</div>${f(h.sh)}</div><div class="sc"><div class="sc-lbl">☀️</div>${f(h.mi)}</div><div class="sc"><div class="sc-lbl">🌙</div>${f(h.ar)}</div></div>`;
+  }).join('');
+  document.getElementById('synModal').classList.remove('hidden');
+}
+function updateSmFav(){const f=isFav(modalSynId);const b=document.getElementById('smFavBtn');b.textContent=f?'⭐ Retirer des favoris':'☆ Ajouter aux favoris';b.classList.toggle('on',f);}
+function toggleFavModal(){toggleFav(modalSynId);updateSmFav();buildList();}
+function closeSynModal(){document.getElementById('synModal').classList.add('hidden');modalSynId=null;}
+
+// ================================================================
+// MODAL TEFILA
+// ================================================================
+function openTefila(key){
+  const tf=TEFILOT[key];
+  if(!tf)return;
+  const titleEl=document.getElementById('tefilaTitle');
+  const contentEl=document.getElementById('tefilaContent');
+  titleEl.style.direction='rtl';titleEl.style.fontFamily="'Frank Ruhl Libre',serif";
+  contentEl.style.direction='rtl';contentEl.style.textAlign='right';
+  contentEl.style.fontFamily="'Frank Ruhl Libre',serif";
+  titleEl.textContent=tf.nameHe;
+  contentEl.textContent=tf.text;
+  document.getElementById('tefilaModal').classList.remove('hidden');
+}
+
+function openMinyanInfo(){
+  const titleEl=document.getElementById('tefilaTitle');
+  const contentEl=document.getElementById('tefilaContent');
+  // Mode français — direction LTR + police DM Sans
+  titleEl.style.direction='ltr';titleEl.style.fontFamily="'Fraunces',serif";
+  contentEl.style.direction='ltr';contentEl.style.textAlign='left';
+  contentEl.style.fontFamily="'DM Sans',sans-serif";
+  titleEl.textContent='Pourquoi prier en minyan ?';
+  contentEl.innerHTML=`<div style="font-size:14px;line-height:1.7;">
+<p style="margin-bottom:14px;color:var(--text2);font-style:italic;">La prière en <b>minyan</b> (מניין) — quorum de dix hommes juifs adultes — est un pilier fondamental de la pratique juive.</p>
+
+<h3 style="color:var(--gold);font-family:'Fraunces',serif;font-size:16px;margin:18px 0 8px;">1. Une prière toujours acceptée</h3>
+<p style="margin-bottom:12px;">La prière de la communauté est toujours exaucée par Hachem, même lorsque les intentions individuelles ne sont pas parfaites. Comme l'enseigne le Yalkout Yossef : « la prière de la communauté est acceptée, et même lorsqu'ils n'ont pas la kavana appropriée, Hachem ne méprise pas leur prière ».</p>
+
+<h3 style="color:var(--gold);font-family:'Fraunces',serif;font-size:16px;margin:18px 0 8px;">2. Une obligation rigoureuse</h3>
+<p style="margin-bottom:12px;">On doit prier chaque jour en minyan, sauf cas de force majeure (onès). Certains avis considèrent même cette obligation comme absolue, nécessitant de parcourir une distance pour trouver un minyan.</p>
+
+<h3 style="color:var(--gold);font-family:'Fraunces',serif;font-size:16px;margin:18px 0 8px;">3. Les "Davar Shebikdousha"</h3>
+<p style="margin-bottom:6px;">Certains éléments sacrés ne peuvent être récités qu'en présence d'un minyan :</p>
+<ul style="margin:0 0 12px 20px;padding:0;">
+  <li>Le <b>Kaddish</b></li>
+  <li>La <b>Kedousha</b></li>
+  <li>Le <b>Barekhou</b></li>
+  <li>Les <b>13 Attributs de Miséricorde</b></li>
+  <li>La <b>répétition de la Amida</b> par le Chaliah Tsibour</li>
+</ul>
+
+<h3 style="color:var(--gold);font-family:'Fraunces',serif;font-size:16px;margin:18px 0 8px;">4. Préférer le minyan au lieu fixe</h3>
+<p style="margin-bottom:12px;">Si aucun minyan ne s'est réuni à votre endroit habituel, déplacez-vous pour en trouver un — la valeur du minyan est supérieure à celle du lieu fixe.</p>
+
+<h3 style="color:var(--gold);font-family:'Fraunces',serif;font-size:16px;margin:18px 0 8px;">5. La répétition de la Amida</h3>
+<p style="margin-bottom:12px;">Les Sages ont institué que l'officiant (Chaliah Tsibour) répète la Amida à voix haute, permettant à ceux qui ne sont pas experts ou qui n'ont pas eu la kavana lors de leur prière silencieuse de s'acquitter de leur obligation.</p>
+
+<h3 style="color:var(--gold);font-family:'Fraunces',serif;font-size:16px;margin:18px 0 8px;">En résumé</h3>
+<p style="margin-bottom:12px;">La prière en minyan est <b>hautement valorisée</b> dans le judaïsme — plus apte à être acceptée par Hachem, et indispensable pour les "choses de sainteté". Faire l'effort d'y participer, c'est s'élever spirituellement avec toute la communauté.</p>
+
+<div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--goldbr);font-size:11px;color:var(--text3);font-style:italic;">
+Sources : Yalkout Yossef · Peninei Halakhah (Tefila, Yamim Noraïm, Tefilat Nashim) · Aroukh HaShoulhan · B'Mareh HaBazak (Vol. III, IX, X)
+</div>
+</div>`;
+  document.getElementById('tefilaModal').classList.remove('hidden');
+}
+function openSefer(){
+  const jd=getJD(new Date());
+  const dayEntry=TEHILIM_DAYS.find(t=>t.day===Math.min(jd.day,30))||TEHILIM_DAYS[0];
+  document.getElementById('tefilaTitle').textContent=`תְּהִלִּים — יוֹם ${jd.day}`;
+  document.getElementById('tefilaContent').textContent=`${dayEntry.text}\n\n(${dayEntry.chaps})`;
+  document.getElementById('tefilaModal').classList.remove('hidden');
+}
+function openOmer(){
+  const omer=getOmer(new Date());
+  if(!omer){alert('Pas de comptage de l\'Omer aujourd\'hui');return;}
+  const txt=getOmerText(omer.jour);
+  document.getElementById('tefilaTitle').textContent=`סְפִירַת הָעֹמֶר — יוֹם ${omer.jour}`;
+  document.getElementById('tefilaContent').textContent=txt;
+  document.getElementById('tefilaModal').classList.remove('hidden');
+}
+function closeTefilaModal(){document.getElementById('tefilaModal').classList.add('hidden');}
+
+// ================================================================
+// CALENDRIER
+// ================================================================
+function mkCal(icon,cls,title,sub){
+  const c=document.createElement('div');c.className='card';
+  c.innerHTML=`<div class="card-hd"><div class="card-ico ${cls}">${icon}</div><div><div class="card-title">${title}</div>${sub?`<div class="card-sub">${sub}</div>`:''}</div></div><div class="card-body"></div>`;
+  return c;
+}
+const MNS=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+
+function buildCalendar(){
+  const g=document.getElementById('calGrid');
+  if(g.dataset.built)return;g.dataset.built='1';
+  const now=new Date(),jd=getJD(now),omer=getOmer(now),daf=getDaf(now);
+  const today0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+
+  // ZMANIM — calcul local exact CalJ
+  {
+    const c=mkCal('🕰','ci-gold','Zmanim du jour',`Lyon · ${now.getDate()} ${MNS[now.getMonth()]}`);
+    const z=fetchZmanim();
+    if(z&&z.sunrise){
+      zmanimData=z;
+      startCountdown(z);
+      c.querySelector('.card-body').innerHTML=`<div class="zman-grid">
+        <div class="zi"><div class="zi-lbl">🌄 Alot HaShahar</div><div class="zi-time">${fmtZD(z.alot)}</div><div class="zi-note">Rav Posen -16.1°</div></div>
+        <div class="zi"><div class="zi-lbl">📿 Début téfilin</div><div class="zi-time">${fmtZD(z.tefilin)}</div><div class="zi-note">Micheyakir -11°</div></div>
+        <div class="zi"><div class="zi-lbl">🌅 Lever du soleil</div><div class="zi-time">${fmtZD(z.sunrise)}</div><div class="zi-note">Hanetz HaHama</div></div>
+        <div class="zi"><div class="zi-lbl">📖 Fin Shema M"A</div><div class="zi-time">${fmtZD(z.shema_ma)}</div><div class="zi-note">Aube Rav Posen -16.1°</div></div>
+        <div class="zi"><div class="zi-lbl">📖 Fin Shema GR"A</div><div class="zi-time">${fmtZD(z.shema_gra)}</div><div class="zi-note">Kriat Shema</div></div>
+        <div class="zi"><div class="zi-lbl">🙏 Fin Tefila GR"A</div><div class="zi-time">${fmtZD(z.tefila_gra)}</div><div class="zi-note">Zman Tefila</div></div>
+        <div class="zi"><div class="zi-lbl">☀️ Hatsot</div><div class="zi-time">${fmtZD(z.hatsot)}</div><div class="zi-note">Midi solaire</div></div>
+        <div class="zi"><div class="zi-lbl">🕌 Minha Guedola</div><div class="zi-time">${fmtZD(z.minha_g)}</div><div class="zi-note">Lahumra : max 30min/0.5h</div></div>
+        <div class="zi"><div class="zi-lbl">🕌 Minha Ketana</div><div class="zi-time">${fmtZD(z.minha_k)}</div><div class="zi-note">9.5h solaires</div></div>
+        <div class="zi"><div class="zi-lbl">🌆 Plag HaMinha</div><div class="zi-time">${fmtZD(z.plag)}</div><div class="zi-note">1.25h avant coucher</div></div>
+        <div class="zi"><div class="zi-lbl">🌇 Coucher soleil</div><div class="zi-time">${fmtZD(z.sunset)}</div><div class="zi-note">Chkiat HaHama</div></div>
+        <div class="zi"><div class="zi-lbl">🌙 3 étoiles</div><div class="zi-time">${fmtZD(z.tzeit)}</div><div class="zi-note">Tsét Hakokavim -7.08°</div></div>
+        <div class="zi"><div class="zi-lbl">✡ Fin Chabbat</div><div class="zi-time">${fmtZD(z.fin_shab)}</div><div class="zi-note">3 petites étoiles -8.5°</div></div>
+        <div class="zi"><div class="zi-lbl">⭐ Rabénou Tam</div><div class="zi-time">${fmtZD(z.rt)}</div><div class="zi-note">72 min prop. après coucher</div></div>
+      </div>`;
+    } else {
+      c.querySelector('.card-body').innerHTML=`<div class="zman-err">⚠️ Erreur de calcul des Zmanim.</div>`;
+    }
+    g.appendChild(c);
+  }
+
+  // SHABBAT
+  if(now.getDay()===5||now.getDay()===6){
+    const z=zmanimData||fetchZmanim();
+    const c=mkCal('🕯','ci-gold','Chabbat cette semaine','');
+    c.querySelector('.card-body').innerHTML=`
+      <div class="shab-row"><span class="shab-lbl">🕯 Allumage (18 min avant)</span><span class="shab-time">${z?.candles?fmtZD(z.candles):'—'}</span></div>
+      <div class="shab-row"><span class="shab-lbl">🌇 Coucher du soleil</span><span class="shab-time">${z?.sunset?fmtZD(z.sunset):'—'}</span></div>
+      <div class="shab-row"><span class="shab-lbl">✡ Fin Chabbat (3 étoiles)</span><span class="shab-time">${z?.fin_shab?fmtZD(z.fin_shab):'—'}</span></div>
+      <div class="shab-row"><span class="shab-lbl">🌙 Rabénou Tam</span><span class="shab-time">${z?.rt?fmtZD(z.rt):'—'}</span></div>`;
+    g.insertBefore(c,g.firstChild);
+  }
+
+  // OMER
+  if(omer){
+    const c=mkCal('🌾','ci-green',"Compte de l'Omer",jd.str);
+    c.querySelector('.card-body').innerHTML=`<div class="omer-c">
+      <div class="omer-big">${omer.jour}</div>
+      <div class="omer-sub">Jour de l'Omer — Semaine ${omer.semaine}, jour ${omer.jourSem}</div>
+      <div class="omer-sefira">${omer.sefirot}</div>
+      <div class="omer-left">${49-omer.jour} jours jusqu'à Chavouot</div>
+    </div>`;
+    g.appendChild(c);
+  }
+
+  // DAF
+  {
+    const c=mkCal('📚','ci-blue','Daf Yomi','Cycle 16');
+    c.querySelector('.card-body').innerHTML=`<div class="daf-c"><div class="daf-name">${daf.n}</div><div class="daf-page">${daf.d}</div><div class="daf-info">${jd.str}</div></div>`;
+    g.appendChild(c);
+  }
+
+  // TEHILIM
+  {
+    const c=mkCal('📜','ci-dim','Tehilim du jour',`Jour ${jd.day} du mois`);
+    const dayEntry=TEHILIM_DAYS.find(t=>t.day===Math.min(jd.day,30))||TEHILIM_DAYS[0];
+    c.querySelector('.card-body').innerHTML=`<div class="teh-c"><div class="teh-chaps">Psaumes ${dayEntry.chaps}</div><div class="teh-sub">${jd.day} ${JM_FR[jd.month]} ${jd.year}</div></div>`;
+    g.appendChild(c);
+  }
+
+  // FETES
+  {
+    const c=mkCal('🎉','ci-gold','Prochaines fêtes','5786–5787');
+    const upcoming=FETES.filter(f=>{return new Date(f.date.getFullYear(),f.date.getMonth(),f.date.getDate())>=today0;}).slice(0,8);
+    c.querySelector('.card-body').innerHTML=upcoming.map(f=>{
+      const fd=new Date(f.date.getFullYear(),f.date.getMonth(),f.date.getDate());
+      const diff=Math.round((fd-today0)/86400000);
+      const badge=diff===0?`<span class="badge b-today">Aujourd'hui</span>`:diff>0&&diff<=14?`<span class="badge b-soon">Dans ${diff}j</span>`:'';
+      return`<div class="fete-row"><div><div class="fete-name">${f.name}${badge}</div><div class="fete-note">${f.note}</div></div><div class="fete-date">${f.date.getDate()} ${MNS[f.date.getMonth()]}</div></div>`;
+    }).join('');
+    g.appendChild(c);
+  }
+
+  // BIRKAT
+  {
+    const c=mkCal('🌙','ci-blue','Birkat Halevana','');
+    const windows=BIRKAT.filter(w=>{return new Date(w.fin.getFullYear(),w.fin.getMonth(),w.fin.getDate())>=today0;}).slice(0,3);
+    c.querySelector('.card-body').innerHTML=windows.map(w=>{
+      const db=new Date(w.debut.getFullYear(),w.debut.getMonth(),w.debut.getDate());
+      const df=new Date(w.fin.getFullYear(),w.fin.getMonth(),w.fin.getDate());
+      const isOpen=today0>=db&&today0<=df;
+      return`<div class="birkat-row ${isOpen?'open':''}"><div class="birkat-mois">${w.mois}</div><div class="birkat-dates">${w.debut.getDate()} ${MNS[w.debut.getMonth()]} → ${w.fin.getDate()} ${MNS[w.fin.getMonth()]}</div>${isOpen?`<div class="birkat-open">🌙 Fenêtre ouverte — ce soir !</div>`:''}</div>`;
+    }).join('');
+    g.appendChild(c);
+  }
+}
+
+// ================================================================
+// PAGE TORAH
+// ================================================================
+function buildTorah(){
+  const mb=MB[new Date().getDate()%MB.length]||MB[0];
+  document.getElementById('mbRef').textContent=mb.ref;
+  document.getElementById('mbText').textContent=mb.text;
+  const list=document.getElementById('mikveList');
+  if(list.dataset.built)return;list.dataset.built='1';
+  MIKVAOT.forEach(m=>{
+    const bcls=m.who==='women'?'mb-w':m.who==='men'?'mb-m':'mb-b';
+    const btxt=m.who==='women'?'Femmes':m.who==='men'?'Hommes':'Mixte';
+    const c=document.createElement('div');c.className='mikve-card';
+    c.innerHTML=`<div class="mikve-hd"><div><div class="mikve-name">${m.name}</div><div class="mikve-addr">📍 ${m.addr}</div>${m.contact?`<div class="mikve-contact">👤 ${m.contact}</div>`:''}</div><span class="mbadge ${bcls}">${btxt}</span></div>`;
+    if(m.tel){c.innerHTML+=`<div class="mikve-btns"><a class="call-btn" href="tel:${m.tel}">📞 ${m.tel.replace(/(\d{2})(?=\d)/g,'$1 ')}</a><a class="wa-btn" href="https://wa.me/33${m.tel.slice(1)}" target="_blank">💬</a></div>`;}
+    list.appendChild(c);
+  });
+}
+
+// ================================================================
+// PAGE 4 — GRID DES PRIERES
+// ================================================================
+function buildPrayerGrid(){
+  const g=document.getElementById('prayerGrid');
+  if(g.dataset.built)return;g.dataset.built='1';
+  const omer=getOmer(new Date());
+  const jd=getJD(new Date());
+  const dayEntry=TEHILIM_DAYS.find(t=>t.day===Math.min(jd.day,30))||TEHILIM_DAYS[0];
+  const birkatOpen=BIRKAT.some(w=>{
+    const now=new Date();const today0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    const db=new Date(w.debut.getFullYear(),w.debut.getMonth(),w.debut.getDate());
+    const df=new Date(w.fin.getFullYear(),w.fin.getMonth(),w.fin.getDate());
+    return today0>=db&&today0<=df;
+  });
+  const items=[
+    {key:'minyaninfo',name:'Pourquoi prier en minyan ?',nameHe:'מדוע להתפלל בציבור?',ico:'🤝',click:()=>openMinyanInfo()},
+    {key:'birkhot',name:'Birkhot HaShahar',nameHe:'ברכות השחר',ico:'🌅',click:()=>openTefila('birkhot')},
+    {key:'asheryatsar',name:'Asher Yatsar',nameHe:'אשר יצר',ico:'🙏',click:()=>openTefila('asheryatsar')},
+    {key:'shaharit',name:'Shaharit',nameHe:'שחרית',ico:'🌄',click:()=>openTefila('shaharit')},
+    {key:'minha',name:'Minha',nameHe:'מנחה',ico:'☀️',click:()=>openTefila('minha')},
+    {key:'arvit',name:'Arvit',nameHe:'ערבית',ico:'🌙',click:()=>openTefila('arvit')},
+    {key:'kaddish',name:'Kaddish',nameHe:'קדיש',ico:'✡',click:()=>openTefila('kaddish')},
+    {key:'birkathamazon',name:'Birkat HaMazon',nameHe:'ברכת המזון',ico:'🍞',click:()=>openTefila('birkathamazon')},
+    {key:'meinshalosh',name:"Me'ein Shalosh",nameHe:'מעין שלוש',ico:'🌾',click:()=>openTefila('meinshalosh')},
+    {key:'boreinefashot',name:'Borei Nefashot',nameHe:'בורא נפשות',ico:'💧',click:()=>openTefila('boreinefashot')},
+    {key:'tefilahadereh',name:'Tefila HaDereh',nameHe:'תפילת הדרך',ico:'✈️',click:()=>openTefila('tefilahadereh')},
+    {key:'tikounhaklali',name:'Tikoun HaKlali',nameHe:'תיקון הכללי',ico:'📿',click:()=>openTefila('tikounhaklali')},
+    {key:'hashkaba',name:'Hashkaba (Ps. 119)',nameHe:'הַשְׁכָּבָה',ico:'📜',click:()=>openTefila('hashkaba')},
+    {key:'omer',name:'Sefirat HaOmer',nameHe:`ספירת העומר${omer?` — יום ${omer.jour}`:''}`,ico:omer?'🌾':'⏭',click:()=>openOmer()},
+    {key:'birkathalevana',name:'Birkat HaLevana',nameHe:birkatOpen?'ברכת הלבנה 🌙':'ברכת הלבנה',ico:'🌙',click:()=>openTefila('birkathalevana')},
+    {key:'tehilim',name:'Sefer Tehilim',nameHe:`תהלים — פסוקים ${dayEntry.chaps}`,ico:'📖',click:()=>openSefer()},
+    {key:'parashatman',name:'Parashat HaMan',nameHe:'פרשת המן',ico:'☁️',click:()=>openTefila('parashatman')},
+    {key:'shevabrahot',name:'Sheva Brakhot',nameHe:'שבע ברכות',ico:'💒',click:()=>openTefila('shevabrahot')},
+  ];
+  items.forEach(item=>{
+    const card=document.createElement('div');card.className='p4-card';
+    card.innerHTML=`<div class="p4-ico">${item.ico}</div><div class="p4-name">${item.name}</div><div class="p4-name-he">${item.nameHe}</div>`;
+    card.onclick=item.click;
+    g.appendChild(card);
+  });
+}
+
+// ================================================================
+// BOUSSOLE
+// ================================================================
+// Direction Lyon → Jérusalem
+// Lyon: 45.76°N, 4.85°E — Jérusalem: 31.78°N, 35.23°E
+const LYON_LAT=45.76,LYON_LNG=4.85,JERU_LAT=31.78,JERU_LNG=35.23;
+function calcBearing(lat1,lng1,lat2,lng2){
+  const dLng=(lng2-lng1)*Math.PI/180;
+  const la1=lat1*Math.PI/180,la2=lat2*Math.PI/180;
+  const y=Math.sin(dLng)*Math.cos(la2);
+  const x=Math.cos(la1)*Math.sin(la2)-Math.sin(la1)*Math.cos(la2)*Math.cos(dLng);
+  return ((Math.atan2(y,x)*180/Math.PI)+360)%360;
+}
+const KOTEL_BEARING=Math.round(calcBearing(LYON_LAT,LYON_LNG,JERU_LAT,JERU_LNG));
+document.getElementById('kotelDeg').textContent=KOTEL_BEARING+'°';
+
+let compassActive=false;
+function startCompass(){
+  if(compassActive)return;
+  if(!window.DeviceOrientationEvent){alert('Boussole non disponible sur cet appareil');return;}
+  if(typeof DeviceOrientationEvent.requestPermission==='function'){
+    DeviceOrientationEvent.requestPermission().then(p=>{if(p==='granted')initCompass();}).catch(()=>alert('Permission refusée'));
+  } else {initCompass();}
+}
+function initCompass(){
+  compassActive=true;
+  window.addEventListener('deviceorientationabsolute',handleCompass,true);
+  window.addEventListener('deviceorientation',handleCompass,true);
+}
+function handleCompass(e){
+  const alpha=e.webkitCompassHeading||e.alpha||0;
+  document.getElementById('compassNeedle').style.transform=`rotate(${-alpha}deg)`;
+  const kotelDir=((KOTEL_BEARING-alpha)+360)%360;
+  document.getElementById('kotelDeg').textContent=Math.round(kotelDir)+'° vers Jérusalem';
+}
+
+// ================================================================
+// SIGNAL MINYAN
+// ================================================================
+let improvs=[];
+function openSignal(){document.getElementById('signalModal').classList.remove('hidden');}
+function closeSignal(){document.getElementById('signalModal').classList.add('hidden');}
+function submitSignal(){
+  const prayer=document.getElementById('sig-prayer').value;
+  const addr=document.getElementById('sig-addr').value.trim();
+  const time=document.getElementById('sig-time').value;
+  const men=document.getElementById('sig-men').value;
+  if(!addr||!time){alert('Adresse et heure obligatoires');return;}
+  const pNames={sh:'Shaharit',mi:'Minha',ar:'Arvit'};
+  const menLabels={minyan:'✅ Minyan complet','9':'9h — il manque 1','8':'8h — il manque 2','7':'7h — il manque 3','moins':'< 7 hommes'};
+  const expire=new Date();expire.setHours(expire.getHours()+2);
+  improvs.push({id:Date.now(),prayer:pNames[prayer],addr,time,men:menLabels[men],expire});
+  closeSignal();renderImprovs();
+  document.getElementById('sig-addr').value='';document.getElementById('sig-time').value='';
+}
+function renderImprovs(){
+  const now=new Date();improvs=improvs.filter(i=>new Date(i.expire)>now);
+  const wrap=document.getElementById('improvList');wrap.innerHTML='';
+  improvs.forEach(i=>{
+    const el=document.createElement('div');el.className='improv-item';
+    const rem=Math.round((new Date(i.expire)-now)/60000);
+    el.innerHTML=`<div><div class="improv-name">🙋 ${i.prayer} — ${i.time}</div><div class="improv-addr">📍 ${i.addr}</div><div style="font-size:11px;color:var(--green);margin-top:2px">${i.men}</div></div><div class="improv-right"><div class="improv-time">${i.time}</div><div class="improv-exp">Expire dans ${rem}min</div><button class="improv-del" onclick="delImprov(${i.id})">✕</button></div>`;
+    wrap.appendChild(el);
+  });
+}
+function delImprov(id){improvs=improvs.filter(i=>i.id!==id);renderImprovs();}
+
+// ================================================================
+// NAVIGATION
+// ================================================================
+function showPage(idx){
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  document.querySelectorAll('.nbtn').forEach((n,i)=>n.classList.toggle('on',i===idx));
+  activePage=idx;
+  if(idx===1)buildCalendar();
+  if(idx===2)buildTorah();
+  if(idx===3)buildPrayerGrid();
+}
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lbtn').forEach(b=>{const map={'fr':'FR','he':'עב','en':'EN'};b.classList.toggle('on',b.textContent===map[l]);});
+  updateHeader();buildDays();buildList();
+}
+function askNotif(){
+  if(!('Notification' in window)){alert('Notifications non disponibles.');return;}
+  Notification.requestPermission().then(p=>{if(p==='granted'){dismissNotif();localStorage.setItem('notif','1');alert('Notifications activées ! 🔔');}});
+}
+function dismissNotif(){document.getElementById('notifBanner').classList.add('hidden');}
+function shareWA(){const msg=encodeURIComponent(`🕍 *Minyan Lyon* — Synagogues, Zmanim, Prières et plus !\n👉 ${window.location.href}`);window.open(`https://wa.me/?text=${msg}`,'_blank');}
+function shareNative(){if(navigator.share){navigator.share({title:'Minyan Lyon',url:window.location.href});}else{navigator.clipboard.writeText(window.location.href).then(()=>alert('Lien copié !'));}}
+
+// ================================================================
+// INIT
+// ================================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('notif')==='1')dismissNotif();
+  updateHeader();buildDays();buildList();
+  getLocation();
+  setInterval(updateHeader,60000);
+  setInterval(renderImprovs,60000);
+  // Zmanim calculés localement — pas besoin de connexion !
+  const z=fetchZmanim();
+  if(z){zmanimData=z;startCountdown(z);}
+});
+</script>
+</body>
+</html>
